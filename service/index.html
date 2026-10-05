@@ -445,7 +445,7 @@
     <h2>무료 요금제로, 안전하게, 원천에 부담 없이</h2>
     <div class="g2">
       <div class="tbl-wrap"><table class="t">
-        <tr><th>구성</th><th>서비스</th><th>무료 한도와 대응</th></tr>
+        <tr><th style="width:16%;min-width:58px">구성</th><th style="min-width:76px">서비스</th><th>무료 한도와 대응</th></tr>
         <tr><td><b>화면</b></td><td>Vercel</td><td>정적 파일만 → 한도 걱정 없음</td></tr>
         <tr><td><b>API</b></td><td>Render (FastAPI)</td><td>15분 유휴 시 절전 → 화면이 스냅숏으로 자동 전환, 발표 전 /health로 깨움</td></tr>
         <tr><td><b>DB</b></td><td>Supabase</td><td>500MB · 1주 미사용 시 일시정지 → 매일 배치가 쓰기로 깨워 둠</td></tr>
@@ -457,13 +457,39 @@
         <div class="card pc principles" style="display:grid;grid-template-columns:44px 1fr;gap:14px"><span class="pi"><svg class="i"><use href="#i-user"/></svg></span><div><h4 style="margin:0 0 4px">개인정보를 받지 않는다</h4><p>로그인 없음. 관심 조문은 브라우저에만 저장하고, 서버에는 조문 키만 질의로 보냅니다.</p></div></div>
       </div>
     </div>
+
+    <h3 class="sub"><svg class="i"><use href="#i-shield"/></svg>DB 접속 계정: 용도별 역할(role) 분리 — 최소 권한 원칙</h3>
+    <p class="intro" style="margin-bottom:14px">이 서비스는 DB를 쓰는 주체가 둘입니다. 인터넷에 공개된 <b>조회 API</b>는 읽기만, 매일 도는 <b>수집 배치</b>는 쓰기만 합니다. 그래서 같은 PostgreSQL 안에 역할을 셋으로 나누고, 각자 맡은 일에 필요한 권한만 주었습니다(Principle of Least Privilege).</p>
+    <div class="tbl-wrap"><table class="t">
+      <tr><th style="width:16%">역할(role)</th><th style="width:22%">누가 쓰나</th><th>권한(GRANT)과 제한</th><th style="width:20%">언제</th></tr>
+      <tr><td><span class="code-ex">postgres</span></td><td>사람(관리자)</td><td>전부 — 테이블 생성·변경·삭제(DDL) 포함</td><td>처음 스키마 만들 때, 초기 데이터 적재 1회</td></tr>
+      <tr><td><span class="code-ex">batch_writer</span></td><td>수집 배치 (GitHub Actions)</td><td><span class="code-ex">SELECT·INSERT·UPDATE·DELETE</span>만. 테이블 구조는 못 바꿈. 집계 뷰 갱신은 소유자 권한 함수(<span class="code-ex">SECURITY DEFINER</span>)로만</td><td>매일 06:00 (KST)</td></tr>
+      <tr><td><span class="code-ex">api_reader</span></td><td>조회 API (FastAPI · Render)</td><td><span class="code-ex">SELECT</span>만. 원본 보관 테이블(<span class="code-ex">raw_payloads</span>)은 읽기도 불가. 쿼리당 5초 제한(<span class="code-ex">statement_timeout</span>)</td><td>사용자가 화면을 볼 때마다</td></tr>
+    </table></div>
+    <div class="g3" style="margin-top:14px">
+      <div class="card pc"><h4 style="margin-top:0">피해 범위를 줄인다</h4><p>공격받기 쉬운 곳은 인터넷에 열린 Render 서버입니다. 그 연결 정보가 새거나 코드에 허점이 있어도 <span class="code-ex">api_reader</span>로는 이미 공개된 데이터를 읽는 것밖에 못 합니다. 관리자 계정이었다면 테이블 삭제까지 가능합니다.</p></div>
+      <div class="card pc"><h4 style="margin-top:0">실수를 DB가 막는다</h4><p>조회 API 코드에 데이터를 바꾸는 줄이 실수로 들어가도 DB가 권한 오류로 거부합니다. 실제로 조회 계정으로 전체 API를 시험해 권한이 빠진 테이블 2개를 찾아 고쳤습니다 — 분리가 실제로 지켜진다는 증거입니다.</p></div>
+      <div class="card pc"><h4 style="margin-top:0">무료 DB를 지킨다</h4><p>무거운 검색이 DB를 오래 붙잡지 못하게 조회 계정에만 5초 제한을 걸었습니다. 모든 테이블에 행 수준 보안(RLS)을 켜고, Supabase 자동 API(Data API)는 쓰지 않아 꺼 두었습니다.</p></div>
+    </div>
+
+    <h3 class="sub"><svg class="i"><use href="#i-info"/></svg>수업 실습(4주차 워크북) 방식과의 차이</h3>
+    <p class="intro" style="margin-bottom:14px">개발 환경(FastAPI · Supabase PostgreSQL · Render · Vercel · GitHub)은 가이드 그대로입니다. 다만 수업의 가계부 API와 서비스 구조가 달라, 아래 네 가지는 다르게 설계했습니다. 모두 가이드가 정한 범위 안의 선택입니다.</p>
+    <div class="tbl-wrap"><table class="t">
+      <tr><th style="width:15%">항목</th><th style="width:27%">수업 실습 (가계부 API)</th><th style="width:27%">이 프로젝트</th><th>이유</th></tr>
+      <tr><td><b>DB를 쓰는 프로그램</b></td><td>FastAPI 앱 하나가 읽기·쓰기 모두 (POST로 저장, GET으로 조회)</td><td>조회 API는 읽기만, 쓰기는 수집 배치만</td><td>사용자는 조회만 하고, 데이터는 공공 원천에서 매일 자동으로 들어오는 서비스이기 때문</td></tr>
+      <tr><td><b>DB 접속 계정</b></td><td>관리자 <span class="code-ex">postgres</span> 하나를 모든 곳에</td><td>역할 셋으로 분리 (위 표)</td><td>최소 권한 원칙 — 공개 서버에는 읽기 권한만</td></tr>
+      <tr><td><b>테이블 생성</b></td><td>ORM(SQLAlchemy) 클래스 + 앱 시작 시 <span class="code-ex">create_all()</span></td><td>SQL 스크립트(<span class="code-ex">001_schema.sql</span>)를 SQL Editor에서 실행, DB 접근은 드라이버(<span class="code-ex">psycopg</span>)로 SQL 직접 실행</td><td>권한·RLS·구체화 뷰·부분 인덱스처럼 ORM 모델로 표현하기 어려운 DB 기능을 쓰고, 조회 API에는 테이블을 만들 권한 자체가 없기 때문</td></tr>
+      <tr><td><b>비밀값 관리</b></td><td>로컬 <span class="code-ex">.env</span> + Render 환경변수</td><td>Render 환경변수 + GitHub Actions Secrets (로컬 1회 작업은 화면에 안 보이는 입력)</td><td>원칙은 같음 — 연결 문자열은 코드·저장소에 두지 않는다</td></tr>
+    </table></div>
+    <div class="callout info"><svg class="i l" style="color:var(--brand-2)"><use href="#i-info"/></svg><div><b>연결 문자열 형식 주의</b>
+      <p>수업은 SQLAlchemy용으로 앞머리를 <span class="code-ex">postgresql+psycopg://</span>로 바꾸지만, 이 프로젝트는 드라이버를 직접 쓰므로 Supabase에서 복사한 <span class="code-ex">postgresql://</span> 그대로 씁니다(Session pooler, 포트 5432). 사용자 이름만 역할에 맞게 <span class="code-ex">batch_writer.&lt;프로젝트ref&gt;</span> · <span class="code-ex">api_reader.&lt;프로젝트ref&gt;</span>로 바꿉니다.</p></div></div>
   </section>
 
   <!-- ============================================================ 12 -->
   <section class="s" id="plan">
     <div class="s-no">12 · 일정·역할</div>
     <h2>데이터부터 쌓고, 화면은 이미 붙어 있습니다</h2>
-    <p class="intro">초록 체크는 이번 기획 단계에서 이미 구현·검증한 항목입니다. 남은 일은 대부분 ‘인증키를 받고 실제 응답에 맞추는 일’입니다.</p>
+    <p class="intro">초록 체크는 이번 기획 단계에서 이미 구현·검증한 항목입니다. 법제처 Open API 전환까지 끝났고, 남은 일은 배포(Supabase·Render·Vercel)와 연결 검수입니다.</p>
     <div class="tl">
       <div class="card wk"><div class="w">5주차</div><h4>뼈대와 엔진</h4><ul>
         <li class="done"><svg class="i"><use href="#i-check"/></svg>스키마 10개 테이블·계정·RLS</li>
