@@ -1,0 +1,2192 @@
+{
+ "api": [
+  {
+   "method": "GET",
+   "path": "/health",
+   "summary": "서버·DB 상태와 데이터 기준 시각",
+   "tag": "상태",
+   "params": [],
+   "example_request": "/health",
+   "status": 200,
+   "response_shape": {
+    "status": "string",
+    "data_as_of": "string",
+    "counts": {
+     "documents": "integer",
+     "articles": "integer",
+     "links": "integer",
+     "laws": "integer"
+    },
+    "runs": [
+     {
+      "stage": "string",
+      "source": "string",
+      "status": "string",
+      "finished_at": "string",
+      "stats": "object"
+     }
+    ]
+   },
+   "response_example": {
+    "status": "ok",
+    "data_as_of": "2026-10-05T12:59:20.335761+00:00",
+    "counts": {
+     "documents": 6341,
+     "articles": 3629,
+     "links": 5266,
+     "laws": 21
+    },
+    "runs": [
+     {
+      "stage": "derive",
+      "source": "events",
+      "status": "ok",
+      "finished_at": "2026-10-05T12:59:20.335761+00:00",
+      "stats": {
+       "errors": 0,
+       "sources": {
+        "lawgo.law": {
+         "n": 12,
+         "api": 19,
+         "last": "2026-10-05T12:37:47.213402+00:00"
+        },
+        "fsc.lawreq": {
+         "n": 2607,
+         "api": 0,
+         "last": "2026-10-04T18:37:25.521026+00:00"
+        },
+        "fsc.opinion": {
+         "n": 1687,
+         "api": 0,
+         "last": "2026-10-04T18:37:23.844561+00:00"
+        },
+        "fsc.pastreq": {
+         "n": 1880,
+         "api": 0,
+         "last": "2026-10-04T18:37:21.342940+00:00"
+        },
+        "fsc.guidance": {
+         "n": 167,
+         "api": 0,
+         "last": "2026-10-04T18:37:30.933759+00:00"
+        },
+        "lawgo.admrul": {
+         "n": 9,
+         "api": 9,
+         "last": "2026-10-05T12:37:54.654432+00:00"
+        },
+        "lawgo.thdcmp": {
+         "n": 5,
+         "api": 0,
+         "last": "2026-10-05T12:37:39.738236+00:00"
+        }
+       },
+       "events_new": 6377
+      }
+     },
+     {
+      "stage": "link",
+      "source": "documents",
+      "status": "ok",
+      "finished_at": "2026-10-05T12:59:17.944898+00:00",
+      "stats": {
+       "docs": 6341,
+       "links": 5266,
+       "errors": 0,
+       "unresolved": 8050,
+       "no_citation": 4160
+      }
+     },
+     "…"
+    ]
+   }
+  },
+  {
+   "method": "GET",
+   "path": "/laws",
+   "summary": "대상 법령 목록 (법률·시행령·감독규정 묶음)",
+   "tag": "법령",
+   "params": [],
+   "example_request": "/laws",
+   "status": 200,
+   "response_shape": [
+    {
+     "slug": "string",
+     "name": "string",
+     "kind": "string",
+     "parent": "null",
+     "sectors": [
+      "string"
+     ],
+     "effective_on": "string",
+     "articles": "integer",
+     "linked_docs": "integer"
+    }
+   ],
+   "response_example": [
+    {
+     "slug": "bank",
+     "name": "은행법",
+     "kind": "법률",
+     "parent": null,
+     "sectors": [
+      "은행"
+     ],
+     "effective_on": "2026-07-01",
+     "articles": 96,
+     "linked_docs": 218
+    },
+    {
+     "slug": "bank-ed",
+     "name": "은행법 시행령",
+     "kind": "시행령",
+     "parent": "bank",
+     "sectors": [
+      "은행"
+     ],
+     "effective_on": "2026-07-01",
+     "articles": 73,
+     "linked_docs": 83
+    },
+    "…"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/laws/{slug}/toc",
+   "summary": "법령 목차 + 조문별 연결 자료 수",
+   "tag": "법령",
+   "params": [
+    {
+     "name": "slug",
+     "in": "경로",
+     "required": true,
+     "type": "string",
+     "default": null,
+     "description": "",
+     "constraints": {}
+    }
+   ],
+   "example_request": "/laws/efta/toc",
+   "status": 200,
+   "response_shape": {
+    "law": {
+     "slug": "string",
+     "name": "string",
+     "kind": "string",
+     "parent": "null",
+     "effective_on": "string",
+     "sectors": [
+      "string"
+     ]
+    },
+    "family": [
+     {
+      "slug": "string",
+      "name": "string",
+      "kind": "string"
+     }
+    ],
+    "chapters": [
+     {
+      "name": "string",
+      "articles": [
+       "object"
+      ]
+     }
+    ]
+   },
+   "response_example": {
+    "law": {
+     "slug": "efta",
+     "name": "전자금융거래법",
+     "kind": "법률",
+     "parent": null,
+     "effective_on": "2026-10-02",
+     "sectors": [
+      "전자금융"
+     ]
+    },
+    "family": [
+     {
+      "slug": "efta",
+      "name": "전자금융거래법",
+      "kind": "법률"
+     },
+     {
+      "slug": "efta-ed",
+      "name": "전자금융거래법 시행령",
+      "kind": "시행령"
+     },
+     "…"
+    ],
+    "chapters": [
+     {
+      "name": "제1장 총칙",
+      "articles": [
+       {
+        "key": "efta:1",
+        "no": "1",
+        "label": "제1조",
+        "title": "목적",
+        "is_deleted": false,
+        "total": 1,
+        "interp": 1,
+        "noaction": 0,
+        "guidance": 0,
+        "notice": 0,
+        "pending": false
+       },
+       {
+        "key": "efta:2",
+        "no": "2",
+        "label": "제2조",
+        "title": "정의",
+        "is_deleted": false,
+        "total": 151,
+        "interp": 108,
+        "noaction": 43,
+        "guidance": 0,
+        "notice": 0,
+        "pending": true
+       },
+       "…"
+      ]
+     },
+     {
+      "name": "제2장 전자금융거래 당사자의 권리와 의무",
+      "articles": [
+       {
+        "key": "efta:5",
+        "no": "5",
+        "label": "제5조",
+        "title": "전자문서의 사용",
+        "is_deleted": false,
+        "total": 1,
+        "interp": 1,
+        "noaction": 0,
+        "guidance": 0,
+        "notice": 0,
+        "pending": false
+       },
+       {
+        "key": "efta:6",
+        "no": "6",
+        "label": "제6조",
+        "title": "접근매체의 선정과 사용 및 관리",
+        "is_deleted": false,
+        "total": 31,
+        "interp": 23,
+        "noaction": 8,
+        "guidance": 0,
+        "notice": 0,
+        "pending": false
+       },
+       "…"
+      ]
+     },
+     "…"
+    ]
+   }
+  },
+  {
+   "method": "GET",
+   "path": "/articles/{key}",
+   "summary": "조문 카드: 현행·시행예정 본문, 위임 관계, 연결 자료, 최근 변화",
+   "tag": "조문",
+   "params": [
+    {
+     "name": "key",
+     "in": "경로",
+     "required": true,
+     "type": "string",
+     "default": null,
+     "description": "",
+     "constraints": {}
+    }
+   ],
+   "example_request": "/articles/efta%3A25%EC%9D%982",
+   "status": 200,
+   "response_shape": {
+    "key": "string",
+    "no": "string",
+    "label": "string",
+    "title": "string",
+    "chapter": "string",
+    "is_deleted": "boolean",
+    "law_slug": "string",
+    "law_name": "string",
+    "law_kind": "string",
+    "law_parent": "null",
+    "current": {
+     "effective_from": "string",
+     "effective_to": "string",
+     "title": "string",
+     "body": "string"
+    },
+    "pending": {
+     "effective_from": "string",
+     "effective_to": "null",
+     "title": "string",
+     "body": "string"
+    },
+    "history": [
+     {
+      "effective_from": "string",
+      "effective_to": "string"
+     }
+    ],
+    "delegates_to": [
+     {
+      "key": "string",
+      "label": "string",
+      "title": "string",
+      "law_name": "string",
+      "law_kind": "string",
+      "origin": "string"
+     }
+    ],
+    "delegated_from": [],
+    "stats": {
+     "total": "integer",
+     "interp": "integer",
+     "noaction": "integer",
+     "guidance": "integer",
+     "notice": "integer",
+     "latest_on": "string"
+    },
+    "documents": [
+     {
+      "id": "string",
+      "kind": "string",
+      "title": "string",
+      "org": "string",
+      "dept": "string",
+      "published_on": "string",
+      "stage": "null",
+      "valid_from": "null",
+      "valid_to": "null",
+      "confidence": "number",
+      "evidence": [
+       "string"
+      ],
+      "paragraphs": "null"
+     }
+    ],
+    "events": [
+     {
+      "occurred_on": "string",
+      "kind": "string",
+      "title": "string",
+      "doc_id": "null"
+     }
+    ],
+    "neighbors": [
+     {
+      "key": "string",
+      "label": "string",
+      "title": "string"
+     }
+    ]
+   },
+   "response_example": {
+    "key": "efta:25의2",
+    "no": "25의2",
+    "label": "제25조의2",
+    "title": "선불충전금의 보호",
+    "chapter": "제3장 전자금융거래의 안전성 확보 및 이용자 보호",
+    "is_deleted": false,
+    "law_slug": "efta",
+    "law_name": "전자금융거래법",
+    "law_kind": "법률",
+    "law_parent": null,
+    "current": {
+     "effective_from": "2026-10-02",
+     "effective_to": "2026-12-16",
+     "title": "선불충전금의 보호",
+     "body": "제25조의2(선불충전금의 보호) ① 제28조제2항제3호의 업무를 행하기 위하여 같은 조에 따라 금융위원회에 등록한 전자금융업자(이하 \"선불업자\"…"
+    },
+    "pending": {
+     "effective_from": "2026-12-17",
+     "effective_to": null,
+     "title": "선불충전금의 보호",
+     "body": "제25조의2(선불충전금의 보호) ① 제28조제2항제3호의 업무를 행하기 위하여 같은 조에 따라 금융위원회에 등록한 전자금융업자(이하 \"선불업자\"…"
+    },
+    "history": [
+     {
+      "effective_from": "2026-10-02",
+      "effective_to": "2026-12-16"
+     },
+     {
+      "effective_from": "2026-12-17",
+      "effective_to": null
+     }
+    ],
+    "delegates_to": [
+     {
+      "key": "efta-ed:13의2",
+      "label": "제13조의2",
+      "title": "선불충전금의 별도관리",
+      "law_name": "전자금융거래법 시행령",
+      "law_kind": "시행령",
+      "origin": "thdcmp"
+     },
+     {
+      "key": "efta-ed:13의3",
+      "label": "제13조의3",
+      "title": "선불충전금의 운용방법",
+      "law_name": "전자금융거래법 시행령",
+      "law_kind": "시행령",
+      "origin": "thdcmp"
+     },
+     "…"
+    ]
+   }
+  },
+  {
+   "method": "GET",
+   "path": "/articles/{key}/graph",
+   "summary": "조문 연결 그래프 (위임 관계 + 인용 문서) — 그림용 점·선 목록",
+   "tag": "조문",
+   "params": [
+    {
+     "name": "key",
+     "in": "경로",
+     "required": true,
+     "type": "string",
+     "default": null,
+     "description": "",
+     "constraints": {}
+    },
+    {
+     "name": "depth",
+     "in": "쿼리",
+     "required": false,
+     "type": "integer",
+     "default": 2,
+     "description": "위임 관계를 몇 단계까지 따라갈지",
+     "constraints": {
+      "minimum": 1,
+      "maximum": 2
+     }
+    },
+    {
+     "name": "per_kind",
+     "in": "쿼리",
+     "required": false,
+     "type": "integer",
+     "default": 3,
+     "description": "문서 유형별로 그릴 최대 건수",
+     "constraints": {
+      "minimum": 1,
+      "maximum": 10
+     }
+    }
+   ],
+   "example_request": "/articles/efta%3A25%EC%9D%982/graph",
+   "status": 200,
+   "response_shape": {
+    "center": "string",
+    "nodes": [
+     {
+      "id": "string",
+      "type": "string",
+      "center": "boolean",
+      "tier": "integer",
+      "label": "string",
+      "title": "string",
+      "law_name": "string",
+      "law_kind": "string"
+     }
+    ],
+    "edges": [
+     {
+      "from": "string",
+      "to": "string",
+      "type": "string",
+      "origin": "string"
+     }
+    ],
+    "more": {
+     "법령해석": "integer"
+    },
+    "note": "string"
+   },
+   "response_example": {
+    "center": "efta:25의2",
+    "nodes": [
+     {
+      "id": "efta:25의2",
+      "type": "article",
+      "center": true,
+      "tier": 0,
+      "label": "제25조의2",
+      "title": "선불충전금의 보호",
+      "law_name": "전자금융거래법",
+      "law_kind": "법률"
+     },
+     {
+      "id": "efta-ed:13의2",
+      "type": "article",
+      "center": false,
+      "tier": 1,
+      "label": "제13조의2",
+      "title": "선불충전금의 별도관리",
+      "law_name": "전자금융거래법 시행령",
+      "law_kind": "시행령"
+     },
+     "…"
+    ],
+    "edges": [
+     {
+      "from": "efta:25의2",
+      "to": "efta-ed:13의2",
+      "type": "delegation",
+      "origin": "thdcmp"
+     },
+     {
+      "from": "efta:25의2",
+      "to": "efta-ed:13의3",
+      "type": "delegation",
+      "origin": "thdcmp"
+     },
+     "…"
+    ],
+    "more": {
+     "법령해석": 6
+    },
+    "note": "위임 관계 origin: thdcmp=법제처 3단비교, text=하위 규정 본문의 '법 제N조' 인용으로 추정"
+   }
+  },
+  {
+   "method": "GET",
+   "path": "/search",
+   "summary": "통합검색 (문서 + 조문 바로가기 + 유형별 개수)",
+   "tag": "검색",
+   "params": [
+    {
+     "name": "q",
+     "in": "쿼리",
+     "required": false,
+     "type": "string",
+     "default": "",
+     "description": "",
+     "constraints": {
+      "maxLength": 100
+     }
+    },
+    {
+     "name": "kinds",
+     "in": "쿼리",
+     "required": false,
+     "type": "array",
+     "default": [],
+     "description": "",
+     "constraints": {}
+    },
+    {
+     "name": "orgs",
+     "in": "쿼리",
+     "required": false,
+     "type": "array",
+     "default": [],
+     "description": "",
+     "constraints": {}
+    },
+    {
+     "name": "laws",
+     "in": "쿼리",
+     "required": false,
+     "type": "array",
+     "default": [],
+     "description": "",
+     "constraints": {}
+    },
+    {
+     "name": "from",
+     "in": "쿼리",
+     "required": false,
+     "type": "string",
+     "default": null,
+     "description": "",
+     "constraints": {}
+    },
+    {
+     "name": "to",
+     "in": "쿼리",
+     "required": false,
+     "type": "string",
+     "default": null,
+     "description": "",
+     "constraints": {}
+    },
+    {
+     "name": "sort",
+     "in": "쿼리",
+     "required": false,
+     "type": "string",
+     "default": "relevance",
+     "description": "",
+     "constraints": {
+      "pattern": "^(relevance|date)$"
+     }
+    },
+    {
+     "name": "limit",
+     "in": "쿼리",
+     "required": false,
+     "type": "integer",
+     "default": 20,
+     "description": "",
+     "constraints": {
+      "minimum": 1,
+      "maximum": 100
+     }
+    },
+    {
+     "name": "offset",
+     "in": "쿼리",
+     "required": false,
+     "type": "integer",
+     "default": 0,
+     "description": "",
+     "constraints": {
+      "minimum": 0
+     }
+    }
+   ],
+   "example_request": "/search",
+   "status": 200,
+   "response_shape": {
+    "query": "string",
+    "jump": "null",
+    "total": "integer",
+    "facets": {
+     "법령해석": "integer"
+    },
+    "articles": [
+     {
+      "key": "string",
+      "label": "string",
+      "title": "string",
+      "law_name": "string",
+      "law_kind": "string",
+      "linked": "integer"
+     }
+    ],
+    "items": [
+     {
+      "id": "string",
+      "kind": "string",
+      "title": "string",
+      "org": "string",
+      "dept": "string",
+      "published_on": "string",
+      "stage": "null",
+      "valid_to": "null",
+      "score": "number",
+      "snippet": "string",
+      "articles": [
+       "object"
+      ]
+     }
+    ]
+   },
+   "response_example": {
+    "query": "선불충전금",
+    "jump": null,
+    "total": 15,
+    "facets": {
+     "법령해석": 15
+    },
+    "articles": [
+     {
+      "key": "efta:25의2",
+      "label": "제25조의2",
+      "title": "선불충전금의 보호",
+      "law_name": "전자금융거래법",
+      "law_kind": "법률",
+      "linked": 9
+     },
+     {
+      "key": "efta-reg:56의2",
+      "label": "제56조의2",
+      "title": "선불충전금 정보의 안전한 관리",
+      "law_name": "전자금융감독규정",
+      "law_kind": "감독규정",
+      "linked": 0
+     },
+     "…"
+    ],
+    "items": [
+     {
+      "id": "fsc.lawreq:4896",
+      "kind": "법령해석",
+      "title": "선불업자의 선불충전금 보호의무와 관련하여, 선불전자지급수단으로 교환할 수 있는 상품권에 대한 판매대금이 위 보호의무의 적용을 받는 선불충전금에 …",
+      "org": "금융위원회",
+      "dept": "디지털금융총괄과",
+      "published_on": "2026-03-11",
+      "stage": null,
+      "valid_to": null,
+      "score": 5.0,
+      "snippet": "선불업자의 선불충전금 보호의무와 관련하여, 선불전자지급수단으로 교환할 수 있는 상품권에 대한 판매대금이 위 보호의무의 적용을 받는 선불충…",
+      "articles": [
+       {
+        "key": "efta:2",
+        "label": "제2조",
+        "title": "정의",
+        "law_name": "전자금융거래법",
+        "law_kind": "법률"
+       },
+       {
+        "key": "efta:25의2",
+        "label": "제25조의2",
+        "title": "선불충전금의 보호",
+        "law_name": "전자금융거래법",
+        "law_kind": "법률"
+       }
+      ]
+     },
+     {
+      "id": "fsc.lawreq:3629",
+      "kind": "법령해석",
+      "title": "지역사랑상품권-신용/체크카드 연결 서비스 관련 비조치의견 요청서",
+      "org": "금융위원회",
+      "dept": "금융안전과",
+      "published_on": "2026-09-30",
+      "stage": null,
+      "valid_to": null,
+      "score": 3.0,
+      "snippet": "… 선택할 수 있도록 소비자보호에 만전을 기해야 할 것입니다. □ ‘지역사랑상품권-신용/체크카드 연결 서비스’는 지역사랑상품권 선불충전금을 초과…",
+      "articles": [
+       {
+        "key": "efta:2",
+        "label": "제2조",
+        "title": "정의",
+        "law_name": "전자금융거래법",
+        "law_kind": "법률"
+       }
+      ]
+     },
+     "…"
+    ]
+   }
+  },
+  {
+   "method": "GET",
+   "path": "/documents/{doc_id}",
+   "summary": "문서 원문 + 인용 조문(근거 표현) + 같은 조문을 다룬 다른 문서",
+   "tag": "문서",
+   "params": [
+    {
+     "name": "doc_id",
+     "in": "경로",
+     "required": true,
+     "type": "string",
+     "default": null,
+     "description": "",
+     "constraints": {}
+    }
+   ],
+   "example_request": "/documents/fsc.lawreq%3A5379",
+   "status": 200,
+   "response_shape": {
+    "id": "string",
+    "kind": "string",
+    "org": "string",
+    "dept": "string",
+    "title": "string",
+    "question": "string",
+    "answer": "string",
+    "reason": "string",
+    "body": "null",
+    "published_on": "null",
+    "valid_from": "null",
+    "valid_to": "null",
+    "stage": "null",
+    "source_url": "string",
+    "source_name": "string",
+    "primary_law": "null",
+    "links": [],
+    "related": []
+   },
+   "response_example": {
+    "id": "fsc.lawreq:5379",
+    "kind": "법령해석",
+    "org": "금융위원회",
+    "dept": "중소금융과",
+    "title": "신용카드 회원의 미성년 가족에 대한 가족카드 발급의 여신전문금융업법 위반 소지",
+    "question": "□ 신용카드업자가 미성년자인 신용카드회원의 가족이 사용할 수 있는 가족카드를 발급하는 것이 현행 여신전문금융업법 및 하위규정을 위반할 소지가 있…",
+    "answer": "☐ 여신전문금융업법령상 가족카드를 신청하는 본인회원이 연령 요건을 충족하는 경우에는 가족회원이 해당 연령 요건을 충족하는지 여부와 상관없이 신용…",
+    "reason": "□ 여신전문금융업법 제14조는 신용카드 발급과 관련하여 제2항에서 ‘발급신청’이 갖춰야 할 요건으로 ①본인이 신청하고 ②신용카드 한도액이 신용카…",
+    "body": null,
+    "published_on": null,
+    "valid_from": null,
+    "valid_to": null,
+    "stage": null,
+    "source_url": "https://better.fsc.go.kr/fsc_new/replyCase/LawreqDetail.do?stNo=11&muNo=117&lawr…"
+   }
+  },
+  {
+   "method": "GET",
+   "path": "/feed",
+   "summary": "변화 피드 (새 해석·비조치, 조문 개정·시행예정, 행정지도 시행·만료)",
+   "tag": "변화",
+   "params": [
+    {
+     "name": "days",
+     "in": "쿼리",
+     "required": false,
+     "type": "integer",
+     "default": 90,
+     "description": "",
+     "constraints": {
+      "minimum": 1,
+      "maximum": 730
+     }
+    },
+    {
+     "name": "laws",
+     "in": "쿼리",
+     "required": false,
+     "type": "array",
+     "default": [],
+     "description": "법률 slug (하위 시행령·감독규정 포함)",
+     "constraints": {}
+    },
+    {
+     "name": "articles",
+     "in": "쿼리",
+     "required": false,
+     "type": "array",
+     "default": [],
+     "description": "관심 조문 키 (예: efta:25의2)",
+     "constraints": {}
+    },
+    {
+     "name": "kinds",
+     "in": "쿼리",
+     "required": false,
+     "type": "array",
+     "default": [],
+     "description": "",
+     "constraints": {}
+    },
+    {
+     "name": "limit",
+     "in": "쿼리",
+     "required": false,
+     "type": "integer",
+     "default": 50,
+     "description": "",
+     "constraints": {
+      "minimum": 1,
+      "maximum": 200
+     }
+    }
+   ],
+   "example_request": "/feed",
+   "status": 200,
+   "response_shape": {
+    "since": "string",
+    "summary": {
+     "비조치_신규": "integer",
+     "해석_신규": "integer",
+     "조문_시행예정": "integer"
+    },
+    "items": [
+     {
+      "id": "integer",
+      "occurred_on": "string",
+      "kind": "string",
+      "title": "string",
+      "doc_id": "null",
+      "article_key": "string",
+      "law_slug": "string",
+      "law_name": "string",
+      "article_label": "string",
+      "doc_kind": "null",
+      "org": "null",
+      "articles": [],
+      "article_keys": [
+       "string"
+      ]
+     }
+    ]
+   },
+   "response_example": {
+    "since": "2026-07-07",
+    "summary": {
+     "비조치_신규": 5,
+     "해석_신규": 47,
+     "조문_시행예정": 71
+    },
+    "items": [
+     {
+      "id": 51,
+      "occurred_on": "2027-03-09",
+      "kind": "조문_시행예정",
+      "title": "보험업법 제209조(과태료) 2027.03.09 시행 예정",
+      "doc_id": null,
+      "article_key": "ins:209",
+      "law_slug": "ins",
+      "law_name": "보험업법",
+      "article_label": "제209조",
+      "doc_kind": null,
+      "org": null,
+      "articles": [],
+      "article_keys": [
+       "ins:209"
+      ]
+     },
+     {
+      "id": 50,
+      "occurred_on": "2027-03-09",
+      "kind": "조문_시행예정",
+      "title": "보험업법 제196조(과징금) 2027.03.09 시행 예정",
+      "doc_id": null,
+      "article_key": "ins:196",
+      "law_slug": "ins",
+      "law_name": "보험업법",
+      "article_label": "제196조",
+      "doc_kind": null,
+      "org": null,
+      "articles": [],
+      "article_keys": [
+       "ins:196"
+      ]
+     },
+     "…"
+    ]
+   }
+  },
+  {
+   "method": "GET",
+   "path": "/guidance",
+   "summary": "행정지도 현황 (시행중·만료임박·예고)",
+   "tag": "변화",
+   "params": [
+    {
+     "name": "status",
+     "in": "쿼리",
+     "required": false,
+     "type": "string",
+     "default": "active",
+     "description": "",
+     "constraints": {
+      "pattern": "^(active|expiring|notice|all)$"
+     }
+    },
+    {
+     "name": "within",
+     "in": "쿼리",
+     "required": false,
+     "type": "integer",
+     "default": 60,
+     "description": "",
+     "constraints": {}
+    }
+   ],
+   "example_request": "/guidance",
+   "status": 200,
+   "response_shape": {
+    "today": "string",
+    "status": "string",
+    "items": [
+     {
+      "id": "string",
+      "title": "string",
+      "org": "string",
+      "dept": "string",
+      "stage": "string",
+      "valid_from": "string",
+      "valid_to": "string",
+      "source_url": "string",
+      "days_left": "integer"
+     }
+    ]
+   },
+   "response_example": {
+    "today": "2026-10-05",
+    "status": "active",
+    "items": [
+     {
+      "id": "fsc.guidance:5065",
+      "title": "「금융회사의 핀테크 투자 등에 관한 가이드라인」 행정지도 시행",
+      "org": "금융위원회",
+      "dept": "디지털금융총괄과",
+      "stage": "시행",
+      "valid_from": "2025-11-17",
+      "valid_to": "2026-11-16",
+      "source_url": "https://better.fsc.go.kr/fsc_new/status/adminMap/OpertnDetail.do?stNo=11&muNo=14…",
+      "days_left": 42
+     },
+     {
+      "id": "fsc.guidance:5111",
+      "title": "「종투사의 모험자본 공급의무 이행 시 가이드라인」 행정지도 시행",
+      "org": "금융위원회",
+      "dept": "자본시장과",
+      "stage": "시행",
+      "valid_from": "2026-01-01",
+      "valid_to": "2026-12-31",
+      "source_url": "https://better.fsc.go.kr/fsc_new/status/adminMap/OpertnDetail.do?stNo=11&muNo=14…",
+      "days_left": 87
+     },
+     "…"
+    ]
+   }
+  },
+  {
+   "method": "GET",
+   "path": "/analysis",
+   "summary": "수집 데이터 분석·정리 (분석 페이지용 집계 전체)",
+   "tag": "분석",
+   "params": [],
+   "example_request": "/analysis",
+   "status": 200,
+   "response_shape": {
+    "scope": {
+     "phase": "integer",
+     "laws": [
+      "string"
+     ],
+     "note": "string",
+     "next": [
+      "string"
+     ]
+    },
+    "sources": [
+     {
+      "key": "string",
+      "name": "string",
+      "provider": "string",
+      "url": "string",
+      "api": "string",
+      "method": "string",
+      "items": "string",
+      "collected": "integer",
+      "last_fetched": "string"
+     }
+    ],
+    "totals": {
+     "laws": "integer",
+     "articles": "integer",
+     "pending_versions": "integer",
+     "delegations": "integer",
+     "documents": "integer",
+     "links": "integer",
+     "first_reply": "string",
+     "last_reply": "string",
+     "portal_listed_total": "null"
+    },
+    "replies_by_year": [
+     {
+      "year": "integer",
+      "interp": "integer",
+      "noaction": "integer"
+     }
+    ],
+    "replies_by_dept": [
+     {
+      "dept": "string",
+      "n": "integer"
+     }
+    ],
+    "top_laws": [
+     {
+      "slug": "string",
+      "name": "string",
+      "docs": "integer"
+     }
+    ],
+    "top_articles": [
+     {
+      "key": "string",
+      "label": "string",
+      "title": "string",
+      "law_name": "string",
+      "law_kind": "string",
+      "docs": "integer"
+     }
+    ],
+    "link_quality": {
+     "docs": "integer",
+     "linked": "integer",
+     "rate": "number",
+     "in_scope": {
+      "docs": "integer",
+      "linked": "integer",
+      "rate": "number"
+     },
+     "by_method": [
+      "object"
+     ],
+     "unresolved": [
+      "object"
+     ],
+     "unknown_laws": [
+      "object"
+     ]
+    },
+    "guidance": {
+     "active": "integer",
+     "expiring_60": "integer",
+     "expired": "integer",
+     "notice": "integer",
+     "avg_days": "integer",
+     "by_dept": [
+      "object"
+     ]
+    },
+    "law_structure": [
+     {
+      "slug": "string",
+      "name": "string",
+      "law_articles": "integer",
+      "decree_articles": "integer",
+      "rule_articles": "integer",
+      "reg_articles": "integer",
+      "detail_articles": "integer",
+      "delegations": "integer",
+      "pending": "integer"
+     }
+    ]
+   },
+   "response_example": {
+    "scope": {
+     "phase": 1,
+     "laws": [
+      "자본시장과 금융투자업에 관한 법률",
+      "보험업법",
+      "…"
+     ],
+     "note": "1단계는 5개 법률과 그 하위법령 전부(시행령·시행규칙·감독규정·고시·시행세칙)입니다. 추후 확대할 예정입니다.",
+     "next": [
+      "대부업법",
+      "여전법",
+      "…"
+     ]
+    },
+    "sources": [
+     {
+      "key": "lawgo",
+      "name": "국가법령정보 (법령·행정규칙 본문)",
+      "provider": "법제처",
+      "url": "https://www.law.go.kr",
+      "api": "https://open.law.go.kr",
+      "method": "Open API (법제처 국가법령정보 공동활용, 인증키 OC)",
+      "items": "법률·시행령·시행규칙·감독규정·고시·시행세칙 조문(현행·시행예정), 시행일, 3단비교(위임조문)",
+      "collected": 21,
+      "last_fetched": "2026-10-05T12:37:54.654432+00:00"
+     },
+     {
+      "key": "fsc.reply",
+      "name": "금융규제·법령해석포털 회신사례",
+      "provider": "금융위원회·금융감독원",
+      "url": "https://better.fsc.go.kr/fsc_new/replyCase/TotalReplyList.do",
+      "method": "크롤링 (목록 JSON + 상세 HTML)",
+      "items": "구분, 제목, 소관부서, 회신일, 질의요지, 회답, 이유",
+      "collected": 6174,
+      "last_fetched": "2026-10-04T18:37:25.521026+00:00"
+     },
+     "…"
+    ],
+    "totals": {
+     "laws": 21,
+     "articles": 3629,
+     "pending_versions": 71,
+     "delegations": 2293,
+     "documents": 6341,
+     "links": 5266,
+     "first_reply": "2014-03-10",
+     "last_reply": "2026-09-30",
+     "portal_listed_total": null
+    },
+    "replies_by_year": [
+     {
+      "year": 2014,
+      "interp": 2,
+      "noaction": 1879
+     },
+     {
+      "year": 2015,
+      "interp": 312,
+      "noaction": 90
+     },
+     "…"
+    ],
+    "replies_by_dept": [
+     {
+      "dept": "(부서 미기재 · 과거 회신)",
+      "n": 1884
+     },
+     {
+      "dept": "자산운용과",
+      "n": 599
+     },
+     "…"
+    ],
+    "top_laws": [
+     {
+      "slug": "fscma",
+      "name": "자본시장과 금융투자업에 관한 법률",
+      "docs": 1072
+     },
+     {
+      "slug": "efta",
+      "name": "전자금융거래법",
+      "docs": 482
+     },
+     "…"
+    ],
+    "top_articles": [
+     {
+      "key": "efta:2",
+      "label": "제2조",
+      "title": "정의",
+      "law_name": "전자금융거래법",
+      "law_kind": "법률",
+      "docs": 151
+     },
+     {
+      "key": "fscma:6",
+      "label": "제6조",
+      "title": "금융투자업",
+      "law_name": "자본시장과 금융투자업에 관한 법률",
+      "law_kind": "법률",
+      "docs": 86
+     },
+     "…"
+    ],
+    "link_quality": {
+     "docs": 6174,
+     "linked": 2181,
+     "rate": 0.353,
+     "in_scope": {
+      "docs": 2727,
+      "linked": 2110,
+      "rate": 0.774
+     },
+     "by_method": [
+      {
+       "method": "explicit",
+       "n": 2272
+      },
+      {
+       "method": "abbr",
+       "n": 843
+      },
+      "…"
+     ],
+     "unresolved": [
+      {
+       "reason": "unknown_law",
+       "n": 7549
+      },
+      {
+       "reason": "unknown_article",
+       "n": 501
+      }
+     ],
+     "unknown_laws": [
+      {
+       "name": "대부업법",
+       "n": 885
+      },
+      {
+       "name": "신용정보법",
+       "n": 676
+      },
+      "…"
+     ]
+    },
+    "guidance": {
+     "active": 13,
+     "expiring_60": 1,
+     "expired": 45,
+     "notice": 109,
+     "avg_days": 609,
+     "by_dept": [
+      {
+       "dept": "자산운용과",
+       "n": 77
+      },
+      {
+       "dept": "금융정책과",
+       "n": 20
+      },
+      "…"
+     ]
+    },
+    "law_structure": [
+     {
+      "slug": "fscma",
+      "name": "자본시장과 금융투자업에 관한 법률",
+      "law_articles": 564,
+      "decree_articles": 503,
+      "rule_articles": 57,
+      "reg_articles": 604,
+      "detail_articles": 111,
+      "delegations": 1239,
+      "pending": 23
+     },
+     {
+      "slug": "ins",
+      "name": "보험업법",
+      "law_articles": 240,
+      "decree_articles": 133,
+      "rule_articles": 48,
+      "reg_articles": 290,
+      "detail_articles": 134,
+      "delegations": 494,
+      "pending": 18
+     },
+     "…"
+    ]
+   }
+  }
+ ],
+ "db": [
+  {
+   "name": "raw_payloads",
+   "description": "원천 응답 원본 보관소. 같은 내용(해시)은 다시 저장하지 않음 → 증분 수집·재처리의 기준",
+   "rows": 6428,
+   "primary_key": [
+    "source",
+    "source_key",
+    "content_hash"
+   ],
+   "columns": [
+    {
+     "name": "source",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": true,
+     "fk": null
+    },
+    {
+     "name": "source_key",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": true,
+     "fk": null
+    },
+    {
+     "name": "content_hash",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": true,
+     "fk": null
+    },
+    {
+     "name": "fetched_at",
+     "type": "timestamp with time zone",
+     "nullable": false,
+     "default": "now()",
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "http_status",
+     "type": "integer",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "payload",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "parsed_at",
+     "type": "timestamp with time zone",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    }
+   ],
+   "references": []
+  },
+  {
+   "name": "pipeline_runs",
+   "description": "배치 단계별 실행 기록 (/health 의 데이터 기준 시각)",
+   "rows": 5,
+   "primary_key": [
+    "id"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "bigint",
+     "nullable": false,
+     "default": "nextval('pipeline_runs_id_seq'::regclass)",
+     "pk": true,
+     "fk": null
+    },
+    {
+     "name": "stage",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "source",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "started_at",
+     "type": "timestamp with time zone",
+     "nullable": false,
+     "default": "now()",
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "finished_at",
+     "type": "timestamp with time zone",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "status",
+     "type": "text",
+     "nullable": false,
+     "default": "'running'::text",
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "stats",
+     "type": "jsonb",
+     "nullable": false,
+     "default": "'{}'::jsonb",
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "error",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    }
+   ],
+   "references": []
+  },
+  {
+   "name": "laws",
+   "description": "대상 법령 목록. parent_slug 로 법률 → 시행령·감독규정 위임 계층",
+   "rows": 21,
+   "primary_key": [
+    "slug"
+   ],
+   "columns": [
+    {
+     "name": "slug",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": true,
+     "fk": null
+    },
+    {
+     "name": "name",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "kind",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "parent_slug",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": "laws.slug"
+    },
+    {
+     "name": "source",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "source_id",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "ministry",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "sectors",
+     "type": "ARRAY",
+     "nullable": false,
+     "default": "'{}'::text[]",
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "aliases",
+     "type": "ARRAY",
+     "nullable": false,
+     "default": "'{}'::text[]",
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "current_seq",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "promulgated_on",
+     "type": "date",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "effective_on",
+     "type": "date",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "synced_at",
+     "type": "timestamp with time zone",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    }
+   ],
+   "references": [
+    "laws"
+   ]
+  },
+  {
+   "name": "articles",
+   "description": "조문의 정체성 (법령 + 조문 번호). 서비스의 중심",
+   "rows": 3629,
+   "primary_key": [
+    "key"
+   ],
+   "columns": [
+    {
+     "name": "key",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": true,
+     "fk": null
+    },
+    {
+     "name": "law_slug",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": "laws.slug"
+    },
+    {
+     "name": "no",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "label",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "title",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "chapter",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "sort_key",
+     "type": "integer",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "is_deleted",
+     "type": "boolean",
+     "nullable": false,
+     "default": "false",
+     "pk": false,
+     "fk": null
+    }
+   ],
+   "references": [
+    "laws"
+   ]
+  },
+  {
+   "name": "article_versions",
+   "description": "조문 본문의 시행일별 버전 (현행·시행예정 공존)",
+   "rows": 3690,
+   "primary_key": [
+    "article_key",
+    "effective_from"
+   ],
+   "columns": [
+    {
+     "name": "article_key",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": true,
+     "fk": "articles.key"
+    },
+    {
+     "name": "effective_from",
+     "type": "date",
+     "nullable": false,
+     "default": null,
+     "pk": true,
+     "fk": null
+    },
+    {
+     "name": "effective_to",
+     "type": "date",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "title",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "body",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "body_hash",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "source_seq",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    }
+   ],
+   "references": [
+    "articles"
+   ]
+  },
+  {
+   "name": "delegations",
+   "description": "조문 간 위임 관계 (법 → 시행령 → 감독규정)",
+   "rows": 2293,
+   "primary_key": [
+    "from_key",
+    "to_key"
+   ],
+   "columns": [
+    {
+     "name": "from_key",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": true,
+     "fk": "articles.key"
+    },
+    {
+     "name": "to_key",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": true,
+     "fk": "articles.key"
+    },
+    {
+     "name": "kind",
+     "type": "text",
+     "nullable": false,
+     "default": "'위임'::text",
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "origin",
+     "type": "text",
+     "nullable": false,
+     "default": "'text'::text",
+     "pk": false,
+     "fk": null
+    }
+   ],
+   "references": [
+    "articles"
+   ]
+  },
+  {
+   "name": "documents",
+   "description": "법령해석·비조치의견·행정지도·입법예고 등 문서",
+   "rows": 6341,
+   "primary_key": [
+    "id"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": true,
+     "fk": null
+    },
+    {
+     "name": "kind",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "org",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "dept",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "title",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "question",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "answer",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "reason",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "body",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "published_on",
+     "type": "date",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "valid_from",
+     "type": "date",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "valid_to",
+     "type": "date",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "stage",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "source_url",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "source_name",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "primary_law",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": "laws.slug"
+    },
+    {
+     "name": "content_hash",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "first_seen_at",
+     "type": "timestamp with time zone",
+     "nullable": false,
+     "default": "now()",
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "changed_at",
+     "type": "timestamp with time zone",
+     "nullable": false,
+     "default": "now()",
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "search_text",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": null
+    }
+   ],
+   "references": [
+    "laws"
+   ]
+  },
+  {
+   "name": "article_links",
+   "description": "문서 ↔ 조문 인용 연결 (근거 표현·방법·신뢰도)",
+   "rows": 5266,
+   "primary_key": [
+    "doc_id",
+    "article_key",
+    "paragraph",
+    "item"
+   ],
+   "columns": [
+    {
+     "name": "doc_id",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": true,
+     "fk": "documents.id"
+    },
+    {
+     "name": "article_key",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": true,
+     "fk": "articles.key"
+    },
+    {
+     "name": "paragraph",
+     "type": "integer",
+     "nullable": false,
+     "default": "0",
+     "pk": true,
+     "fk": null
+    },
+    {
+     "name": "item",
+     "type": "text",
+     "nullable": false,
+     "default": "''::text",
+     "pk": true,
+     "fk": null
+    },
+    {
+     "name": "method",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "confidence",
+     "type": "real",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "evidence",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "reviewed",
+     "type": "boolean",
+     "nullable": false,
+     "default": "false",
+     "pk": false,
+     "fk": null
+    }
+   ],
+   "references": [
+    "articles",
+    "documents"
+   ]
+  },
+  {
+   "name": "unresolved_mentions",
+   "description": "연결하지 못한 인용 (대상 밖 법령 등) — 별칭 사전·대상 법령 보강용",
+   "rows": 8050,
+   "primary_key": [
+    "doc_id",
+    "raw_text"
+   ],
+   "columns": [
+    {
+     "name": "doc_id",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": true,
+     "fk": "documents.id"
+    },
+    {
+     "name": "raw_text",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": true,
+     "fk": null
+    },
+    {
+     "name": "reason",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    }
+   ],
+   "references": [
+    "documents"
+   ]
+  },
+  {
+   "name": "change_events",
+   "description": "변화 이벤트 (새 해석, 조문 시행예정, 행정지도 시행·만료 등)",
+   "rows": 6450,
+   "primary_key": [
+    "id"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "bigint",
+     "nullable": false,
+     "default": "nextval('change_events_id_seq'::regclass)",
+     "pk": true,
+     "fk": null
+    },
+    {
+     "name": "dedupe_key",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "occurred_on",
+     "type": "date",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "kind",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "law_slug",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": "laws.slug"
+    },
+    {
+     "name": "article_key",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": "articles.key"
+    },
+    {
+     "name": "doc_id",
+     "type": "text",
+     "nullable": true,
+     "default": null,
+     "pk": false,
+     "fk": "documents.id"
+    },
+    {
+     "name": "title",
+     "type": "text",
+     "nullable": false,
+     "default": null,
+     "pk": false,
+     "fk": null
+    },
+    {
+     "name": "created_at",
+     "type": "timestamp with time zone",
+     "nullable": false,
+     "default": "now()",
+     "pk": false,
+     "fk": null
+    }
+   ],
+   "references": [
+    "articles",
+    "documents",
+    "laws"
+   ]
+  },
+  {
+   "name": "article_stats",
+   "description": "조문별 연결 문서 수 집계 (구체화 뷰)",
+   "rows": 911,
+   "primary_key": [],
+   "columns": [],
+   "references": []
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+# 코드를 올릴 때마다 인용 연결 엔진·파서 테스트를 돌립니다 (규칙을 고치다 기존 동작이 깨지는 것을 막음).
+name: test
+on:
+  push:
+    paths: ["service/backend/**"]
+  pull_request:
+    paths: ["service/backend/**"]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: service/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt -r requirements-dev.txt
+      - run: python -m pytest -q

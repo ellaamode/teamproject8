@@ -1,0 +1,13 @@
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+node_modules/
+_data/
+_localdb/
+_archive_v1/
+# 로컬 작업용 (저장소에 올리지 않음)
+.claude/
+/index.html
+/fin-reg-pitch*.html

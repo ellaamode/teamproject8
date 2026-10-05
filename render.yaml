@@ -1,0 +1,19 @@
+# Render Blueprint — 레포지토리 최상위(teamproject)에 두는 파일입니다.
+# 조회 API(FastAPI)만 Render에 올립니다. 수집 배치는 GitHub Actions(.github/workflows/collect.yml)가 맡습니다.
+# 무료 인스턴스는 15분간 요청이 없으면 잠듭니다. 화면은 이때 자동으로 정적 스냅숏을 씁니다.
+services:
+  - type: web
+    name: finreg-api
+    runtime: python
+    rootDir: service/backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      - key: DATABASE_URL          # api_reader 계정(읽기 전용)의 Supabase 연결 주소
+        sync: false
+      - key: ALLOWED_ORIGINS       # Vercel 주소 (끝에 / 없이, 여러 개면 쉼표)
+        sync: false

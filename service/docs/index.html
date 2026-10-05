@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>API·DB 문서 · 금융규제통합조회</title>
+<meta name="description" content="금융규제통합조회 API 설명 문서와 DB 테이블 문서 (FastAPI OpenAPI 명세와 PostgreSQL 카탈로그에서 자동 생성)">
+<script>try{var t=localStorage.getItem("finreg.theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="../assets/base.css?v=5">
+<style>
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  header.dt{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  header.dt .wrap{height:62px;display:flex;align-items:center;gap:18px}
+  header.dt nav{display:flex;gap:4px;margin-left:auto}
+  header.dt nav a{padding:7px 12px;border-radius:9px;font-size:14px;font-weight:600;color:var(--ink-2)}
+  header.dt nav a:hover{background:var(--bg-tint);color:var(--ink)}
+  h1{font-size:30px;font-weight:850;margin:36px 0 8px}
+  .lead{color:var(--ink-2);font-size:15.5px;max-width:760px}
+  .links{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 8px}
+  h2.sh{font-size:23px;font-weight:850;margin:44px 0 6px;scroll-margin-top:76px}
+  .sub{color:var(--ink-3);font-size:13.5px;margin-bottom:16px}
+  .ep{margin-bottom:14px;overflow:hidden}
+  .ep summary{list-style:none;cursor:pointer;padding:16px 18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .ep summary::-webkit-details-marker{display:none}
+  .m{font:800 12px/1 ui-monospace,Consolas,monospace;color:var(--t-interp);background:color-mix(in srgb,var(--t-interp) 14%,var(--surface));padding:5px 8px;border-radius:6px}
+  .p{font:700 14.5px ui-monospace,Consolas,monospace;color:var(--ink)}
+  .ep summary .d{color:var(--ink-2);font-size:14px}
+  .ep summary .tg{margin-left:auto}
+  .ep .in{padding:0 18px 18px;border-top:1px solid var(--line)}
+  .ep h4{font-size:12.5px;font-weight:800;color:var(--ink-3);margin:16px 0 8px;letter-spacing:.02em}
+  table.dt{width:100%;border-collapse:collapse;font-size:13.5px}
+  table.dt th{text-align:left;font-size:12px;color:var(--ink-3);font-weight:750;padding:8px 10px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+  table.dt td{padding:9px 10px;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top}
+  table.dt td code,.code{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:var(--ink)}
+  pre{margin:0;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.55;overflow:auto;max-height:340px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .badge{font-size:11px;font-weight:800;padding:2px 6px;border-radius:5px;margin-left:4px}
+  .b-pk{background:var(--brand);color:var(--on-brand)} .b-fk{background:color-mix(in srgb,var(--t-noact) 18%,var(--surface));color:var(--ink)}
+  .tbl-card{padding:18px 20px;margin-bottom:14px}
+  .tbl-card h3{font:800 17px ui-monospace,Consolas,monospace;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .tbl-card h3 small{font:500 13px inherit;color:var(--ink-3);font-family:inherit}
+  .tbl-card p{color:var(--ink-2);font-size:14px;margin:4px 0 10px}
+  .rel{display:grid;gap:6px;font-size:13.5px;color:var(--ink-2)}
+  .rel code{font-family:ui-monospace,Consolas,monospace;color:var(--ink)}
+  footer{border-top:1px solid var(--line);margin-top:48px;padding:24px 0 40px;color:var(--ink-3);font-size:12.5px}
+  @media(max-width:760px){.two{grid-template-columns:1fr}header.dt nav{display:none}h1{font-size:24px}}
+</style>
+</head>
+<body>
+<header class="dt"><div class="wrap">
+  <a class="logo" href="../"><span class="logo-mark"><svg viewBox="0 0 24 24"><use href="#i-logo"/></svg></span>금융규제통합조회</a>
+  <nav><a href="#api">API 설명 문서</a><a href="#db">DB 테이블 문서</a><a href="#rel">테이블 관계</a><a href="../">기획서</a><a href="../app/">서비스</a></nav>
+</div></header>
+<main class="wrap">
+  <h1>API · DB 문서</h1>
+  <p class="lead">이 문서는 손으로 쓰지 않았습니다. API 부분은 FastAPI가 만드는 OpenAPI 명세(Swagger와 같은 원천)와 실제 호출 결과에서, DB 부분은 PostgreSQL 카탈로그에서 자동으로 생성했습니다(<span class="code">python -m tools.gen_docs</span>). 그래서 코드·DB와 어긋나지 않습니다.</p>
+  <div class="links">
+    <a class="btn primary sm" id="swagger" href="#" target="_blank" rel="noopener">Swagger UI 열기 <svg class="i s"><use href="#i-ext"/></svg></a>
+    <a class="btn sm" href="https://github.com/" id="gh" target="_blank" rel="noopener">GitHub 저장소 <svg class="i s"><use href="#i-ext"/></svg></a>
+    <span class="faint" id="swNote" style="font-size:12.5px;align-self:center"></span>
+  </div>
+
+  <h2 class="sh" id="api">API 설명 문서</h2>
+  <div class="sub">모든 API는 조회 전용 GET, 응답은 JSON(UTF-8), 날짜는 ISO 8601. 오류는 <span class="code">{"detail": …}</span> 형식 — 404 없는 대상 · 422 허용하지 않는 입력값 · 503 DB 연결 실패. 응답에 <span class="code">Cache-Control: max-age=300</span>.</div>
+  <div id="apiList">불러오는 중…</div>
+
+  <h2 class="sh" id="db">DB 테이블 문서</h2>
+  <div class="sub">PostgreSQL (Supabase). 원본·운영 → 정규화 → 파생의 세 층. <span class="badge b-pk">PK</span> 기본키 <span class="badge b-fk">FK</span> 외래키. 행 수는 문서 생성 시점 기준.</div>
+  <div id="dbList">불러오는 중…</div>
+
+  <h2 class="sh" id="rel">테이블 관계</h2>
+  <div class="card tbl-card"><div class="rel" id="relList"></div></div>
+</main>
+<footer><div class="wrap">금융규제통합조회 · KAIST 디지털금융MBA 클라우드컴퓨팅실습 8조 · 생성 시각 <span id="gen"></span></div></footer>
+<script src="../assets/icons.js?v=5"></script>
+<script src="../app/config.js?v=5"></script>
+<script>
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const api = (window.FINREG_API || "").replace(/\/$/, "");
+const sw = document.getElementById("swagger");
+if (api) { sw.href = api + "/docs"; document.getElementById("swNote").textContent = api + "/docs"; }
+else { sw.removeAttribute("href"); sw.style.opacity = .5; document.getElementById("swNote").textContent = "백엔드를 Render에 배포하면 '주소/docs' 가 Swagger UI 입니다 (app/config.js 에 주소 입력 시 자동 연결)"; }
+
+function shapeRows(s, prefix = "") {
+  if (s === null || s === undefined) return [];
+  if (Array.isArray(s)) return s.length ? [[prefix || "(목록)", "array"], ...shapeRows(s[0], prefix + "[]")] : [[prefix, "array"]];
+  if (typeof s === "object") return Object.entries(s).flatMap(([k, v]) => {
+    const p = prefix ? `${prefix}.${k}` : k;
+    if (Array.isArray(v)) return [[p, "array"], ...shapeRows(v[0], p + "[]")];
+    if (v && typeof v === "object") return [[p, "object"], ...shapeRows(v, p)];
+    return [[p, v]];
+  });
+  return [[prefix, s]];
+}
+fetch("data.json").then((r) => r.json()).then((d) => {
+  document.getElementById("gen").textContent = new Date().toISOString().slice(0, 10);
+  document.getElementById("apiList").innerHTML = d.api.map((a, i) => `
+    <details class="card ep" ${i < 2 ? "open" : ""}><summary><span class="m">${a.method}</span><span class="p">${esc(a.path)}</span><span class="d">${esc(a.summary)}</span><span class="tag tg">${esc(a.tag)}</span></summary>
+    <div class="in">
+      <h4>입력값</h4>${a.params.length ? `<table class="dt"><tr><th>이름</th><th>위치</th><th>필수</th><th>자료형</th><th>기본값</th><th>제약·설명</th></tr>
+        ${a.params.map((p) => `<tr><td><code>${esc(p.name)}</code></td><td>${p.in}</td><td>${p.required ? "예" : "-"}</td><td>${esc(p.type)}</td><td>${p.default ?? "-"}</td>
+          <td>${[Object.entries(p.constraints).map(([k, v]) => `${k}=${v}`).join(", "), p.description].filter(Boolean).map(esc).join(" · ") || "-"}</td></tr>`).join("")}</table>` : '<p class="faint" style="font-size:13.5px">없음</p>'}
+      <h4>요청 예</h4><pre>GET ${esc(decodeURIComponent(a.example_request))}</pre>
+      <div class="two" style="margin-top:4px">
+        <div><h4>응답 형식 (필드 · 자료형)</h4><table class="dt"><tr><th>필드</th><th>자료형</th></tr>
+          ${shapeRows(a.response_shape).slice(0, 40).map(([k, t]) => `<tr><td><code>${esc(k)}</code></td><td>${esc(t)}</td></tr>`).join("")}</table></div>
+        <div><h4>응답 예 (실제 호출 결과, 일부)</h4><pre>${esc(JSON.stringify(a.response_example, null, 2))}</pre></div>
+      </div>
+    </div></details>`).join("");
+  document.getElementById("dbList").innerHTML = d.db.map((t) => `
+    <div class="card tbl-card" id="t-${t.name}"><h3>${t.name}${t.view ? ' <span class="tag">구체화 뷰</span>' : ""} <small>${t.rows != null ? t.rows.toLocaleString("ko-KR") + "행" : ""}</small></h3>
+      <p>${esc(t.description)}</p>
+      <table class="dt"><tr><th>컬럼</th><th>자료형</th><th>NULL</th><th>키</th><th>기본값</th></tr>
+      ${t.columns.map((c) => `<tr><td><code>${esc(c.name)}</code></td><td>${esc(c.type)}</td><td>${c.nullable ? "허용" : "NOT NULL"}</td>
+        <td>${c.pk ? '<span class="badge b-pk">PK</span>' : ""}${c.fk ? `<span class="badge b-fk">FK</span> <a href="#t-${esc(c.fk.split(".")[0])}"><code>${esc(c.fk)}</code></a>` : ""}</td>
+        <td>${c.default ? `<code>${esc(String(c.default).slice(0, 40))}</code>` : "-"}</td></tr>`).join("")}</table></div>`).join("");
+  const rels = d.db.flatMap((t) => t.columns.filter((c) => c.fk).map((c) => [t.name, c.name, c.fk]));
+  document.getElementById("relList").innerHTML = rels.map(([t, c, fk]) => `<div><code>${t}.${c}</code> → <code>${fk}</code> <span class="faint">(${fk.split(".")[0]} 1 : N ${t})</span></div>`).join("");
+});
+</script>
+</body>
+</html>
