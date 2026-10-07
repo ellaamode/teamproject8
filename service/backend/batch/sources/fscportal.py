@@ -9,6 +9,7 @@
                  {postNo, title, dpNm(소관부서), addFild1(관리번호), eventStartDate~eventEndDate(존속·예고기간)}
 
 이용 조건: 포털 저작권정책상 원문 변경 금지·출처 명시 의무 → 원문은 고치지 않고 저장하며 화면에 항상 출처 링크를 단다.
+개인정보: 회신 본문의 전화번호·담당 공무원 실명, 행정지도 목록의 등록자 ID·이름은 저장 전에 가린다(normalize.redact_pii).
 공식 API가 아니므로 하루 1회, 새 글만 받는다(증분). 첫 적재는 BACKFILL_LIMIT 으로 나눠서 진행한다.
 """
 from __future__ import annotations
@@ -18,8 +19,8 @@ import re
 
 from .. import store
 from ..config import SETTINGS
-from ..http import PoliteClient
-from ..normalize import html_to_text
+from ..http import PoliteClient, SourceBlocked
+from ..normalize import html_to_text, redact_pii, strip_personal
 
 BASE = "https://better.fsc.go.kr/fsc_new"
 LIST_REFERER = f"{BASE}/replyCase/TotalReplyList.do?stNo=11&muNo=117&muGpNo=75"
@@ -75,10 +76,13 @@ def fetch_replies(conn, client: PoliteClient | None = None, page_size: int = 50)
             try:
                 d = client.request("POST", f"{BASE}/{path}", expect="html:질의요지", referer=LIST_REFERER,
                                    data={"muNo": 117, "stNo": 11, param: row["dataIdx"], "actCd": "R"})
-                payload = json.dumps({"list": row, "html": content_tables(d.text)}, ensure_ascii=False)
+                payload = json.dumps({"list": strip_personal(row), "html": redact_pii(content_tables(d.text))},
+                                     ensure_ascii=False)
                 if store.save_raw(conn, src, key, d.status_code, payload):
                     stats["new"] += 1
                 conn.commit()
+            except SourceBlocked:
+                raise                                      # 403·429: 이 사이트 수집을 멈춘다
             except Exception:
                 stats["errors"] += 1
         return fresh
@@ -118,6 +122,7 @@ def fetch_guidance(conn, client: PoliteClient | None = None) -> dict:
                            data={"draw": 1, "start": 0, "length": 200, "muNo": mu})
         for row in r.json().get("data", []):
             stats["listed"] += 1
+            row = strip_personal(row)                      # 등록자 ID·이름(regId·regNm)은 저장하지 않는다
             row["_stage"] = stage
             payload = json.dumps(row, ensure_ascii=False, sort_keys=True)
             if store.save_raw(conn, "fsc.guidance", f"{stage}:{row['postNo']}", 200, payload):
@@ -140,7 +145,7 @@ _CELL = r"<th[^>]*>\s*{label}\s*</th>\s*<td[^>]*>(.*?)</td>"
 
 def _cell(html: str, label: str) -> str:
     m = re.search(_CELL.format(label=label), html, re.S)
-    return html_to_text(m.group(1)) if m else ""
+    return redact_pii(html_to_text(m.group(1))) if m else ""
 
 
 def normalize_dept(raw: str | None) -> str | None:

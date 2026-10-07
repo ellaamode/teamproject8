@@ -71,6 +71,39 @@ def sort_key(no: str) -> tuple:
     return (*parts, *([0] * (2 - len(parts))), int(sub or 0))
 
 
+# ---------------------------------------------------------------- 개인정보 가리기 (수집 단계에서 적용)
+# 실측(회신 6,174건): 본문 29건에 '○○과(02-2156-9431)', '보험과 ○○○ 사무관(02-…)'처럼 연락처·담당 공무원 실명이 있다.
+# 회신의 법적 내용과 무관하므로 저장·표시하지 않는다. 부서명(공정시장과 등)은 그대로 둔다.
+_PHONE = re.compile(r"(?<![\d.])(?:0\d{1,2}[)-]\s?\d{3,4}-\d{4}|1[568]\d{2}-\d{4})(?!\d)"
+                    # 지역번호 없는 '(2156-9834)' — 괄호 안 + 앞자리가 연도(19xx·20xx)가 아닐 때만
+                    r"|(?<=\()(?!(?:19|20)\d\d-)\d{3,4}-\d{4}(?=\))")
+_EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+_RANKS = "사무관|주무관|서기관|연구관|행정관|조사관|검사역|조사역|전문관"
+# 직급 뒤에는 조사·괄호만 허용 — '일반사무관리회사', '주무관청' 같은 법률 용어는 건드리지 않는다
+_NAME_RANK = re.compile(rf"(?<![가-힣])([가-힣]{{2,4}})(?=\s?(?:{_RANKS})(?:입니다|에게|께|님|이|은|는|과|와|[\s(),.]|$))")
+_NOT_NAME = {"담당", "소관", "해당", "관련", "주무", "행정", "선임", "수석", "책임", "전문", "일반", "담당자"}
+# 원천 응답(JSON)에서 통째로 빼는 칸: 포털 행정지도 목록의 등록자 ID·이름, 법제처 행정규칙의 담당자·전화번호
+PERSONAL_KEYS = {"regId", "regNm", "담당자명", "담당자", "전화번호", "부서연락처", "담당자연락처"}
+
+
+def redact_pii(text: str | None) -> str | None:
+    """전화번호 → '연락처 생략', 이메일 → '이메일 생략', '홍길동 사무관' → '○○○ 사무관' (예: '보험과(연락처 생략)')"""
+    if not text:
+        return text
+    text = _PHONE.sub("연락처 생략", text)
+    text = _EMAIL.sub("이메일 생략", text)
+    return _NAME_RANK.sub(lambda m: m.group(1) if m.group(1) in _NOT_NAME else "○○○", text)
+
+
+def strip_personal(obj):
+    """JSON 객체에서 PERSONAL_KEYS 칸을 재귀적으로 지운다."""
+    if isinstance(obj, dict):
+        return {k: strip_personal(v) for k, v in obj.items() if k not in PERSONAL_KEYS}
+    if isinstance(obj, list):
+        return [strip_personal(v) for v in obj]
+    return obj
+
+
 def substance(body: str | None) -> str:
     """조문의 '내용'만 남긴 비교용 문자열: 공백·줄바꿈, <개정 …>·[본조신설 …] 같은 연혁 표기, 따옴표 모양을 무시한다.
     출처(웹 수집 ↔ Open API)마다 표기가 달라 생기는 가짜 '개정'을 막는다."""

@@ -17,6 +17,7 @@ from .config import DEPT_HINTS, LAW_BY_SLUG, SETTINGS, TARGET_LAWS
 from .lawtext import lines_from_payload, split_articles
 from .normalize import substance
 from .linker import Resolver
+from .http import SourceBlocked
 from .sources import fscportal, lawgo
 
 DOC_SOURCES = ("fsc.lawreq", "fsc.opinion", "fsc.pastreq", "fsc.guidance")
@@ -25,22 +26,33 @@ LAW_SOURCES = ("lawgo.law", "lawgo.admrul")
 
 # ---------------------------------------------------------------- fetch
 def fetch(conn, sources=("fsc", "lawgo")):
+    """원천별로 받는다. 한 원천이 403·429로 거부하면(SourceBlocked) 그 원천만 멈추고 나머지는 계속 받은 뒤,
+    마지막에 실패로 알린다 → 실행 기록에는 'failed' + 사유, GitHub Actions 에는 빨간 X 로 보인다(원인 확인용)."""
+    blocked: list[str] = []
+
+    def guarded(source: str, fn) -> dict | None:
+        try:
+            with store.run(conn, "fetch", source) as s:
+                s.update(fn())
+                return s
+        except SourceBlocked as e:                  # store.run 이 failed·사유를 이미 기록했다
+            blocked.append(f"{source}: {e}")
+            return None
+
     if "fsc" in sources:
-        with store.run(conn, "fetch", "fsc.reply") as s:
-            s.update(fscportal.fetch_replies(conn))
-        with store.run(conn, "fetch", "fsc.guidance") as s:
-            s.update(fscportal.fetch_guidance(conn))
+        guarded("fsc.reply", lambda: fscportal.fetch_replies(conn))
+        guarded("fsc.guidance", lambda: fscportal.fetch_guidance(conn))
     if "lawgo" in sources:
-        # 정식 경로는 법제처 Open API(OC 키). 키가 없으면 국가법령정보센터 웹페이지 수집(크롤링)으로 대체
+        # 정식 경로는 법제처 Open API(OC 키). 키가 없거나 API가 전부 실패하면 국가법령정보센터 웹페이지 수집으로 대체
         api_ok = False
         if SETTINGS.law_oc:
-            with store.run(conn, "fetch", "lawgo") as s:
-                s.update(lawgo.fetch_laws(conn))
-                api_ok = s.get("errors", 0) < s.get("checked", 0)       # 전부 실패(키 오류·장애)면 웹 수집으로 대체
+            s = guarded("lawgo", lambda: lawgo.fetch_laws(conn))
+            api_ok = bool(s) and s.get("errors", 0) < s.get("checked", 0)
         if not api_ok:
             from .sources import lawweb
-            with store.run(conn, "fetch", "lawweb") as s:
-                s.update(lawweb.fetch_laws_web(conn))
+            guarded("lawweb", lambda: lawweb.fetch_laws_web(conn))   # 같은 호스트가 막혔으면 요청 없이 바로 멈춘다
+    if blocked:
+        raise SourceBlocked("원천이 요청을 거부해 수집을 멈춤 — 원인 확인 필요: " + " / ".join(blocked))
 
 
 # ---------------------------------------------------------------- parse

@@ -19,7 +19,8 @@ import json
 
 from .. import store
 from ..config import LAW_BY_SLUG, SETTINGS, TARGET_LAWS
-from ..http import PoliteClient
+from ..http import PoliteClient, SourceBlocked
+from ..normalize import strip_personal
 
 BASE = "https://www.law.go.kr/DRF"
 REFERER = "https://www.law.go.kr/"
@@ -110,7 +111,7 @@ def fetch_laws(conn, client: PoliteClient | None = None, slugs: list[str] | None
                         "promulgated": h.get(f["promulgated"]), "via": "api",
                         "source_url": f"https://www.law.go.kr/{'법령' if target == 'law' else '행정규칙'}/"
                                       f"{spec.name.replace(' ', '')}"}
-                body = _body(client, target, seq, efyd)
+                body = strip_personal(_body(client, target, seq, efyd))   # 행정규칙 담당자명·전화번호는 저장하지 않음
                 store.save_raw(conn, spec.source, key, 200, json.dumps({"meta": meta, "body": body}, ensure_ascii=False))
                 stats["fetched"] += 1
                 stats["pending_versions"] += label == "시행예정"
@@ -123,6 +124,9 @@ def fetch_laws(conn, client: PoliteClient | None = None, slugs: list[str] | None
                     store.save_raw(conn, "lawgo.thdcmp", key, r.status_code, r.text)
                     stats["thdcmp"] += 1
             conn.commit()
+        except SourceBlocked:
+            conn.rollback()
+            raise                                                   # 403·429: 법제처 수집을 멈춘다
         except Exception as e:
             conn.rollback()
             stats["errors"] += 1

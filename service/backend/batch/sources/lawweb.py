@@ -18,7 +18,7 @@ from urllib.parse import quote
 
 from .. import store
 from ..config import TARGET_LAWS
-from ..http import PoliteClient
+from ..http import PoliteClient, SourceBlocked
 from ..lawtext import lines_from_payload, split_articles
 
 BASE = "https://www.law.go.kr"
@@ -80,6 +80,9 @@ def fetch_laws_web(conn, client: PoliteClient | None = None, slugs: list[str] | 
             store.save_raw(conn, spec.source, key, r.status_code, json.dumps(payload, ensure_ascii=False))
             conn.commit()
             stats["fetched"] += 1
+        except SourceBlocked:
+            conn.rollback()
+            raise                                                   # 403·429: 수집을 멈춘다
         except Exception as e:
             conn.rollback()
             stats["errors"] += 1

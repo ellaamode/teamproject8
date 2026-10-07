@@ -29,7 +29,7 @@
    },
    "response_example": {
     "status": "ok",
-    "data_as_of": "2026-10-05T12:59:20.335761+00:00",
+    "data_as_of": "2026-10-07T15:04:53.125049+00:00",
     "counts": {
      "documents": 6341,
      "articles": 3629,
@@ -41,7 +41,7 @@
       "stage": "derive",
       "source": "events",
       "status": "ok",
-      "finished_at": "2026-10-05T12:59:20.335761+00:00",
+      "finished_at": "2026-10-07T15:04:53.125049+00:00",
       "stats": {
        "errors": 0,
        "sources": {
@@ -81,20 +81,20 @@
          "last": "2026-10-05T12:37:39.738236+00:00"
         }
        },
-       "events_new": 6377
+       "events_new": 0
       }
      },
      {
       "stage": "link",
       "source": "documents",
       "status": "ok",
-      "finished_at": "2026-10-05T12:59:17.944898+00:00",
+      "finished_at": "2026-10-07T15:04:50.938769+00:00",
       "stats": {
-       "docs": 6341,
-       "links": 5266,
+       "docs": 25,
+       "links": 32,
        "errors": 0,
-       "unresolved": 8050,
-       "no_citation": 4160
+       "unresolved": 17,
+       "no_citation": 14
       }
      },
      "…"
@@ -915,10 +915,10 @@
     ]
    },
    "response_example": {
-    "since": "2026-07-07",
+    "since": "2026-07-10",
     "summary": {
      "비조치_신규": 5,
-     "해석_신규": 47,
+     "해석_신규": 45,
      "조문_시행예정": 71
     },
     "items": [
@@ -1007,7 +1007,7 @@
     ]
    },
    "response_example": {
-    "today": "2026-10-05",
+    "today": "2026-10-08",
     "status": "active",
     "items": [
      {
@@ -1019,7 +1019,7 @@
       "valid_from": "2025-11-17",
       "valid_to": "2026-11-16",
       "source_url": "https://better.fsc.go.kr/fsc_new/status/adminMap/OpertnDetail.do?stNo=11&muNo=14…",
-      "days_left": 42
+      "days_left": 40
      },
      {
       "id": "fsc.guidance:5111",
@@ -1030,7 +1030,7 @@
       "valid_from": "2026-01-01",
       "valid_to": "2026-12-31",
       "source_url": "https://better.fsc.go.kr/fsc_new/status/adminMap/OpertnDetail.do?stNo=11&muNo=14…",
-      "days_left": 87
+      "days_left": 85
      },
      "…"
     ]
@@ -1419,7 +1419,7 @@
   {
    "name": "pipeline_runs",
    "description": "배치 단계별 실행 기록 (/health 의 데이터 기준 시각)",
-   "rows": 5,
+   "rows": 15,
    "primary_key": [
     "id"
    ],

@@ -5,6 +5,8 @@
   - 클라우드 IP에서는 데이터 대신 JS 리다이렉트(안티봇) 페이지가, 점검 중에는 200 + 빈 본문/HTML이 온다.
     → 상태코드만 믿지 않고 '기대한 형식인지'를 검사해, 아니면 재시도 후 실패로 기록한다.
   - 같은 호스트에는 최소 간격(기본 1.5초)을 지킨다.
+  - 원천이 403(차단)·429(요청 과다)로 답하면 재시도하지 않고 그 사이트 수집을 이번 실행에서 즉시 멈춘다
+    (수업 5주차 크롤링 윤리: "403·429가 오면 수집을 멈추고 원인을 확인한다"). 실행 기록에 실패로 남는다.
 """
 from __future__ import annotations
 
@@ -19,6 +21,13 @@ from .config import SETTINGS
 
 class FetchError(RuntimeError):
     pass
+
+
+class SourceBlocked(FetchError):
+    """원천이 403·429로 거부 → 이번 실행에서 그 호스트로는 더 요청하지 않는다."""
+
+
+BLOCKED: dict[str, str] = {}      # 호스트 → 거부 사유 (실행 단위, 모든 수집기가 공유)
 
 
 class PoliteClient:
@@ -41,6 +50,8 @@ class PoliteClient:
     def request(self, method: str, url: str, *, expect: str, referer: str | None = None, **kw) -> requests.Response:
         """expect: 'json' | 'xml' | 'html:<반드시 포함될 문자열>'"""
         host = urlparse(url).netloc
+        if host in BLOCKED:
+            raise SourceBlocked(f"{host} 수집 중단 상태 ({BLOCKED[host]}) — 요청하지 않음")
         headers = kw.pop("headers", {})
         headers.setdefault("Referer", referer or f"https://{host}/")
         last_err = None
@@ -48,11 +59,16 @@ class PoliteClient:
             self._wait(host)
             try:
                 r = self.s.request(method, url, headers=headers, timeout=30, **kw)
-                if r.status_code == 429 or r.status_code >= 500:
+                if r.status_code in (403, 429):
+                    BLOCKED[host] = f"HTTP {r.status_code}"
+                    raise SourceBlocked(f"{host} 이(가) HTTP {r.status_code} 로 거부 — 수집 중단, 원인 확인 필요")
+                if r.status_code >= 500:
                     raise FetchError(f"HTTP {r.status_code}")
                 r.raise_for_status()
                 self._check(r, expect)
                 return r
+            except SourceBlocked:
+                raise                             # 재시도하지 않는다
             except (requests.RequestException, FetchError) as e:
                 last_err = e
                 time.sleep(2 ** attempt)          # 2, 4, 8초 지수 백오프
