@@ -2,4 +2,4 @@
  * 예) window.FINREG_API = "https://finreg-api.onrender.com";
  * 서버가 잠들어 있거나 오류가 나면 자동으로 스냅숏으로 넘어갑니다.
  */
-window.FINREG_API = "";
+window.FINREG_API = "https://finreg-api-nbco.onrender.com";

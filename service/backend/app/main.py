@@ -28,7 +28,8 @@ app = FastAPI(title="금융규제통합조회 API", version="1.0",
               description="조문을 중심으로 법령·해석·비조치의견·행정지도를 연결해 조회하는 읽기 전용 API",
               lifespan=lifespan)
 app.add_middleware(CORSMiddleware,
-                   allow_origins=[o.strip() for o in os.environ.get("ALLOWED_ORIGINS", "http://localhost:8765").split(",")],
+                   allow_origins=[o.strip().rstrip("/") for o in os.environ.get("ALLOWED_ORIGINS", "http://localhost:8765").split(",")
+                                  if o.strip()],   # 끝의 '/'는 무시 (브라우저의 Origin 에는 '/'가 없다)
                    allow_methods=["GET"], allow_headers=["*"])
 
 

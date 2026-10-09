@@ -35,6 +35,9 @@ def clean(source: str, payload: str) -> str:
 
 def main():
     conn = store.connect(SETTINGS.database_url)
+    if not conn.execute("SELECT count(*) AS n FROM raw_payloads").fetchone()["n"]:
+        raise SystemExit("이 DB에는 아직 수집 데이터가 없습니다 — 정리할 것이 없습니다. "
+                         "먼저 'python -m tools.load_supabase' 로 데이터를 옮기세요 (옮기는 데이터는 이미 정리된 버전).")
     changed = {}
     rows = conn.execute("""SELECT source, source_key, content_hash, payload FROM raw_payloads
                            WHERE source IN ('fsc.lawreq','fsc.opinion','fsc.pastreq','fsc.guidance',

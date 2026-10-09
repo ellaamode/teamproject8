@@ -56,7 +56,7 @@
   <p class="lead">이 문서는 손으로 쓰지 않았습니다. API 부분은 FastAPI가 만드는 OpenAPI 명세(Swagger와 같은 원천)와 실제 호출 결과에서, DB 부분은 PostgreSQL 카탈로그에서 자동으로 생성했습니다(<span class="code">python -m tools.gen_docs</span>). 그래서 코드·DB와 어긋나지 않습니다.</p>
   <div class="links">
     <a class="btn primary sm" id="swagger" href="#" target="_blank" rel="noopener">Swagger UI 열기 <svg class="i s"><use href="#i-ext"/></svg></a>
-    <a class="btn sm" href="https://github.com/" id="gh" target="_blank" rel="noopener">GitHub 저장소 <svg class="i s"><use href="#i-ext"/></svg></a>
+    <a class="btn sm" href="https://github.com/ellaamode/teamproject8" id="gh" target="_blank" rel="noopener">GitHub 저장소 <svg class="i s"><use href="#i-ext"/></svg></a>
     <span class="faint" id="swNote" style="font-size:12.5px;align-self:center"></span>
   </div>
 
@@ -73,7 +73,7 @@
 </main>
 <footer><div class="wrap">금융규제통합조회 · KAIST 디지털금융MBA 클라우드컴퓨팅실습 8조 · 생성 시각 <span id="gen"></span></div></footer>
 <script src="../assets/icons.js?v=5"></script>
-<script src="../app/config.js?v=5"></script>
+<script src="../app/config.js?v=10"></script>
 <script>
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const api = (window.FINREG_API || "").replace(/\/$/, "");
