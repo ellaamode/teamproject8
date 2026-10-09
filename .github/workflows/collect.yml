@@ -1,12 +1,13 @@
-# 매일 데이터 수집 (GitHub Actions, 무료). 레포지토리 최상위의 .github/workflows/ 에 있어야 동작합니다.
+# 데이터 수집 (GitHub Actions, 무료). Actions 탭 > collect > Run workflow 버튼으로 실행합니다. 레포지토리 최상위의 .github/workflows/ 에 있어야 동작합니다.
 # Settings > Secrets and variables > Actions 에 등록:
 #   DATABASE_URL_WRITER  batch_writer 계정의 Supabase 연결 주소
 #   LAW_GO_KR_OC         국가법령정보 공동활용 Open API 인증키 (없으면 법령 수집은 건너뜀)
 #   CRAWLER_CONTACT      원천 서버에 남길 연락처(팀 이메일)
 name: collect
 on:
-  schedule:
-    - cron: "0 21 * * *"     # 매일 06:00 KST (UTC 21:00)
+  # 매일 자동 실행은 팀 결정 전까지 꺼 둠. 켜려면 아래 두 줄의 # 를 지우면 됨 (매일 06:00 KST)
+  # schedule:
+  #   - cron: "0 21 * * *"
   workflow_dispatch:
     inputs:
       stage:

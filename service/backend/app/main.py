@@ -14,7 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from .db import pool
-from .routes import analysis, articles, documents, feed, graph, laws, search, system
+from .routes import analysis, articles, collection, documents, feed, graph, laws, search, system
 
 
 @asynccontextmanager
@@ -49,5 +49,5 @@ async def db_down(_, exc: Exception):
     return JSONResponse({"detail": "서버 오류"}, status_code=500)
 
 
-for r in (system, laws, articles, graph, search, documents, feed, analysis):
+for r in (system, laws, articles, graph, search, documents, feed, analysis, collection):
     app.include_router(r.router)

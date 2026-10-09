@@ -674,6 +674,7 @@
       "linked": "integer"
      }
     ],
+    "articles_total": "integer",
     "items": [
      {
       "id": "string",
@@ -718,6 +719,7 @@
      },
      "…"
     ],
+    "articles_total": 14,
     "items": [
      {
       "id": "fsc.lawreq:4896",
@@ -915,7 +917,7 @@
     ]
    },
    "response_example": {
-    "since": "2026-07-10",
+    "since": "2026-07-11",
     "summary": {
      "비조치_신규": 5,
      "해석_신규": 45,
@@ -1007,7 +1009,7 @@
     ]
    },
    "response_example": {
-    "today": "2026-10-08",
+    "today": "2026-10-09",
     "status": "active",
     "items": [
      {
@@ -1019,7 +1021,7 @@
       "valid_from": "2025-11-17",
       "valid_to": "2026-11-16",
       "source_url": "https://better.fsc.go.kr/fsc_new/status/adminMap/OpertnDetail.do?stNo=11&muNo=14…",
-      "days_left": 40
+      "days_left": 38
      },
      {
       "id": "fsc.guidance:5111",
@@ -1030,7 +1032,7 @@
       "valid_from": "2026-01-01",
       "valid_to": "2026-12-31",
       "source_url": "https://better.fsc.go.kr/fsc_new/status/adminMap/OpertnDetail.do?stNo=11&muNo=14…",
-      "days_left": 85
+      "days_left": 83
      },
      "…"
     ]
@@ -1340,6 +1342,133 @@
       "detail_articles": 134,
       "delegations": 494,
       "pending": 18
+     },
+     "…"
+    ]
+   }
+  },
+  {
+   "method": "GET",
+   "path": "/collection",
+   "summary": "외부 원천별 수집 현황 (법제처 Open API · 금융위 포털 크롤링)",
+   "tag": "수집 현황",
+   "params": [
+    {
+     "name": "limit",
+     "in": "쿼리",
+     "required": false,
+     "type": "integer",
+     "default": 20,
+     "description": "최근 실행 기록 개수",
+     "constraints": {
+      "minimum": 1,
+      "maximum": 100
+     }
+    }
+   ],
+   "example_request": "/collection",
+   "status": 200,
+   "response_shape": {
+    "runner": {
+     "tool": "string",
+     "workflow": "string",
+     "trigger": "string",
+     "url": "string",
+     "steps": [
+      "string"
+     ]
+    },
+    "sources": [
+     {
+      "key": "string",
+      "name": "string",
+      "provider": "string",
+      "url": "string",
+      "api": "string",
+      "method": "string",
+      "items": "string",
+      "collected": "integer",
+      "last_fetched": "string",
+      "last_run": "null"
+     }
+    ],
+    "recent_runs": [
+     {
+      "stage": "string",
+      "source": "string",
+      "status": "string",
+      "started_at": "string",
+      "finished_at": "string",
+      "stats": "object",
+      "error": "null"
+     }
+    ]
+   },
+   "response_example": {
+    "runner": {
+     "tool": "GitHub Actions",
+     "workflow": ".github/workflows/collect.yml",
+     "trigger": "수동 실행 (Run workflow 버튼)",
+     "url": "https://github.com/ellaamode/teamproject8/actions/workflows/collect.yml",
+     "steps": [
+      "수집 (외부 원천에서 받아 원문 보관)",
+      "정리 (조문·문서로 나눔)",
+      "…"
+     ]
+    },
+    "sources": [
+     {
+      "key": "lawgo",
+      "name": "국가법령정보 (법령·행정규칙 본문)",
+      "provider": "법제처",
+      "url": "https://www.law.go.kr",
+      "api": "https://open.law.go.kr",
+      "method": "Open API (법제처 국가법령정보 공동활용, 인증키 OC)",
+      "items": "법률·시행령·시행규칙·감독규정·고시·시행세칙 조문(현행·시행예정), 시행일, 3단비교(위임조문)",
+      "collected": 21,
+      "last_fetched": "2026-10-05T12:37:54.654432+00:00",
+      "last_run": null
+     },
+     {
+      "key": "fsc.reply",
+      "name": "금융규제·법령해석포털 회신사례",
+      "provider": "금융위원회·금융감독원",
+      "url": "https://better.fsc.go.kr/fsc_new/replyCase/TotalReplyList.do",
+      "method": "크롤링 (목록 JSON + 상세 HTML)",
+      "items": "구분, 제목, 소관부서, 회신일, 질의요지, 회답, 이유",
+      "collected": 6174,
+      "last_fetched": "2026-10-04T18:37:25.521026+00:00",
+      "last_run": null
+     },
+     "…"
+    ],
+    "recent_runs": [
+     {
+      "stage": "변화 기록",
+      "source": "events",
+      "status": "ok",
+      "started_at": "2026-10-07T15:04:50.940563+00:00",
+      "finished_at": "2026-10-07T15:04:53.125049+00:00",
+      "stats": {
+       "errors": 0,
+       "events_new": 0
+      },
+      "error": null
+     },
+     {
+      "stage": "연결",
+      "source": "documents",
+      "status": "ok",
+      "started_at": "2026-10-07T15:04:50.759901+00:00",
+      "finished_at": "2026-10-07T15:04:50.938769+00:00",
+      "stats": {
+       "docs": 25,
+       "links": 32,
+       "errors": 0,
+       "unresolved": 17,
+       "no_citation": 14
+      },
+      "error": null
      },
      "…"
     ]

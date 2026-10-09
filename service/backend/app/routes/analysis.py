@@ -33,9 +33,9 @@ SOURCES = [
 ]
 
 
-@router.get("/analysis", summary="수집 데이터 분석·정리 (분석 페이지용 집계 전체)")
-def analysis():
-    # 1) 수집 현황 — 원본 표는 조회 계정이 읽을 수 없으므로 배치(derive)가 실행 기록에 남긴 요약을 쓴다
+def source_summary() -> list[dict]:
+    """출처별 수집 건수·방식·마지막 수집 시각.
+    원본 표는 조회 계정이 읽을 수 없으므로 배치(derive)가 실행 기록에 남긴 요약을 쓴다."""
     last_run = q("""SELECT stats->'sources' AS src FROM pipeline_runs
                     WHERE stage='derive' AND status IN ('ok','partial') AND stats ? 'sources'
                     ORDER BY started_at DESC LIMIT 1""")
@@ -48,6 +48,13 @@ def analysis():
         method = s["method"] if via_api or "method_fallback" not in s else s["method_fallback"]
         sources.append({k: v for k, v in s.items() if k not in ("raw", "method_fallback")}
                        | {"method": method, "collected": n, "last_fetched": last})
+    return sources
+
+
+@router.get("/analysis", summary="수집 데이터 분석·정리 (분석 페이지용 집계 전체)")
+def analysis():
+    # 1) 수집 현황
+    sources = source_summary()
     totals = q("""SELECT (SELECT count(*) FROM laws WHERE EXISTS (SELECT 1 FROM articles a WHERE a.law_slug=laws.slug)) AS laws,
                          (SELECT count(*) FROM articles) AS articles,
                          (SELECT count(*) FROM article_versions WHERE effective_from > current_date) AS pending_versions,
