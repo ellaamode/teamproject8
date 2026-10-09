@@ -102,9 +102,9 @@ function staticSearch(ix, p) {
       articles: d.articles.filter((a) => !seen.has(a.key) && seen.add(a.key)).slice(0, 4),
     };
   });
-  const articles = words.length ? ix.articles.filter((a) => words.every((w) => like(a.title || "", w)))
-    .sort((a, b) => b.linked - a.linked).slice(0, 5) : [];
-  return { query: q, jump, total: rows.length, facets, articles, items };
+  const artAll = words.length ? ix.articles.filter((a) => words.every((w) => like(a.title || "", w)))
+    .sort((a, b) => b.linked - a.linked) : [];
+  return { query: q, jump, total: rows.length, facets, articles: artAll.slice(0, 12), articles_total: artAll.length, items };
 }
 
 function staticFeed(f, p) {

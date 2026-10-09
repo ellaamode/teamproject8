@@ -123,14 +123,24 @@ def search(q_: str = Query("", alias="q", max_length=100),
     facets = {r["kind"]: r["n"] for r in q(f"SELECT d.kind, count(*) AS n FROM documents d WHERE {fwhere} GROUP BY d.kind",
                                            tuple(fargs))}
 
-    # 4) 조문 자체 검색 (제목·본문)
-    art_hits = []
+    # 4) 조문 자체 검색 (제목 + 현행 본문). 제목에 걸린 조문을 먼저, 그다음 연결 자료가 많은 순
+    art_hits, art_total = [], 0
     if words:
-        art_hits = q(f"""SELECT a.key, a.label, a.title, l.name AS law_name, l.kind AS law_kind,
-                                coalesce(s.total,0) AS linked
+        cond = " AND ".join(["(a.title ILIKE %s OR v.body ILIKE %s)"] * len(words))
+        in_title = " AND ".join(["a.title ILIKE %s"] * len(words))
+        likes = [_like(w) for w in words]
+        art_hits = q(f"""WITH v AS (SELECT DISTINCT ON (article_key) article_key, body FROM article_versions
+                                    WHERE effective_from <= current_date ORDER BY article_key, effective_from DESC)
+                         SELECT a.key, a.label, a.title, l.name AS law_name, l.kind AS law_kind,
+                                coalesce(s.total,0) AS linked, count(*) OVER () AS n
                          FROM articles a JOIN laws l ON l.slug=a.law_slug
+                         LEFT JOIN v ON v.article_key=a.key
                          LEFT JOIN article_stats s ON s.article_key=a.key
-                         WHERE {' AND '.join(['a.title ILIKE %s'] * len(words))}
-                         ORDER BY coalesce(s.total,0) DESC, l.kind, a.sort_key LIMIT 5""",
-                     tuple(_like(w) for w in words))
-    return {"query": q_, "jump": jump, "total": total, "facets": facets, "articles": art_hits, "items": items}
+                         WHERE {cond}
+                         ORDER BY ({in_title}) DESC, coalesce(s.total,0) DESC, l.kind, a.sort_key LIMIT 12""",
+                     tuple([x for w in likes for x in (w, w)] + likes))
+        art_total = art_hits[0]["n"] if art_hits else 0
+        for a in art_hits:
+            a.pop("n", None)
+    return {"query": q_, "jump": jump, "total": total, "facets": facets,
+            "articles": art_hits, "articles_total": art_total, "items": items}

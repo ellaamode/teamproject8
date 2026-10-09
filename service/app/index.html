@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>금융규제통합조회</title>
-<meta name="description" content="법령·시행령·감독규정과 법령해석·비조치의견·행정지도·입법예고를 조문 단위로 연결해 조회하는 서비스">
+<meta name="description" content="금융 법령·하위법령과 법령해석·비조치의견·행정지도를 조문 단위로 연결해 조회하는 서비스">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23222c6b'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='17' font-weight='800' fill='white' font-family='sans-serif'%3E%C2%A7%3C/text%3E%3C/svg%3E">
 <script>try{var t=localStorage.getItem("finreg.theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
-<link rel="stylesheet" href="../assets/base.css?v=9">
-<link rel="stylesheet" href="app.css?v=9">
+<link rel="stylesheet" href="../assets/base.css?v=10">
+<link rel="stylesheet" href="app.css?v=10">
 <style>@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}</style>
 </head>
 <body>
@@ -17,18 +17,19 @@
     <a class="logo" href="#/"><span class="logo-mark"><svg viewBox="0 0 24 24"><use href="#i-logo"/></svg></span><span>금융규제통합조회</span></a>
     <nav class="nav" aria-label="주 메뉴">
       <a href="#/" data-nav="home"><svg class="i s"><use href="#i-home"/></svg>홈</a>
-      <a href="#/laws/efta" data-nav="laws"><svg class="i s"><use href="#i-book"/></svg>법령</a>
-      <a href="#/search" data-nav="search"><svg class="i s"><use href="#i-search"/></svg>검색</a>
+      <a href="#/laws" data-nav="laws"><svg class="i s"><use href="#i-book"/></svg>법령</a>
+      <a href="#/search" data-nav="search"><svg class="i s"><use href="#i-interp"/></svg>해석·의견 찾기</a>
       <a href="#/guidance" data-nav="guidance"><svg class="i s"><use href="#i-guide"/></svg>행정지도</a>
+      <span class="nav-sep" aria-hidden="true"></span>
       <a href="#/insights" data-nav="insights"><svg class="i s"><use href="#i-layers"/></svg>데이터 분석</a>
       <a href="#/watch" data-nav="watch"><svg class="i s"><use href="#i-star"/></svg>관심 조문<span class="badge" id="watchBadge" hidden></span></a>
     </nav>
     <form class="qbox" id="gform" role="search">
       <svg class="i s"><use href="#i-search"/></svg>
       <label class="sr" for="gq">통합검색</label>
-      <input id="gq" placeholder="키워드 또는 ‘전금법 제25조의2’" autocomplete="off">
-      <kbd>/</kbd>
+      <input id="gq" placeholder="조문·해석 검색" autocomplete="off">
     </form>
+    <a class="btn sm ghost plan-link" href="../" title="서비스 기획서로 돌아가기">기획서</a>
     <button class="btn icon ghost" id="theme" aria-label="밝은·어두운 화면 전환"><svg class="i"><use href="#i-moon"/></svg></button>
   </div>
 </header>
@@ -39,11 +40,11 @@
 <main id="view" tabindex="-1"></main>
 <footer class="foot">
   <span>금융규제통합조회 · KAIST 디지털금융MBA 클라우드컴퓨팅실습 8조</span>
-  <span>출처: 국가법령정보센터 · 금융규제·법령해석포털 · 국회 — 법률 자문이 아닌 조회 도구입니다 · <a href="../" style="text-decoration:underline">서비스 기획서</a></span>
+  <span>출처: 국가법령정보센터(법제처 Open API) · 금융규제·법령해석포털 — 법률 자문이 아닌 조회 도구입니다 · <a href="../" style="text-decoration:underline">서비스 기획서</a></span>
 </footer>
 <div class="toast" id="toast" role="status"></div>
-<script src="../assets/icons.js?v=9"></script>
+<script src="../assets/icons.js?v=10"></script>
 <script src="config.js?v=10"></script>
-<script type="module" src="app.js?v=9"></script>
+<script type="module" src="app.js?v=10"></script>
 </body>
 </html>

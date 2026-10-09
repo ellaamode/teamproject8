@@ -6,22 +6,25 @@ body { min-height: 100vh; }
   border-bottom: 1px solid var(--line);
 }
 .top-in { max-width: 1240px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; gap: 20px; }
-.nav { display: flex; gap: 2px; }
+.top-in .logo { flex: none; white-space: nowrap; }
+.nav { display: flex; gap: 2px; align-items: center; min-width: 0; }
+.nav-sep { flex: none; width: 1px; height: 20px; margin: 0 6px; background: var(--line-2); }
+.plan-link { flex: none; white-space: nowrap; }
 .nav a {
+  flex: none; white-space: nowrap;
   display: inline-flex; align-items: center; gap: 7px; height: 38px; padding: 0 13px; border-radius: 10px;
   font-size: 14.5px; font-weight: 600; color: var(--ink-2); transition: background .15s, color .15s;
 }
 .nav a:hover { background: var(--bg-tint); color: var(--ink); }
 .nav a[aria-current="page"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-1); }
 .nav a .badge { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--brand); color: var(--on-brand); font-size: 11px; display: grid; place-items: center; }
-.qbox { flex: 1; max-width: 440px; margin-left: auto; position: relative; }
+.qbox { flex: 1 1 180px; min-width: 0; max-width: 400px; margin-left: auto; position: relative; }
 .qbox input {
   width: 100%; height: 40px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--surface);
-  padding: 0 70px 0 40px; font-size: 14px; transition: border-color .15s, box-shadow .15s;
+  padding: 0 14px 0 40px; font-size: 14px; transition: border-color .15s, box-shadow .15s;
 }
 .qbox input:focus { outline: none; border-color: var(--focus); box-shadow: 0 0 0 4px color-mix(in srgb, var(--focus) 18%, transparent); }
 .qbox > svg { position: absolute; left: 13px; top: 11px; color: var(--ink-3); }
-.qbox kbd { position: absolute; right: 10px; top: 9px; font: 600 11px/20px inherit; padding: 0 7px; border-radius: 6px; border: 1px solid var(--line-2); color: var(--ink-3); background: var(--surface-2); }
 main { max-width: 1240px; margin: 0 auto; padding: 28px 24px 96px; }
 .mode-banner {
   max-width: 1240px; margin: 14px auto 0; padding: 0 24px;
@@ -98,7 +101,8 @@ main { max-width: 1240px; margin: 0 auto; padding: 28px 24px 96px; }
 .fopt .box { width: 18px; height: 18px; border-radius: 6px; border: 1.5px solid var(--line-2); display: grid; place-items: center; flex: none; }
 .fopt[aria-pressed="true"] .box { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
 .fopt .box svg { width: 13px; height: 13px; stroke-width: 3; }
-.dates { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.dates { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }   /* 좁은 필터 칸에서 넘치지 않게 위아래로 */
+.dates input { min-width: 0; }
 .dates input, select.sel { height: 36px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--surface); padding: 0 8px; font-size: 13px; width: 100%; }
 .jump {
   display: flex; align-items: center; gap: 16px; padding: 16px 18px; margin-bottom: 14px;
@@ -107,6 +111,22 @@ main { max-width: 1240px; margin: 0 auto; padding: 28px 24px 96px; }
 .jump .ic { width: 44px; height: 44px; border-radius: 12px; background: rgba(255,255,255,.16); display: grid; place-items: center; }
 .jump small { opacity: .8; font-size: 12.5px; }
 .jump b { display: block; font-size: 16px; }
+/* 검색 결과: 조문 / 해석·의견 두 칸 */
+.res-h { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin: 2px 0 12px; }
+.res-h h2 { font-size: 17px; display: flex; align-items: center; gap: 8px; }
+.res-h h2 .n { font-size: 13px; font-weight: 700; color: var(--ink-3); }
+.res-h .faint { font-size: 12.5px; }
+.art-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-bottom: 26px; }
+.art-list .art-chip { min-width: 0; }
+.art-list .art-chip div { min-width: 0; }
+.art-list .art-chip b, .art-list .art-chip span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.art-empty { padding: 14px 16px; margin-bottom: 26px; color: var(--ink-3); font-size: 13.5px; }
+/* 법령 화면: 5개 법률 전환 */
+.law-switch { display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 16px; }
+.law-switch a { padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--surface); font-size: 13.5px; font-weight: 600; color: var(--ink-2); white-space: nowrap; }
+.law-switch a[aria-current="true"] { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+.law-group { margin-bottom: 18px; }
+.law-group .family { margin-bottom: 4px; }
 .art-strip { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 16px; scrollbar-width: thin; }
 .art-chip { flex: none; display: flex; gap: 10px; align-items: center; padding: 10px 14px 10px 10px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); }
 .art-chip:hover { border-color: var(--brand-2); }
@@ -252,6 +272,17 @@ main { max-width: 1240px; margin: 0 auto; padding: 28px 24px 96px; }
 .star-btn[aria-pressed="true"] svg { fill: currentColor; }
 footer.foot { max-width: 1240px; margin: 0 auto; padding: 24px; color: var(--ink-3); font-size: 12.5px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--line); }
 
+@media (max-width: 1180px) {
+  .nav a svg.i { display: none; }
+  .nav a { padding: 0 10px; }
+  .top-in { gap: 14px; }
+}
+@media (max-width: 1024px) {
+  .top-in { padding: 10px 16px; gap: 10px; height: auto; flex-wrap: wrap; }
+  .nav { order: 3; width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .qbox { order: 2; max-width: none; }
+  .plan-link, #theme { order: 2; }
+}
 @media (max-width: 1080px) {
   .kpis { grid-template-columns: repeat(2, 1fr); }
   .grid-2, .art-layout { grid-template-columns: minmax(0, 1fr); }
@@ -260,11 +291,9 @@ footer.foot { max-width: 1240px; margin: 0 auto; padding: 24px; color: var(--ink
   .hello-art { display: none; }
 }
 @media (max-width: 760px) {
-  .top-in { padding: 0 14px; gap: 10px; height: auto; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; }
-  .nav { order: 3; width: 100%; max-width: calc(100vw - 28px); min-width: 0; overflow-x: auto; scrollbar-width: none; }
-  .nav a { flex: none; }
-  .qbox { max-width: none; order: 2; flex-basis: calc(100% - 140px); }
-  .qbox kbd { display: none; }
+  .top-in { padding: 10px 14px; }
+  .nav { max-width: calc(100vw - 28px); }
+  .top-in .logo span:last-child { display: none; }   /* 아주 좁으면 로고는 마크만 */
   main { padding: 18px 14px 80px; }
   .hello { padding: 24px 20px; }
   .hello h1 { font-size: 24px; }

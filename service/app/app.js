@@ -109,8 +109,6 @@ async function viewHome() {
   Object.entries(byDate).forEach(([d, list]) => sched.push({ d, k: "조문", t: `${list[0].law_name} 조문 ${list.length}개 시행`, m: list.slice(0, 3).map((e) => e.article_label).join(", ") + (list.length > 3 ? " 외" : ""), href: aLink(list[0].article_key) }));
   guidanceSoon.items.forEach((g) => sched.push({ d: g.valid_to, k: "행정지도", t: g.title, m: "존속기간 만료", href: dLink(g.id) }));
   notices.items.filter((g) => g.valid_to >= t).forEach((g) => sched.push({ d: g.valid_to, k: "행정지도", t: g.title, m: "예고 의견제출 마감", href: dLink(g.id) }));
-  const searchIdx = await api.search({ kinds: ["입법예고", "규정변경예고"], limit: 50 });
-  searchIdx.items.filter((n) => n.valid_to && n.valid_to >= t).forEach((n) => sched.push({ d: n.valid_to, k: n.kind, t: n.title, m: "의견제출 마감", href: dLink(n.id) }));
   sched.sort((a, b) => (a.d < b.d ? -1 : 1));
 
   const recent90 = past.filter((e) => days(e.occurred_on) >= -90);
@@ -129,7 +127,7 @@ async function viewHome() {
     <div>
       <span class="eyebrow">${I("spark", "s")} ${fmt(t)} 기준 · 데이터 ${fmt(health.data_as_of) || "-"} 갱신</span>
       <h1>조문 하나로,<br>규제의 변화를 따라갑니다</h1>
-      <p class="lead">금융법률과 하위법령(시행령·시행규칙·감독규정·고시·시행세칙)을 해석·비조치의견·행정지도·입법예고와 조문 단위로 연결했습니다.</p>
+      <p class="lead">금융법률과 하위법령(시행령·시행규칙·감독규정·고시·시행세칙)을 법령해석·비조치의견·행정지도와 조문 단위로 연결했습니다.</p>
       <p class="scope-line">${I("book", "s")} 1단계 대상 · 자본시장법 · 외국환거래법 · 은행법 · 보험업법 · 전자금융거래법 <span class="faint">— 추후 확대 예정</span></p>
       <form class="bigq" id="bigq" role="search">
         ${I("search")}
@@ -145,15 +143,15 @@ async function viewHome() {
   </section>
   <section class="kpis">
     ${kpi("법령해석", "interp", nNew, "건", "최근 90일 새 해석·비조치의견", "조문에 자동 연결됨", "#/search?kinds=법령해석&kinds=비조치의견&sort=date")}
-    ${kpi("조문", "pending", nPending, "개", "시행을 앞둔 조문", nextPending ? `가장 가까운 시행 ${fmt(nextPending)}` : "예정 없음", "#/laws/efta")}
+    ${kpi("조문", "pending", nPending, "개", "시행을 앞둔 조문", nextPending ? `가장 가까운 시행 ${fmt(nextPending)}` : "예정 없음", "#/laws")}
     ${kpi("행정지도", "guide", guidanceSoon.items.length, "건", "60일 안에 만료되는 행정지도", "존속기간 기준", "#/guidance?tab=expiring")}
-    ${kpi("입법예고", "notice", sched.filter((s) => s.k === "입법예고" || s.k === "규정변경예고").length, "건", "의견제출 진행 중인 예고", "입법·규정변경 예고", "#/search?kinds=입법예고&kinds=규정변경예고")}
+    ${kpi("조문", "link", (health.counts?.links || 0).toLocaleString(), "건", "조문에 연결된 해석·의견", "인용 연결 엔진이 자동 연결", "#/insights")}
   </section>
   <div class="grid-2">
     <section class="card sec">
       <div class="sec-h"><h2>${I("bell")} 최근 변화</h2>
         <div class="tabs" id="feedTabs">
-          ${[["all", "전체"], ["doc", "해석·비조치"], ["guide", "행정지도"], ["notice", "예고"]].map(([v, l], i) => `<button class="pill" data-f="${v}" aria-pressed="${!i}">${l}</button>`).join("")}
+          ${[["all", "전체"], ["doc", "해석·비조치"], ["guide", "행정지도"]].map(([v, l], i) => `<button class="pill" data-f="${v}" aria-pressed="${!i}">${l}</button>`).join("")}
         </div>
       </div>
       <div id="feedList"></div>
@@ -181,7 +179,7 @@ async function viewHome() {
     }).join("")}
   </section>`;
   $("#bigq").onsubmit = (e) => { e.preventDefault(); const q = $("#bq").value.trim(); if (q) location.hash = `#/search?q=${encodeURIComponent(q)}`; };
-  const groups = { all: null, doc: ["해석_신규", "비조치_신규"], guide: ["행정지도_시행", "행정지도_예고", "행정지도_만료임박", "행정지도_만료"], notice: ["입법예고_시작", "입법예고_마감임박"] };
+  const groups = { all: null, doc: ["해석_신규", "비조치_신규"], guide: ["행정지도_시행", "행정지도_예고", "행정지도_만료임박", "행정지도_만료"] };
   const renderFeed = (f) => {
     const list = past.filter((e) => !groups[f] || groups[f].includes(e.kind)).slice(0, 8);
     $("#feedList").innerHTML = list.map(feedItem).join("") || '<p class="faint" style="padding:12px 0 20px">이 기간에 변화가 없습니다.</p>';
@@ -240,10 +238,12 @@ async function viewSearch(params) {
     if (Array.isArray(v)) { n.delete(k); v.forEach((x) => n.append(k, x)); } else if (v) n.set(k, v); else n.delete(k);
     location.hash = "#/search?" + n.toString();
   };
-  const KINDS = ["법령해석", "비조치의견", "행정지도", "입법예고", "규정변경예고"];
+  // 수집하는 유형만 보여 준다 (입법예고 등은 데이터가 생기면 자동으로 나타남)
+  const KINDS = ["법령해석", "비조치의견", "행정지도", ...["입법예고", "규정변경예고"].filter((k) => r.facets[k])];
+  const artTotal = Math.max(r.articles_total ?? r.articles.length, r.jump ? 1 : 0);   // '전금법 제28조'처럼 바로가기만 있는 경우 포함
   view.innerHTML = `
-  <div class="page-h"><div><h1>${p.q ? `“${esc(p.q)}” 검색 결과` : "전체 문서"}</h1>
-    <div class="sub">${r.total}건 · 법령해석·비조치의견·행정지도·입법예고를 함께 찾습니다</div></div>
+  <div class="page-h"><div><h1>${p.q ? `“${esc(p.q)}” 검색 결과` : "해석·의견 찾기"}</h1>
+    <div class="sub">${p.q ? `조문 ${artTotal.toLocaleString()}개 · 해석·의견 ${r.total.toLocaleString()}건` : `${r.total.toLocaleString()}건 · 법령해석·비조치의견·행정지도`}</div></div>
     <select class="sel" id="sort" style="width:auto" aria-label="정렬">
       <option value="relevance" ${p.sort === "relevance" ? "selected" : ""}>관련도순</option>
       <option value="date" ${p.sort === "date" ? "selected" : ""}>최신순</option>
@@ -251,22 +251,28 @@ async function viewSearch(params) {
   </div>
   <div class="search-layout">
     <aside class="card facets">
-      <div><h3>문서 유형</h3>${KINDS.map((k) => `
+      <div><h3>해석·의견 유형</h3>${KINDS.map((k) => `
         <button class="fopt" data-kind="${k}" aria-pressed="${p.kinds.includes(k)}" data-k="${k}">
           <span class="box">${p.kinds.includes(k) ? I("check") : ""}</span>${kchip(k)}<span class="n num">${r.facets[k] || 0}</span>
         </button>`).join("")}</div>
-      <div><h3>기관</h3>${["금융위원회", "금융감독원", "국회"].map((o) => `
+      <div><h3>기관</h3>${["금융위원회", "금융감독원"].map((o) => `
         <button class="fopt" data-org="${o}" aria-pressed="${p.orgs.includes(o)}"><span class="box">${p.orgs.includes(o) ? I("check") : ""}</span>${o}</button>`).join("")}</div>
       <div><h3>기간</h3><div class="dates">
         <input type="date" id="fFrom" value="${esc(p.from)}" aria-label="시작일"><input type="date" id="fTo" value="${esc(p.to)}" aria-label="종료일"></div></div>
       <button class="btn sm ghost" id="reset">${I("x", "s")} 조건 초기화</button>
     </aside>
     <section>
+      ${p.q ? `
+      <div class="res-h"><h2>${I("book", "s")} 조문 <span class="n">${artTotal.toLocaleString()}개</span></h2>
+        <span class="faint">법령·하위법령 본문에서 찾은 조문${artTotal > r.articles.length ? ` · 상위 ${r.articles.length}개 표시` : ""}</span></div>
       ${r.jump ? `<a class="card jump" href="${aLink(r.jump.key)}"><span class="ic">${I("article", "l")}</span>
         <div><small>입력하신 조문으로 바로 가기</small><b>${esc(r.jump.law_name)} ${esc(r.jump.label)} ${esc(r.jump.title)}</b></div>${I("arrow")}</a>` : ""}
-      ${r.articles.length ? `<div class="art-strip">${r.articles.map((a) => `
+      ${r.articles.length ? `<div class="art-list">${r.articles.map((a) => `
         <a class="art-chip" href="${aLink(a.key)}"><span class="ic">${I("article", "s")}</span>
-        <div><b>${esc(a.law_name)} ${esc(a.label)}</b><span>${hl(a.title)} · 연결 ${a.linked}건</span></div></a>`).join("")}</div>` : ""}
+        <div><b>${esc(LAW_SHORT[a.law_name] || a.law_name)} ${esc(a.label)}</b><span>${hl(a.title || "")} · 연결 ${a.linked}건</span></div></a>`).join("")}</div>`
+        : r.jump ? "" : `<div class="card art-empty">검색어와 맞는 조문이 없습니다.</div>`}
+      <div class="res-h"><h2>${I("interp", "s")} 해석·의견 <span class="n">${r.total.toLocaleString()}건</span></h2>
+        <span class="faint">법령해석·비조치의견·행정지도</span></div>` : ""}
       ${r.items.map((d) => `
         <a class="card hover result" href="${dLink(d.id)}" data-k="${esc(d.kind)}">
           ${kicon(d.kind)}
@@ -277,7 +283,7 @@ async function viewSearch(params) {
             <p class="snip">${hl(d.snippet)}</p>
             ${d.articles.length ? `<div class="arts">${d.articles.map((a) => `<span class="acite">${I("article")}${esc(a.label)} <span class="lk">${esc(a.title)}</span></span>`).join("")}</div>` : ""}
           </div>
-        </a>`).join("") || `<div class="card empty">${ILLUS.emptySearch()}<b>조건에 맞는 문서가 없습니다</b>검색어를 줄이거나 유형 필터를 해제해 보세요.</div>`}
+        </a>`).join("") || `<div class="card empty">${ILLUS.emptySearch()}<b>조건에 맞는 해석·의견이 없습니다</b>검색어를 줄이거나 유형 필터를 해제해 보세요.</div>`}
     </section>
   </div>`;
   view.querySelectorAll("[data-kind]").forEach((b) => b.onclick = () => {
@@ -293,15 +299,42 @@ async function viewSearch(params) {
 }
 
 /* ============================================================ 화면: 법령 목차 */
+const LAW_SHORT = { "자본시장과 금융투자업에 관한 법률": "자본시장법" };
+const rootOf = (laws, slug) => (laws.find((l) => l.slug === slug) || {}).parent || slug;
+const LAW_ORDER = ["fscma", "bank", "ins", "efta", "fx"];          // 화면에 보이는 5개 법률 순서
+const rootsOf = (laws) => laws.filter((l) => !l.parent).sort((x, y) => (LAW_ORDER.indexOf(x.slug) + 99) % 99 - (LAW_ORDER.indexOf(y.slug) + 99) % 99);
+
+function lawSwitch(laws, current) {
+  return `<nav class="law-switch" aria-label="법률 선택">${rootsOf(laws).map((r) =>
+    `<a href="#/laws/${r.slug}" aria-current="${r.slug === current}">${esc(LAW_SHORT[r.name] || r.name)}</a>`).join("")}</nav>`;
+}
+
+function viewLawIndex(laws) {
+  const roots = rootsOf(laws);
+  view.innerHTML = `
+  <div class="page-h"><div><h1>법령</h1>
+    <div class="sub">1단계 대상 ${roots.length}개 법률과 하위법령 ${laws.length - roots.length}건 · 추후 확대 예정</div></div></div>
+  ${roots.map((r) => {
+    const fam = laws.filter((l) => l.slug === r.slug || l.parent === r.slug);
+    const arts = fam.reduce((s, f) => s + (f.articles || 0), 0), links = fam.reduce((s, f) => s + (f.linked_docs || 0), 0);
+    return `<section class="card sec law-group">
+      <div class="sec-h"><h2>${I("book")} ${esc(r.name)}</h2><span class="faint" style="font-size:12.5px">법령 ${fam.length}건 · 조문 ${arts.toLocaleString()}개 · 연결 ${links.toLocaleString()}건</span></div>
+      <div class="family">${fam.map((f) => `<a class="fam" href="#/laws/${f.slug}">
+        <span class="lv">${tierShort[f.kind] || "·"}</span><div><b>${esc(f.name)}</b><span>${esc(f.kind)} · ${f.articles ?? "-"}조 · 연결 ${f.linked_docs ?? 0}건</span></div></a>`).join("")}</div>
+    </section>`;
+  }).join("")}`;
+}
+
 async function viewLaws(slug) {
-  const laws = await api.laws();
-  slug = slug || laws[0]?.slug;
   view.innerHTML = skeleton(4);
+  const laws = await api.laws();
+  if (!slug) return viewLawIndex(laws);
   const t = await api.toc(slug);
   const lvl = tierShort;
   const total = t.chapters.reduce((s, c) => s + c.articles.length, 0);
   const cnt = (k, n) => (n ? `<span class="cnt" data-k="${k}" title="${k} ${n}건">${I(KI(k))}${n}</span>` : "");
   view.innerHTML = `
+  ${lawSwitch(laws, rootOf(laws, slug))}
   <div class="page-h"><div><h1>${esc(t.law.name)}</h1>
     <div class="sub">${esc(t.law.kind)} · ${total}개 조문 · 시행 ${fmt(t.law.effective_on)}</div></div></div>
   <div class="family">${t.family.map((f) => {
@@ -310,7 +343,7 @@ async function viewLaws(slug) {
       <span class="lv">${lvl[f.kind] || "·"}</span><div><b>${esc(f.name)}</b><span>${esc(f.kind)} · ${L.articles ?? "-"}조 · 연결 ${L.linked_docs ?? 0}건</span></div></a>`;
   }).join("")}</div>
   <div class="toc-legend"><span>조문 옆 숫자 = 그 조문에 연결된 자료 수</span>
-    ${["법령해석", "비조치의견", "행정지도", "입법예고"].map((k) => `<span data-k="${k}">${kchip(k)}</span>`).join("")}
+    ${["법령해석", "비조치의견", "행정지도"].map((k) => `<span data-k="${k}">${kchip(k)}</span>`).join("")}
     <span class="tag pending">${I("pending", "s")} 시행 예정</span></div>
   ${t.chapters.map((c, i) => {
     const linked = c.articles.reduce((s, a) => s + a.total, 0);
@@ -575,7 +608,7 @@ async function viewWatch() {
     view.innerHTML = `<div class="page-h"><div><h1>관심 조문</h1></div></div>
       <div class="card empty">${ILLUS.emptyStar()}<b>등록한 관심 조문이 없습니다</b>
       조문 화면에서 ☆ 관심 등록을 누르면, 그 조문의 개정·시행 예정과 새 해석·비조치의견·행정지도가 여기에 모입니다.<br><br>
-      <a class="btn primary" href="#/laws/efta">${I("book", "s")} 법령 목차로 가기</a></div>`;
+      <a class="btn primary" href="#/laws">${I("book", "s")} 법령 목차로 가기</a></div>`;
     return;
   }
   view.innerHTML = skeleton(3);
