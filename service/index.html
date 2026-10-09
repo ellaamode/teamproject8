@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>금융규제통합조회 · 서비스 기획서 (8조)</title>
-<meta name="description" content="흩어진 금융규제를 조문 하나로 잇는 서비스 — 법령·시행령·감독규정과 해석·비조치의견·행정지도·입법예고를 조문 단위로 연결. KAIST 디지털금융MBA 클라우드컴퓨팅실습 8조">
+<meta name="description" content="흩어진 금융규제를 조문 하나로 잇는 서비스 — 금융 법령·하위법령과 법령해석·비조치의견·행정지도를 조문 단위로 연결. KAIST 디지털금융MBA 클라우드컴퓨팅실습 8조">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23222c6b'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='17' font-weight='800' fill='white' font-family='sans-serif'%3E%C2%A7%3C/text%3E%3C/svg%3E">
 <script>try{var t=localStorage.getItem("finreg.theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
-<link rel="stylesheet" href="assets/base.css?v=3">
-<link rel="stylesheet" href="plan.css?v=5">
+<link rel="stylesheet" href="assets/base.css?v=4">
+<link rel="stylesheet" href="plan.css?v=6">
 </head>
 <body>
 <header class="ptop">
@@ -28,7 +28,7 @@
     <div>
       <span class="eyebrow"><svg class="i s"><use href="#i-spark"/></svg>KAIST 디지털금융MBA · 클라우드컴퓨팅실습 8조</span>
       <h1>흩어진 금융규제를<br><em>조문 하나로</em> 잇습니다</h1>
-      <p class="lead">법령·시행령·감독규정과 법령해석·비조치의견·행정지도·입법예고를 <b>조문 단위로 연결</b>해,
+      <p class="lead">금융 법령과 하위법령, 그리고 금융당국의 법령해석·비조치의견·행정지도를 <b>조문 단위로 연결</b>해,
         금융회사 실무자가 “이 조문을 두고 당국은 뭐라고 했고, 앞으로 무엇이 바뀌는지”를 한 화면에서 확인하게 합니다.</p>
       <p style="font-size:13.5px;color:var(--ink-2);margin:10px 0 0"><b>1단계 대상</b> 자본시장법 · 외국환거래법 · 은행법 · 보험업법 · 전자금융거래법과 각 하위법령 전부(시행령·시행규칙·감독규정·고시·시행세칙) — 대상 법령은 추후 확대할 예정입니다.</p>
       <div class="cta">
@@ -56,7 +56,7 @@
   <div class="ribbon" id="ribbon">
     <div class="card rb"><div class="v num">6,174<small>건</small></div><div class="c">금융위 포털의 법령해석·비조치의견 회신 (전부 수집)</div><div class="s">포털 회신사례 12,088건 중 현장건의 5,914건 제외</div></div>
     <div class="card rb"><div class="v num">0<small>칸</small></div><div class="c">회신사례에 ‘관련 조문’ 항목이 없음</div><div class="s">조문 연결은 본문에서 직접 찾아야 함</div></div>
-    <div class="card rb"><div class="v num">14<small>개</small></div><div class="c">전자금융거래법에서 현행과 시행예정 본문이 공존하는 조문</div><div class="s">2026.12.17 시행 · 국가법령정보센터</div></div>
+    <div class="card rb"><div class="v num">71<small>개</small></div><div class="c">지금 본문과 앞으로 바뀔 본문이 함께 있는 조문</div><div class="s">5개 법률·하위법령 기준 · 법제처 Open API</div></div>
     <div class="card rb"><div class="v num">58<small>건</small></div><div class="c">존속기간이 정해진 금융위 행정지도(시행)</div><div class="s">만료일이 지나면 효력이 끝남</div></div>
   </div>
 </div>
@@ -90,22 +90,22 @@
   <section class="s" id="problem">
     <div class="s-no">01 · 문제</div>
     <h2>규제 정보는 업무와 가장 가깝지만, 가장 찾기 어렵습니다</h2>
-    <p class="intro">금융회사 실무에서 기술 이슈를 빼면 가장 큰 제약은 규제입니다. 그런데 ‘이 업무를 해도 되나’에 답하려면 서로 다른 다섯 곳을 오가며, 서로 연결되지 않은 자료를 사람이 직접 이어 붙여야 합니다.</p>
+    <p class="intro">금융회사 실무에서 가장 큰 제약 중 하나는 규제입니다. 그런데 ‘이 업무를 해도 되나’에 답하려면 여러 사이트를 오가며, 서로 연결되지 않은 자료를 사람이 직접 이어 붙여야 합니다.</p>
     <div class="g3">
       <div class="card pc"><span class="kicon" data-k="입법예고"><svg class="i"><use href="#i-layers"/></svg></span>
-        <div class="step-no" style="margin-top:14px">STEP 1</div><h4>자료가 다섯 곳에 흩어져 있다</h4>
-        <p>법령·감독규정은 국가법령정보센터, 해석·비조치의견·금융위 행정지도는 금융규제·법령해석포털, 금감원 행정지도는 금감원 홈페이지, 의원 입법예고는 국회에 있습니다.</p></div>
+        <div class="step-no" style="margin-top:14px">STEP 1</div><h4>자료가 여러 곳에 흩어져 있다</h4>
+        <p>법령과 하위법령은 국가법령정보센터, 법령해석·비조치의견·행정지도는 금융규제·법령해석포털에 따로 있습니다. 둘 사이를 잇는 화면은 없습니다.</p></div>
       <div class="card pc"><span class="kicon" data-k="법령해석"><svg class="i"><use href="#i-interp"/></svg></span>
         <div class="step-no" style="margin-top:14px">STEP 2</div><h4>해석은 조문과 이어져 있지 않다</h4>
-        <p>법령해석·비조치의견 회신 6,174건에는 ‘관련 조문’ 칸이 없습니다. 본문 속 인용도 <span class="code-ex">「여신전문금융업법」 제2조제3호</span>, <span class="code-ex">여전법 제2조제5호</span>, <span class="code-ex">통신사기피해환급법 2조의4 1항</span>처럼 제각각입니다.</p></div>
+        <p>법령해석·비조치의견 회신 6,174건에는 ‘관련 조문’ 칸이 없습니다. 본문 속 인용도 <span class="code-ex">「자본시장과 금융투자업에 관한 법률」 제9조</span>, <span class="code-ex">자본시장법 제9조</span>, <span class="code-ex">같은 법 시행령 제7조</span>처럼 제각각입니다.</p></div>
       <div class="card pc"><span class="kicon" data-k="행정지도"><svg class="i"><use href="#i-hourglass"/></svg></span>
         <div class="step-no" style="margin-top:14px">STEP 3</div><h4>변화는 소리 없이 온다</h4>
-        <p>같은 조문에 현행 본문과 시행예정 본문이 함께 존재하고(전자금융거래법 14개 조문), 행정지도는 존속기간이 끝나면 효력을 잃습니다. 직접 찾아보기 전에는 알 수 없습니다.</p></div>
+        <p>한 조문에 지금 본문과 앞으로 바뀔 본문이 함께 있고(대상 법령 전체 71개 조문), 행정지도는 존속기간이 끝나면 효력을 잃습니다. 직접 찾아보기 전에는 알 수 없습니다.</p></div>
     </div>
     <div class="callout">
       <svg class="i l" style="color:var(--t-notice)"><use href="#i-info"/></svg>
       <div><b>우리 아이디어 피칭의 예시도 틀려 있었습니다</b>
-        <p>피칭에서는 ‘전자금융거래법 제23조 선불충전금의 관리’를 예로 들었지만, 현행법(2026.10.02 시행)에서 제23조는 ‘전자지급수단 등의 발행과 이용한도’이고, 선불충전금은 <b>제25조의2·제25조의3</b>입니다. 조문 번호와 내용은 개정으로 바뀝니다. 그래서 이 서비스는 조문을 <b>시행일 기준 버전</b>으로 관리합니다.</p></div>
+        <p>피칭에서는 ‘전자금융거래법 제23조 선불충전금의 관리’를 예로 들었지만, 현행법(2026.10.02 시행)에서 제23조는 ‘전자지급수단 등의 발행과 이용한도’이고, 선불충전금은 <b>제25조의2·제25조의3</b>입니다. 조문 번호와 내용은 개정으로 바뀝니다. 그래서 이 서비스는 조문 본문을 <b>시행일별로 따로 보관</b>합니다.</p></div>
     </div>
   </section>
 
@@ -124,12 +124,12 @@
         <div><h4>상품·사업 기획자</h4><div class="role">핀테크·간편결제 사업부</div></div>
         <dl><dt>상황</dt><dd>“선불충전금을 신탁과 예치로 나눠 관리해도 되나?” 같은 질문이 생겼다</dd>
           <dt>지금</dt><dd>법률 용어를 몰라 어느 조문부터 봐야 할지 모른다</dd>
-          <dt>필요한 것</dt><dd>일상어로 검색해도 관련 조문과 사례로 안내, 법→시행령→감독규정 위임 관계</dd></dl></div>
+          <dt>필요한 것</dt><dd>일상어로 검색해도 관련 조문과 사례로 안내, 법률 → 시행령 → 감독규정으로 이어지는 위임 관계</dd></dl></div>
       <div class="card pc persona"><span class="face" data-k="행정지도" style="background:color-mix(in srgb,var(--k) 15%,var(--surface));color:var(--k)"><svg class="i"><use href="#i-bell"/></svg></span>
         <div><h4>IT·보안 담당자</h4><div class="role">전자금융·클라우드 운영</div></div>
         <dl><dt>상황</dt><dd>전자금융감독규정 개정, 클라우드 가이드 행정지도 시행·만료를 놓치면 안 된다</dd>
           <dt>지금</dt><dd>공지 게시판을 주기적으로 들어가 확인</dd>
-          <dt>필요한 것</dt><dd>관심 조문을 등록해 두면 개정 예정·새 해석·행정지도 만료가 모여 보이는 피드</dd></dl></div>
+          <dt>필요한 것</dt><dd>관심 조문을 등록해 두면 개정 예정·새 해석·행정지도 만료가 한곳에 모여 보이는 화면</dd></dl></div>
     </div>
   </section>
 
@@ -137,9 +137,9 @@
   <section class="s" id="idea">
     <div class="s-no">03 · 핵심 아이디어</div>
     <h2>모든 자료의 기준점은 ‘조문’입니다</h2>
-    <p class="intro">자료를 유형별 게시판으로 나열하지 않고, 조문을 중심에 두고 엮습니다. 위로는 근거 법률, 아래로는 위임받은 시행령·감독규정, 옆으로는 그 조문을 인용한 해석·비조치의견·행정지도·예고가 연결됩니다. 아래 그림은 설명용 예시입니다(오른쪽 문서 제목은 예시). 서비스의 조문 화면에서는 같은 형태의 그림이 실제 데이터로 자동 생성됩니다.</p>
+    <p class="intro">자료를 유형별 게시판으로 나열하지 않고, 조문을 중심에 두고 엮습니다. 위로는 근거 법률, 아래로는 위임받은 시행령·감독규정, 옆으로는 그 조문을 인용한 법령해석·비조치의견·행정지도가 연결됩니다. 아래 그림의 조문과 위임 관계는 실제 데이터이고, 오른쪽 문서 제목만 설명용 예시입니다. 서비스의 조문 화면에서는 같은 형태의 그림이 실제 데이터로 자동으로 그려집니다.</p>
     <figure class="card figure" style="margin:0">
-      <svg viewBox="0 0 980 430" role="img" aria-label="전자금융거래법 제25조의2를 중심으로 시행령 5개 조문이 위임되고, 해석·비조치·행정지도·예고 문서가 연결된 그림">
+      <svg viewBox="0 0 980 430" role="img" aria-label="전자금융거래법 제25조의2를 중심으로 시행령 5개 조문이 위임되고, 해석·비조치·행정지도 문서가 연결된 그림">
         <defs>
           <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--ink-3)" stroke-width="1.6"/></marker>
         </defs>
@@ -148,7 +148,7 @@
           <path d="M500 50 C620 50 640 40 745 40" stroke="var(--t-interp)"/>
           <path d="M500 60 C620 70 640 108 745 108" stroke="var(--t-noact)"/>
           <path d="M500 70 C610 100 640 176 745 176" stroke="var(--t-guide)"/>
-          <path d="M500 80 C600 130 640 244 745 244" stroke="var(--t-notice)"/>
+          <path d="M500 80 C600 130 640 244 745 244" stroke="var(--t-noact)"/>
           <path d="M500 88 C590 150 650 312 745 312" stroke="var(--t-interp)"/>
           <path d="M560 219 C660 219 690 60 745 52" stroke="var(--t-interp)" stroke-dasharray="3 4"/>
         </g>
@@ -173,43 +173,54 @@
         </g>
         <g id="decree">
           <g transform="translate(54 190)"><rect width="116" height="58" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="12" y="24" font-weight="800" fill="var(--ink)" font-size="14">제13조의2</text><text x="12" y="44" fill="var(--ink-2)" font-size="12">별도관리</text></g>
-          <g transform="translate(184 190)"><rect width="116" height="58" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="12" y="24" font-weight="800" fill="var(--ink)" font-size="14">제13조의4</text><text x="12" y="44" fill="var(--ink-2)" font-size="12">예외적 양도사유</text></g>
-          <g transform="translate(314 190)"><rect width="116" height="58" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="12" y="24" font-weight="800" fill="var(--ink)" font-size="14">제13조의5</text><text x="12" y="44" fill="var(--ink-2)" font-size="12">지급 방법·절차</text></g>
+          <g transform="translate(184 190)"><rect width="116" height="58" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="12" y="24" font-weight="800" fill="var(--ink)" font-size="14">제13조의3</text><text x="12" y="44" fill="var(--ink-2)" font-size="12">운용방법</text></g>
+          <g transform="translate(314 190)"><rect width="116" height="58" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="12" y="24" font-weight="800" fill="var(--ink)" font-size="14">제13조의4</text><text x="12" y="44" fill="var(--ink-2)" font-size="12">예외적 양도사유</text></g>
           <g transform="translate(444 190)"><rect width="116" height="58" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="12" y="24" font-weight="800" fill="var(--ink)" font-size="14">제13조의6</text><text x="12" y="44" fill="var(--ink-2)" font-size="12">관리 기준·방법</text></g>
-          <g transform="translate(574 190)"><rect width="116" height="58" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="12" y="24" font-weight="800" fill="var(--ink)" font-size="14">제13조의7</text><text x="12" y="44" fill="var(--ink-2)" font-size="12">고지 내용</text></g>
+          <g transform="translate(574 190)"><rect width="116" height="58" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="12" y="24" font-weight="800" fill="var(--ink)" font-size="14">제13조의5</text><text x="12" y="44" fill="var(--ink-2)" font-size="12">지급 방법·절차</text></g>
         </g>
         <g transform="translate(377 340)"><rect width="250" height="58" rx="12" fill="var(--surface)" stroke="var(--line-2)" stroke-dasharray="5 4"/><text x="14" y="24" font-weight="800" fill="var(--ink)" font-size="14">전자금융감독규정 제56조의2</text><text x="14" y="44" fill="var(--ink-2)" font-size="12">선불충전금 정보의 안전한 관리</text></g>
         <path d="M502 248 L502 336" stroke="var(--ink-3)" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#ar)" fill="none"/>
         ${1}
       </svg>
-      <figcaption>서비스의 조문 화면에는 이 그림이 <b>그래프 API 응답으로 조문마다 자동 생성</b>됩니다. 실선: 문서 → 조문 인용 연결 · 점선 화살표: 위임(시행령은 ‘법 제25조의2’를, 감독규정 제56조의2는 ‘영 제13조의6’을 인용) · 문서 색은 유형(픽토그램과 함께 표시)</figcaption>
+      <figcaption>서비스의 조문 화면에는 이 그림이 <b>조문마다 API 데이터로 자동으로 그려집니다</b>. 실선: 문서가 이 조문을 인용함 · 화살표: 위임(법률 → 시행령 5개는 법제처 3단비교 공식 자료, 시행령 제13조의6 → 감독규정 제56조의2는 감독규정 본문의 ‘영 제13조의6’ 인용으로 판단) · 문서 색은 유형(그림 기호와 함께 표시)</figcaption>
     </figure>
     <div class="g3" style="margin-top:16px">
-      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-article"/></svg></span><h4>조문 = 하나의 주소</h4><p><span class="code-ex">efta:25의2</span>처럼 법령과 조문 번호로 고정된 키를 씁니다. 본문이 개정돼도 키는 같고, 본문은 시행일별 버전으로 쌓입니다.</p></div>
-      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-tree"/></svg></span><h4>위·아래로: 위임 관계</h4><p>법률 조문을 열면 위임받은 시행령·감독규정 조문이, 시행령 조문을 열면 근거 법률 조문이 보입니다. 실무 기준은 대개 하위 규정에 있습니다.</p></div>
-      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-link"/></svg></span><h4>옆으로: 인용한 자료</h4><p>해석·비조치의견·행정지도·예고가 어느 조문을 다뤘는지 본문에서 찾아 연결합니다. 근거 표현과 신뢰도를 함께 남깁니다.</p></div>
+      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-article"/></svg></span><h4>조문마다 고유 번호</h4><p><span class="code-ex">efta:25의2</span>(전자금융거래법 제25조의2)처럼 법령과 조문 번호로 만든 고유 번호를 씁니다. 본문이 개정돼도 번호는 그대로이고, 본문만 시행일별로 쌓입니다.</p></div>
+      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-tree"/></svg></span><h4>위·아래로: 위임 관계</h4><p>법률 조문을 열면 위임받은 시행령·감독규정 조문이, 시행령 조문을 열면 근거가 된 법률 조문이 보입니다. 실무의 세부 기준은 대개 하위 규정에 있습니다.</p></div>
+      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-link"/></svg></span><h4>옆으로: 인용한 자료</h4><p>법령해석·비조치의견·행정지도가 어느 조문을 다뤘는지 본문에서 찾아 연결합니다. 어떤 표현을 보고 연결했는지와 확실한 정도를 함께 남깁니다.</p></div>
     </div>
   </section>
 
   <!-- ============================================================ 04 -->
   <section class="s" id="screens">
     <div class="s-no">04 · 화면</div>
-    <h2>핵심 화면은 넷, 모두 두 번 클릭 안에</h2>
+    <h2>메뉴는 여섯, 핵심 자료는 두 번 클릭 안에</h2>
     <p class="intro">아래 미리보기는 그림이 아니라 실제 서비스 화면입니다. 실무자가 두 번 클릭 안에 “조문 → 관련 자료 → 원문”에 닿도록 설계했습니다.</p>
     <div class="screens">
       <div class="card screen"><div class="shot"><iframe loading="lazy" data-src="app/#/" title="홈 화면 미리보기" tabindex="-1"></iframe></div>
-        <div class="cap"><span class="kicon"><svg class="i"><use href="#i-home"/></svg></span><div><b>홈 · 변화 대시보드</b><p>최근 해석, 시행 예정 조문, 만료 임박 행정지도, 의견제출 중인 예고를 한눈에</p></div><a class="btn sm" href="app/#/">열기</a></div></div>
+        <div class="cap"><span class="kicon"><svg class="i"><use href="#i-home"/></svg></span><div><b>홈 · 변화 한눈에 보기</b><p>최근 해석·비조치의견, 시행을 앞둔 조문, 만료가 다가오는 행정지도를 한 화면에</p></div><a class="btn sm" href="app/#/">열기</a></div></div>
       <div class="card screen"><div class="shot"><iframe loading="lazy" data-src="app/#/a/efta%3A25%EC%9D%982" title="조문 화면 미리보기" tabindex="-1"></iframe></div>
-        <div class="cap"><span class="kicon"><svg class="i"><use href="#i-article"/></svg></span><div><b>조문 카드 (핵심 화면)</b><p>연결 지도(자동 생성), 현행·시행예정 본문과 ‘바뀌는 부분’, 위임 규정, 이 조문을 다룬 자료</p></div><a class="btn sm" href="app/#/a/efta%3A25%EC%9D%982">열기</a></div></div>
+        <div class="cap"><span class="kicon"><svg class="i"><use href="#i-article"/></svg></span><div><b>조문 카드 (핵심 화면)</b><p>연결 지도(자동으로 그림), 지금 본문과 바뀔 본문의 차이, 위임 규정, 이 조문을 다룬 자료</p></div><a class="btn sm" href="app/#/a/efta%3A25%EC%9D%982">열기</a></div></div>
       <div class="card screen"><div class="shot"><iframe loading="lazy" data-src="app/#/search?q=%EC%84%A0%EB%B6%88%EC%B6%A9%EC%A0%84%EA%B8%88" title="검색 화면 미리보기" tabindex="-1"></iframe></div>
-        <div class="cap"><span class="kicon"><svg class="i"><use href="#i-search"/></svg></span><div><b>통합검색</b><p>유형별 개수 필터, 관련 조문 바로가기, ‘전금법 제25조의2’ 같은 조문 표기 인식</p></div><a class="btn sm" href="app/#/search?q=%EC%84%A0%EB%B6%88%EC%B6%A9%EC%A0%84%EA%B8%88">열기</a></div></div>
+        <div class="cap"><span class="kicon"><svg class="i"><use href="#i-search"/></svg></span><div><b>해석·의견 찾기</b><p>검색 결과를 ‘조문’과 ‘해석·의견’ 두 칸으로 나눠 보여 주고, ‘전금법 제25조의2’ 같은 표기는 그 조문으로 바로 안내</p></div><a class="btn sm" href="app/#/search?q=%EC%84%A0%EB%B6%88%EC%B6%A9%EC%A0%84%EA%B8%88">열기</a></div></div>
       <div class="card screen"><div class="shot"><iframe loading="lazy" id="docShot" data-src="app/#/search" title="문서 화면 미리보기" tabindex="-1"></iframe></div>
         <div class="cap"><span class="kicon" data-k="법령해석"><svg class="i"><use href="#i-interp"/></svg></span><div><b>문서 · 인용 하이라이트</b><p>원문은 고치지 않고 인용 표현만 조문 링크로, 출처는 항상 표시</p></div><a class="btn sm" id="docOpen" href="app/#/search">열기</a></div></div>
     </div>
+    <h3 class="sub"><svg class="i"><use href="#i-layers"/></svg>메뉴 구성 (실제 서비스 기준)</h3>
+    <div class="tbl-wrap"><table class="t">
+      <tr><th style="width:20%">메뉴</th><th>하는 일</th></tr>
+      <tr><td><b>홈</b></td><td>최근 변화(새 해석·비조치의견, 행정지도), 다가오는 일정(시행 예정 조문, 행정지도 만료), 5개 법률 바로가기</td></tr>
+      <tr><td><b>법령</b></td><td>5개 법률과 하위법령 21건 목록 → 법령별 장·조 목차. 조문 옆에 연결된 자료 수 표시, 화면 위에서 5개 법률 사이를 바로 전환</td></tr>
+      <tr><td><b>해석·의견 찾기</b></td><td>검색어로 조문과 해석·의견을 함께 찾음. 유형(법령해석·비조치의견·행정지도)·기관·기간 필터, 관련도순·최신순</td></tr>
+      <tr><td><b>행정지도</b></td><td>시행 중 · 60일 안에 만료 · 예고 · 만료된 행정지도를 존속기간 기준으로</td></tr>
+      <tr><td><b>데이터 분석</b></td><td>수집한 데이터의 출처·건수, 연도별·부서별 회신, 많이 인용된 법령·조문, 연결 품질, 법령 구조 (과제 필수 페이지)</td></tr>
+      <tr><td><b>관심 조문</b></td><td>별표로 등록한 조문의 변화만 모아 봄. 등록 목록은 사용자 브라우저에만 저장(서버에 보내지 않음)</td></tr>
+      <tr><td class="faint">상세 화면</td><td><b>조문 카드</b>(본문·연결 지도·관련 자료) · <b>문서</b>(원문, 인용한 조문 표시, 출처 링크)</td></tr>
+    </table></div>
     <h3 class="sub"><svg class="i"><use href="#i-arrow"/></svg>사용 흐름 — “선불충전금을 신탁·예치로 나눠도 되나?”</h3>
     <div class="card flow">
-      <div class="f"><span class="kicon"><svg class="i"><use href="#i-search"/></svg></span><b>① 일상어로 검색</b><p>‘선불충전금’ → 관련 조문 3개와 문서 7건</p></div>
-      <div class="f"><span class="kicon"><svg class="i"><use href="#i-article"/></svg></span><b>② 조문 카드</b><p>제25조의2 본문, 12.17 바뀌는 부분, 위임된 시행령 5개</p></div>
+      <div class="f"><span class="kicon"><svg class="i"><use href="#i-search"/></svg></span><b>① 일상어로 검색</b><p>‘선불충전금’ → 조문 14개와 해석·의견 15건</p></div>
+      <div class="f"><span class="kicon"><svg class="i"><use href="#i-article"/></svg></span><b>② 조문 카드</b><p>제25조의2 본문, 12월 17일부터 바뀌는 부분, 위임된 시행령 5개</p></div>
       <div class="f"><span class="kicon" data-k="법령해석"><svg class="i"><use href="#i-interp"/></svg></span><b>③ 선례 확인</b><p>같은 조문을 다룬 해석·비조치의견을 최신순으로</p></div>
       <div class="f"><span class="kicon" data-k="행정지도"><svg class="i"><use href="#i-star"/></svg></span><b>④ 관심 등록</b><p>이후 개정·새 해석·행정지도 만료가 홈에 모임</p></div>
     </div>
@@ -219,117 +230,114 @@
   <section class="s" id="data">
     <div class="s-no">05 · 데이터</div>
     <h2>원천을 직접 조사하고, 실제로 호출해 확인했습니다</h2>
-    <p class="intro">설계 전에 각 원천의 실제 응답과 이용 조건을 확인했습니다. 추측으로 설계한 부분은 ‘확인 필요’로 따로 표시했습니다.</p>
+    <p class="intro">설계 전에 각 원천의 실제 응답과 이용 조건을 확인했고, 지금 서비스는 아래 세 가지 데이터로 동작합니다.</p>
     <div class="tbl-wrap"><table class="t">
       <tr><th style="width:22%">데이터 · 제공 기관 · 출처 URL</th><th style="width:22%">수집 항목</th><th>수집 방식과 현황</th><th style="width:22%">제약 → 대응</th></tr>
       <tr><td><b>국가법령정보 (법령·행정규칙)</b><br>법제처<br><a class="faint" href="https://www.law.go.kr" target="_blank" rel="noopener">law.go.kr</a> · <a class="faint" href="https://open.law.go.kr" target="_blank" rel="noopener">open.law.go.kr</a></td>
         <td>법률·시행령·시행규칙·감독규정·고시·시행세칙 조문(현행·시행예정), 시행일, 위임 관계(3단비교)</td>
         <td><b>구현·수집 완료 (Open API)</b>: 법제처 국가법령정보 공동활용 Open API(<span class="code-ex">lawSearch.do</span>·<span class="code-ex">lawService.do</span>, 인증키 OC). 1단계 5개 법률(자본시장법·외국환거래법·은행법·보험업법·전자금융거래법)과 하위법령 전부 21건, 조문 3,629개, 시행예정 본 7개, 3단비교 위임조문 908쌍 (추후 확대 예정)</td>
-        <td>Referer/UA 필수, 시행일(efYd)을 지정하지 않으면 시행 전 개정분이 섞임 → 시행일 기준으로 받음. 키가 없으면 웹페이지 수집으로 자동 대체</td></tr>
+        <td>시행일을 지정하지 않으면 아직 시행 전인 개정 내용이 섞여 옴 → 시행일을 지정해서 받음. API가 막히면 그날만 웹페이지 수집으로 대체</td></tr>
       <tr><td><b>금융규제·법령해석포털 회신사례</b><br>금융위원회·금융감독원<br><a class="faint" href="https://better.fsc.go.kr/fsc_new/replyCase/TotalReplyList.do" target="_blank" rel="noopener">better.fsc.go.kr/…/TotalReplyList.do</a></td>
         <td>구분(법령해석·비조치의견), 제목, 소관부서, 회신일, 질의요지, 회답, 이유, 첨부파일명</td>
-        <td><b>구현·수집 완료 (크롤링)</b>: 목록 JSON(<span class="code-ex">selectReplyCaseTotalReplyList.do</span>) + 상세 HTML(<span class="code-ex">LawreqDetail.do</span> 등). 회신사례 12,088건 중 범위 안(법령해석·비조치의견) 6,174건 전부 수집, 1.2초 간격. 현장건의 과제 5,914건은 범위 밖</td>
-        <td>공식 API 아님·저작권정책(원문 변경 금지·출처 명시) → 원문 그대로 저장·출처 링크, 새 글만 증분 수집</td></tr>
+        <td><b>구현·수집 완료 (크롤링)</b>: 목록 JSON(<span class="code-ex">selectReplyCaseTotalReplyList.do</span>) + 상세 HTML(<span class="code-ex">LawreqDetail.do</span> 등). 회신사례 12,088건 중 범위 안(법령해석·비조치의견) 6,174건 전부 수집, 요청 간격 1.5초. 현장건의 과제 5,914건은 범위 밖</td>
+        <td>공식 API가 없음 → 원문 그대로 저장·출처 링크, 새 글만 받음. 본문의 전화번호·담당 공무원 실명은 가려서 저장, 사이트가 거부(403·429)하면 즉시 중단</td></tr>
       <tr><td><b>금융위원회 행정지도</b><br>금융위원회<br><a class="faint" href="https://better.fsc.go.kr/fsc_new/status/adminMap/OpertnList.do" target="_blank" rel="noopener">better.fsc.go.kr/…/OpertnList.do</a></td>
         <td>관리번호, 제목, 소관부서, 존속기간(시작~종료), 단계(예고·시행)</td>
         <td><b>구현 (크롤링)</b>: 목록 JSON(<span class="code-ex">selectOpertnList.do</span> · <span class="code-ex">selectPrvntcList.do</span>)</td>
         <td>존속기간으로 시행 중·만료 임박 계산</td></tr>
-      <tr><td><b>국회 입법예고</b><br>국회사무처<br><a class="faint" href="https://www.data.go.kr/data/15126069/openapi.do" target="_blank" rel="noopener">data.go.kr/data/15126069</a></td><td>진행 중·종료된 의원 발의 법률안 입법예고</td><td><b>미구현 (계획)</b>: 공공데이터포털 Open API(XML, 이용허락 제한 없음). 대상 법령명으로 거름</td><td>운영 단계 심의승인 → 개발 단계 키로 시작</td></tr>
-      <tr><td><b>금감원 행정지도</b><br>금융감독원<br><a class="faint" href="https://www.fss.or.kr/fss/job/admnstgudc/list.do?menuNo=200492" target="_blank" rel="noopener">fss.or.kr/…/admnstgudc</a></td><td>금감원 행정지도 예고·시행</td><td><b>미구현 (2단계)</b>: 같은 <span class="code-ex">documents(kind='행정지도')</span>로 통합 예정</td><td>사이트 구조가 다름 → 수집기만 추가</td></tr>
+      <tr><td colspan="4" class="faint">확장 후보 (아직 수집하지 않음): 국회 입법예고(공공데이터포털 Open API), 금감원 행정지도, 대상 밖 법령(대부업법·신용정보법 등, 2단계)</td></tr>
     </table></div>
     <div class="g2" style="margin-top:16px">
       <div class="callout info"><svg class="i l" style="color:var(--brand-2)"><use href="#i-info"/></svg><div><b>모두 실제로 수집한 데이터입니다</b>
         <p>법령 조문은 국가법령정보센터의 실제 조문(저작권법 제7조상 보호받지 않는 저작물), 회신사례·행정지도는 금융규제·법령해석포털에서 수집한 원문입니다. 원문은 고치지 않고 저장하며 모든 문서에 출처 링크를 답니다. 수업 시연 목적이며, 정식 공개 전에는 포털 저작권정책에 따른 협의가 필요합니다.</p></div></div>
-      <div class="callout good"><svg class="i l" style="color:var(--t-interp)"><use href="#i-check"/></svg><div><b>수집 → 가공은 모두 같은 파이프라인</b>
-        <p>원문을 <span class="code-ex">raw_payloads</span>에 그대로 보관하고 정규화 → 인용 연결 → 변화 이벤트를 만듭니다. 수집한 원본은 파일로 옮겨 Supabase에서 그대로 다시 가공할 수 있습니다(재수집 불필요).</p></div></div>
+      <div class="callout good"><svg class="i l" style="color:var(--t-interp)"><use href="#i-check"/></svg><div><b>세 데이터 모두 같은 순서로 처리</b>
+        <p>받은 원문을 <span class="code-ex">raw_payloads</span>에 그대로 보관한 뒤, 정리 → 조문 연결 → 변화 기록 순서로 가공합니다. 원문을 보관해 두므로 원천 사이트에 다시 요청하지 않고도 언제든 처음부터 다시 가공할 수 있습니다(실제로 Supabase에 이렇게 옮겨 담았습니다).</p></div></div>
     </div>
   </section>
 
   <!-- ============================================================ 06 -->
   <section class="s" id="arch">
     <div class="s-no">06 · 시스템 구조</div>
-    <h2>쓰기는 배치만, 읽기는 API만</h2>
-    <p class="intro">수집·가공은 하루 한 번 배치가 하고, API는 이미 정리된 데이터를 읽기만 합니다. 사용자 요청이 원천 서버에 닿지 않으므로 무료 서버에서도 빠르고, 원천에 부담을 주지 않습니다.</p>
+    <h2>모으는 일과 보여 주는 일을 나눴습니다</h2>
+    <p class="intro">데이터를 모아 정리하는 일은 수집 프로그램(GitHub Actions)이 따로 하고, 화면에 보여 주는 API(FastAPI)는 정리된 데이터를 읽기만 합니다. 사용자가 화면을 볼 때 원천 사이트에 요청이 가지 않으므로 무료 서버에서도 빠르고, 원천 사이트에 부담을 주지 않습니다.</p>
     <figure class="card figure" style="margin:0">
-      <svg viewBox="0 0 1000 380" role="img" aria-label="원천 4곳 → GitHub Actions 배치 4단계 → Supabase 3계층 저장 → FastAPI 읽기 전용 → Vercel 화면">
+      <svg viewBox="0 0 1000 380" role="img" aria-label="원천 2곳 → GitHub Actions 수집 4단계 → Supabase 3층 저장 → FastAPI 읽기 전용 → Vercel 화면">
         <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--ink-3)" stroke-width="1.6"/></marker></defs>
         <text x="20" y="28" font-size="12" font-weight="800" fill="var(--ink-3)">원천</text>
         <g font-size="12.5">
-          <g transform="translate(20 42)"><rect width="168" height="52" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="14" y="22" font-weight="800" fill="var(--ink)">법제처 Open API</text><text x="14" y="40" fill="var(--ink-3)" font-size="11.5">법령·감독규정·위임</text></g>
-          <g transform="translate(20 106)"><rect width="168" height="52" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="14" y="22" font-weight="800" fill="var(--ink)">금융위 포털</text><text x="14" y="40" fill="var(--ink-3)" font-size="11.5">해석·비조치·행정지도</text></g>
-          <g transform="translate(20 170)"><rect width="168" height="52" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="14" y="22" font-weight="800" fill="var(--ink)">국회 입법예고</text><text x="14" y="40" fill="var(--ink-3)" font-size="11.5">공공데이터포털</text></g>
-          <g transform="translate(20 234)"><rect width="168" height="52" rx="12" fill="var(--surface)" stroke="var(--line-2)" stroke-dasharray="5 4"/><text x="14" y="22" font-weight="800" fill="var(--ink)">금감원 행정지도</text><text x="14" y="40" fill="var(--ink-3)" font-size="11.5">2단계 확장</text></g>
+          <g transform="translate(20 96)"><rect width="168" height="52" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="14" y="22" font-weight="800" fill="var(--ink)">법제처 Open API</text><text x="14" y="40" fill="var(--ink-3)" font-size="11.5">법령·하위법령·위임</text></g>
+          <g transform="translate(20 170)"><rect width="168" height="52" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="14" y="22" font-weight="800" fill="var(--ink)">금융위 포털 (크롤링)</text><text x="14" y="40" fill="var(--ink-3)" font-size="11.5">해석·비조치·행정지도</text></g>
         </g>
-        <g stroke="var(--ink-3)" stroke-width="1.4" fill="none" marker-end="url(#ar2)"><path d="M188 68 L236 150"/><path d="M188 132 L236 156"/><path d="M188 196 L236 164"/><path d="M188 260 L236 172" stroke-dasharray="4 4"/></g>
+        <g stroke="var(--ink-3)" stroke-width="1.4" fill="none" marker-end="url(#ar2)"><path d="M188 122 L236 154"/><path d="M188 196 L236 168"/></g>
         <g transform="translate(240 72)">
           <rect width="230" height="180" rx="18" fill="var(--brand-soft)" stroke="var(--brand-2)" stroke-opacity=".35"/>
-          <text x="18" y="30" font-size="14" font-weight="850" fill="var(--ink)">수집·가공 배치</text>
-          <text x="18" y="48" font-size="11.5" fill="var(--ink-2)">GitHub Actions · 매일 06:00 KST</text>
+          <text x="18" y="30" font-size="14" font-weight="850" fill="var(--ink)">수집 프로그램</text>
+          <text x="18" y="48" font-size="11.5" fill="var(--ink-2)">GitHub Actions · 버튼 실행·예약 가능</text>
           <g font-size="12.5" font-weight="750">
-            <rect x="18" y="62" width="92" height="30" rx="9" fill="var(--surface)"/><text x="64" y="82" text-anchor="middle" fill="var(--ink)">① fetch</text>
-            <rect x="120" y="62" width="92" height="30" rx="9" fill="var(--surface)"/><text x="166" y="82" text-anchor="middle" fill="var(--ink)">② parse</text>
-            <rect x="18" y="100" width="92" height="30" rx="9" fill="var(--surface)"/><text x="64" y="120" text-anchor="middle" fill="var(--ink)">③ link</text>
-            <rect x="120" y="100" width="92" height="30" rx="9" fill="var(--surface)"/><text x="166" y="120" text-anchor="middle" fill="var(--ink)">④ derive</text>
+            <rect x="18" y="62" width="92" height="30" rx="9" fill="var(--surface)"/><text x="64" y="82" text-anchor="middle" fill="var(--ink)">① 수집</text>
+            <rect x="120" y="62" width="92" height="30" rx="9" fill="var(--surface)"/><text x="166" y="82" text-anchor="middle" fill="var(--ink)">② 정리</text>
+            <rect x="18" y="100" width="92" height="30" rx="9" fill="var(--surface)"/><text x="64" y="120" text-anchor="middle" fill="var(--ink)">③ 연결</text>
+            <rect x="120" y="100" width="92" height="30" rx="9" fill="var(--surface)"/><text x="166" y="120" text-anchor="middle" fill="var(--ink)">④ 변화</text>
           </g>
-          <text x="18" y="156" font-size="11.5" fill="var(--ink-2)">증분 수집 · 재실행해도 결과 동일</text>
+          <text x="18" y="156" font-size="11.5" fill="var(--ink-2)">새것만 처리 · 다시 돌려도 결과 같음</text>
         </g>
         <path d="M470 162 L520 162" stroke="var(--ink-3)" stroke-width="1.6" marker-end="url(#ar2)"/>
-        <text x="473" y="150" font-size="11" fill="var(--ink-3)">쓰기 계정</text>
+        <text x="473" y="150" font-size="11" fill="var(--ink-3)">쓰기 전용</text>
         <g transform="translate(524 52)">
           <path d="M0 22 C0 6 200 6 200 22 L200 210 C200 226 0 226 0 210 Z" fill="var(--surface)" stroke="var(--line-2)"/>
           <ellipse cx="100" cy="22" rx="100" ry="16" fill="var(--surface-2)" stroke="var(--line-2)"/>
           <text x="100" y="27" text-anchor="middle" font-size="13" font-weight="850" fill="var(--ink)">Supabase PostgreSQL</text>
           <g font-size="12">
-            <rect x="16" y="52" width="168" height="40" rx="10" fill="var(--bg-tint)"/><text x="28" y="70" font-weight="800" fill="var(--ink)">원본 raw</text><text x="28" y="85" fill="var(--ink-3)" font-size="11">응답 그대로 · 해시로 변경 감지</text>
-            <rect x="16" y="100" width="168" height="40" rx="10" fill="var(--bg-tint)"/><text x="28" y="118" font-weight="800" fill="var(--ink)">정규화</text><text x="28" y="133" fill="var(--ink-3)" font-size="11">법령·조문 버전·문서</text>
-            <rect x="16" y="148" width="168" height="40" rx="10" fill="var(--bg-tint)"/><text x="28" y="166" font-weight="800" fill="var(--ink)">파생</text><text x="28" y="181" fill="var(--ink-3)" font-size="11">인용 링크·변화 이벤트·집계</text>
+            <rect x="16" y="52" width="168" height="40" rx="10" fill="var(--bg-tint)"/><text x="28" y="70" font-weight="800" fill="var(--ink)">① 원문 보관</text><text x="28" y="85" fill="var(--ink-3)" font-size="11">받은 그대로 · 바뀐 것만 새로 저장</text>
+            <rect x="16" y="100" width="168" height="40" rx="10" fill="var(--bg-tint)"/><text x="28" y="118" font-weight="800" fill="var(--ink)">② 정리된 데이터</text><text x="28" y="133" fill="var(--ink-3)" font-size="11">법령·조문(시행일별)·문서</text>
+            <rect x="16" y="148" width="168" height="40" rx="10" fill="var(--bg-tint)"/><text x="28" y="166" font-weight="800" fill="var(--ink)">③ 연결·변화</text><text x="28" y="181" fill="var(--ink-3)" font-size="11">조문 연결·변화 기록·집계</text>
           </g>
         </g>
         <path d="M724 162 L768 162" stroke="var(--ink-3)" stroke-width="1.6" marker-end="url(#ar2)"/>
-        <text x="726" y="150" font-size="11" fill="var(--ink-3)">읽기 계정</text>
+        <text x="726" y="150" font-size="11" fill="var(--ink-3)">읽기 전용</text>
         <g transform="translate(772 120)"><rect width="100" height="84" rx="16" fill="var(--surface)" stroke="var(--line-2)"/><text x="50" y="34" text-anchor="middle" font-size="13" font-weight="850" fill="var(--ink)">FastAPI</text><text x="50" y="52" text-anchor="middle" font-size="11" fill="var(--ink-3)">Render</text><text x="50" y="68" text-anchor="middle" font-size="11" fill="var(--ink-3)">GET 10개</text></g>
         <path d="M872 162 L900 162" stroke="var(--ink-3)" stroke-width="1.6" marker-end="url(#ar2)"/>
         <g transform="translate(904 120)"><rect width="80" height="84" rx="16" fill="var(--brand)"/><text x="40" y="38" text-anchor="middle" font-size="13" font-weight="850" fill="var(--on-brand)">화면</text><text x="40" y="58" text-anchor="middle" font-size="11" fill="var(--on-brand)" opacity=".8">Vercel</text></g>
         <path d="M624 274 C624 330 944 330 944 208" stroke="var(--ink-3)" stroke-width="1.4" stroke-dasharray="4 5" fill="none" marker-end="url(#ar2)"/>
-        <text x="560" y="350" font-size="11.5" fill="var(--ink-3)">정적 스냅숏(JSON): API가 잠들거나 장애일 때 화면이 자동으로 사용</text>
+        <text x="540" y="350" font-size="11.5" fill="var(--ink-3)">대표 데이터 파일(JSON): API가 잠들었거나 장애일 때 화면이 자동으로 사용</text>
       </svg>
     </figure>
     <div class="g3 principles" style="margin-top:16px">
-      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-db"/></svg></span><div><h4>원본 먼저, 가공은 나중</h4><p>원천 응답을 그대로 보관하고 그 위에서 가공합니다. 인용 규칙을 고치면 원천을 다시 긁지 않고 <span class="code-ex">link --all</span>만 다시 돌립니다.</p></div></div>
-      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-check"/></svg></span><div><h4>증분·멱등</h4><p>내용 해시로 바뀐 것만 처리하고, 모든 쓰기는 자연키 UPSERT입니다. 같은 날 두 번 돌려도 결과가 같은 것을 실제로 확인했습니다.</p></div></div>
-      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-pending"/></svg></span><div><h4>조문은 시행일 버전</h4><p>현행과 시행예정 본문을 함께 저장하고, 각 버전의 효력 구간을 계산합니다. 시행예정만 있는 신설 조문은 현행으로 보이지 않게 합니다.</p></div></div>
-      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-link"/></svg></span><div><h4>연결에는 근거와 신뢰도</h4><p>모든 링크에 원문 표현·해석 방법·신뢰도를 남겨, 화면에서 “왜 이 조문과 연결됐는지”를 보여 줍니다.</p></div></div>
-      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-bell"/></svg></span><div><h4>변화는 이벤트로</h4><p>새 해석·개정·행정지도 만료를 한 테이블에 쌓아, 홈 피드와 관심 조문 모니터링이 같은 데이터를 씁니다.</p></div></div>
-      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-shield"/></svg></span><div><h4>멈추지 않는 화면</h4><p>API가 응답하지 않으면 실제 API 응답을 떠 둔 스냅숏으로 자동 전환합니다. 발표 시연 중 서버가 잠들어도 화면은 동작합니다.</p></div></div>
+      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-db"/></svg></span><div><h4>받은 원문은 그대로 보관</h4><p>원천에서 받은 내용을 고치지 않고 저장해 두고, 그것을 정리해서 씁니다. 연결 규칙을 고쳐도 원천 사이트에 다시 요청하지 않고 저장된 원문으로 다시 계산합니다.</p></div></div>
+      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-check"/></svg></span><div><h4>바뀐 것만, 몇 번 돌려도 같게</h4><p>새 글이나 내용이 바뀐 글만 처리합니다. 같은 작업을 두 번 실행해도 데이터가 중복으로 쌓이지 않습니다(실제로 확인).</p></div></div>
+      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-pending"/></svg></span><div><h4>조문은 시행일별로 보관</h4><p>지금 시행 중인 본문과 앞으로 시행될 본문을 함께 저장하고, 각 본문이 언제부터 언제까지 효력이 있는지 계산합니다. 아직 시행 전인 신설 조문은 현행으로 보이지 않습니다.</p></div></div>
+      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-link"/></svg></span><div><h4>연결에는 근거를 함께</h4><p>모든 연결에 원문의 어느 표현을 보고 연결했는지와 그 확실한 정도를 남겨, 화면에서 “왜 이 조문과 연결됐는지”를 보여 줍니다.</p></div></div>
+      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-bell"/></svg></span><div><h4>변화는 한곳에 기록</h4><p>새 해석, 조문 개정·시행 예정, 행정지도 시행·만료를 한 표에 날짜와 함께 쌓습니다. 홈의 ‘최근 변화’와 관심 조문 화면이 같은 기록을 씁니다.</p></div></div>
+      <div class="card pc"><span class="pi"><svg class="i"><use href="#i-shield"/></svg></span><div><h4>멈추지 않는 화면</h4><p>서버가 응답하지 않으면 미리 저장해 둔 대표 데이터로 자동으로 바꿔 보여 줍니다. 무료 서버가 잠들어 있어도 화면은 멈추지 않습니다.</p></div></div>
     </div>
   </section>
 
   <!-- ============================================================ 07 -->
   <section class="s" id="pipeline">
     <div class="s-no">07 · 수집 파이프라인</div>
-    <h2>네 단계는 각각 따로, 몇 번이든 다시 돌릴 수 있습니다</h2>
-    <p class="intro">한 단계가 실패해도 다음 단계는 이미 저장된 데이터로 진행하고, 실패 기록은 <span class="code-ex">pipeline_runs</span>에 남아 <span class="code-ex">/health</span>로 확인합니다.</p>
+    <h2>네 단계로 나눠, 단계마다 따로 다시 돌릴 수 있습니다</h2>
+    <p class="intro">한 단계가 실패해도 다음 단계는 이미 저장된 데이터로 진행합니다. 각 단계의 결과와 실패 사유는 <span class="code-ex">pipeline_runs</span> 표에 남고, <span class="code-ex">/health</span> 주소에서 바로 확인할 수 있습니다.</p>
     <div class="stages">
-      <div class="stg"><div class="tagline">STAGE 1</div><h4>fetch · 수집</h4><dl>
-        <dt>입력</dt><dd>원천 4곳</dd><dt>처리</dt><dd>법령: 검색 1회로 현재 일련번호만 확인, 바뀐 법령만 본문 수신. 포털: 최신순 목록을 넘기다 이미 받은 페이지에서 멈춤</dd>
-        <dt>출력</dt><dd><span class="code-ex">raw_payloads</span> (내용 해시가 같으면 저장 안 함)</dd></dl></div>
-      <div class="stg"><div class="tagline">STAGE 2</div><h4>parse · 정규화</h4><dl>
-        <dt>입력</dt><dd>미처리 원본</dd><dt>처리</dt><dd>조문 분리(부칙 제외), 시행예정 꼬리표로 버전 분리, HTML 공백·태그 정리, 하위 규정의 ‘법 제N조’로 위임 관계 추정</dd>
+      <div class="stg"><div class="tagline">1단계</div><h4>수집 (fetch)</h4><dl>
+        <dt>입력</dt><dd>원천 2곳 (법제처 Open API, 금융위 포털)</dd><dt>처리</dt><dd>법령: 법령마다 검색 1~2회로 현재 본·시행예정 본을 확인하고 처음 보는 본만 본문을 받음. 법률은 3단비교(위임 조문)도 받음. 포털: 최신순 목록을 넘기다 이미 받은 글만 나오면 멈춤. 전화번호·담당자 실명은 가리고 저장, 403·429면 즉시 중단</dd>
+        <dt>출력</dt><dd><span class="code-ex">raw_payloads</span> (내용이 같으면 다시 저장하지 않음)</dd></dl></div>
+      <div class="stg"><div class="tagline">2단계</div><h4>정리 (parse)</h4><dl>
+        <dt>입력</dt><dd>아직 정리하지 않은 원문</dd><dt>처리</dt><dd>조문 단위로 자르기(부칙 제외), 시행일별 본문 나누기, 서식·공백 정리. 위임 관계: 법률→시행령·시행규칙은 3단비교 공식 자료, 그 아래(감독규정·고시·세칙)는 본문의 ‘법 제N조’·‘영 제N조’ 인용으로 판단</dd>
         <dt>출력</dt><dd><span class="code-ex">articles · article_versions · delegations · documents</span></dd></dl></div>
-      <div class="stg"><div class="tagline">STAGE 3</div><h4>link · 인용 연결</h4><dl>
-        <dt>입력</dt><dd>새로 들어오거나 바뀐 문서</dd><dt>처리</dt><dd>인용 연결 엔진(08) → 실제 존재하는 조문인지 검증 → 문서 단위로 링크 통째 교체(사람이 검수한 링크는 보존)</dd>
+      <div class="stg"><div class="tagline">3단계</div><h4>연결 (link)</h4><dl>
+        <dt>입력</dt><dd>새로 들어오거나 바뀐 문서</dd><dt>처리</dt><dd>인용 연결 엔진(08)으로 본문의 ‘어느 법 몇 조’를 찾음 → 실제로 있는 조문인지 확인 → 그 문서의 연결을 새로 저장(사람이 검수한 연결은 유지)</dd>
         <dt>출력</dt><dd><span class="code-ex">article_links · unresolved_mentions</span></dd></dl></div>
-      <div class="stg"><div class="tagline">STAGE 4</div><h4>derive · 파생</h4><dl>
-        <dt>입력</dt><dd>문서·조문·링크</dd><dt>처리</dt><dd>새 해석·개정·시행예정·행정지도 시행/만료임박/만료·예고 마감 이벤트 생성(중복키로 1회만), 조문별 집계 갱신</dd>
+      <div class="stg"><div class="tagline">4단계</div><h4>변화 기록 (derive)</h4><dl>
+        <dt>입력</dt><dd>문서·조문·연결</dd><dt>처리</dt><dd>새 해석·비조치의견, 조문 개정·시행 예정, 행정지도 시행·만료 임박·만료를 기록(같은 일은 한 번만), 조문별 자료 수 다시 계산</dd>
         <dt>출력</dt><dd><span class="code-ex">change_events · article_stats</span></dd></dl></div>
     </div>
-    <h3 class="sub"><svg class="i"><use href="#i-clock"/></svg>원천별 주기</h3>
+    <h3 class="sub"><svg class="i"><use href="#i-clock"/></svg>원천별 요청량 (한 번 실행할 때)</h3>
     <div class="tbl-wrap"><table class="t">
-      <tr><th>원천</th><th>주기</th><th>하루 호출량(예상)</th><th>증분 기준</th></tr>
-      <tr><td><b>법제처 법령·행정규칙</b></td><td>매일 (GitHub Actions, IP 등록 불필요 확인)</td><td>대상 21개 × 검색 1~2회 + 바뀐 본문·3단비교만</td><td>법령일련번호(MST)가 바뀌었는지</td></tr>
-      <tr><td><b>포털 회신사례</b></td><td>매일</td><td>목록 1~2쪽 + 새 글 상세 (보통 0~10건)</td><td>원천 번호(dataIdx)가 이미 있는지</td></tr>
-      <tr><td><b>포털 행정지도</b></td><td>매일</td><td>목록 2회 (예고·시행)</td><td>행 전체 해시 (존속기간 변경까지 감지)</td></tr>
-      <tr><td><b>첫 적재</b></td><td>1회, 나눠서</td><td>회신 6,174건 × 1.2초 + 목록 ≈ 3시간 (실측) → <span class="code-ex">BACKFILL_LIMIT</span>로 며칠에 분할</td><td>—</td></tr>
+      <tr><th>원천</th><th>언제</th><th>요청량</th><th>새로 받을지 판단하는 기준</th></tr>
+      <tr><td><b>법제처 법령·행정규칙</b></td><td>수집 실행 때 (IP 등록 불필요 확인)</td><td>21건 × 검색 1~2회 + 처음 보는 본문·3단비교만</td><td>법령일련번호와 시행일이 처음 보는 것인지</td></tr>
+      <tr><td><b>포털 회신사례</b></td><td>수집 실행 때</td><td>목록 1~2쪽 + 새 글 상세 (보통 0~10건)</td><td>글 번호(dataIdx)를 이미 받았는지</td></tr>
+      <tr><td><b>포털 행정지도</b></td><td>수집 실행 때</td><td>목록 2회 (예고·시행)</td><td>목록 한 줄의 내용이 바뀌었는지 (존속기간 변경까지 감지)</td></tr>
+      <tr><td><b>첫 수집</b></td><td>1회</td><td>회신 6,174건을 1.5초 간격으로 ≈ 3시간 (실측). 한 번에 받을 양을 <span class="code-ex">BACKFILL_LIMIT</span>로 나눌 수 있음</td><td>—</td></tr>
     </table></div>
   </section>
 
@@ -337,7 +345,7 @@
   <section class="s" id="linker">
     <div class="s-no">08 · 인용 연결 엔진</div>
     <h2>서비스의 핵심 기술: 본문에서 ‘어느 법 몇 조’를 찾는다</h2>
-    <p class="intro">회신사례에는 관련 조문 칸이 없어, 본문 표기를 읽어 조문 키로 바꿔야 합니다. 실제 회신에서 관찰한 표기를 규칙으로 만들고, 각 연결에 방법과 신뢰도를 붙입니다.</p>
+    <p class="intro">회신사례에는 관련 조문 칸이 없어, 본문에 적힌 표기를 읽어 조문 고유 번호로 바꿔야 합니다. 실제 회신에서 관찰한 표기 방식을 규칙으로 만들고, 연결마다 어떤 방식으로 찾았는지와 확실한 정도를 붙입니다.</p>
     <div class="card anno">
       <div class="faint" style="font-size:12.5px;margin-bottom:14px">예시 문장 (실제 회신에서 관찰한 표기를 모은 설명용 문장) → 엔진이 찾은 인용</div>
       <p class="sent">□ <span class="hl m1"><i>법령명 명시</i>전자금융거래법(이하 '전금법') 제25조의2제1항</span>은 별도관리 방법으로 신탁, 예치, 지급보증보험을 열거하고 있을 뿐…
@@ -352,35 +360,35 @@
     </div>
     <div class="tbl-wrap" style="margin-top:16px"><table class="t">
         <tr><th style="width:46%">표기 (실제 회신에서 관찰)</th><th style="width:30%">해석 방법</th><th>신뢰도</th></tr>
-        <tr><td><span class="code-ex">「여신전문금융업법」 제2조제3호</span></td><td>법령명 명시</td><td><span class="meter"><i style="width:98%"></i></span>0.98</td></tr>
-        <tr><td><span class="code-ex">여신전문금융업법(이하 ‘여전법’)</span> → <span class="code-ex">여전법 제2조</span></td><td>문서 안에서 정의한 약칭</td><td><span class="meter"><i style="width:93%"></i></span>0.93</td></tr>
-        <tr><td><span class="code-ex">자본시장법 제180조</span></td><td>널리 쓰는 약칭(사전)</td><td><span class="meter"><i style="width:92%"></i></span>0.92</td></tr>
-        <tr><td><span class="code-ex">같은 법 시행령 제13조의2</span> · <span class="code-ex">및 제18조</span></td><td>직전 인용 법령 이어받음</td><td><span class="meter"><i style="width:88%"></i></span>0.88</td></tr>
-        <tr><td><span class="code-ex">이 법 제36조의2</span></td><td>문서의 주 법령</td><td><span class="meter"><i style="width:80%"></i></span>0.80</td></tr>
-        <tr><td><span class="code-ex">법 제25조의2</span> · <span class="code-ex">영 제13조</span></td><td>모법·하위규정 지칭 (+소관부서 단서)</td><td><span class="meter"><i style="width:78%"></i></span>0.78</td></tr>
-        <tr><td><span class="code-ex">통신사기피해환급법 2조의4 1항</span></td><td>‘제’ 없는 제목형</td><td><span class="meter"><i style="width:72%"></i></span>0.72</td></tr>
+        <tr><td><span class="code-ex">「보험업법」 제97조제1항</span></td><td>법령명 명시</td><td><span class="meter"><i style="width:98%"></i></span>0.98</td></tr>
+        <tr><td><span class="code-ex">전자금융거래법(이하 ‘전금법’)</span> → <span class="code-ex">전금법 제28조</span></td><td>문서 안에서 정한 약칭</td><td><span class="meter"><i style="width:93%"></i></span>0.93</td></tr>
+        <tr><td><span class="code-ex">자본시장법 제180조</span></td><td>널리 쓰는 약칭(약칭 사전)</td><td><span class="meter"><i style="width:92%"></i></span>0.92</td></tr>
+        <tr><td><span class="code-ex">같은 법 시행령 제13조의2</span> · <span class="code-ex">및 제18조</span></td><td>바로 앞에 인용한 법령을 이어받음</td><td><span class="meter"><i style="width:88%"></i></span>0.88</td></tr>
+        <tr><td><span class="code-ex">이 법 제36조의2</span></td><td>문서가 주로 다루는 법령</td><td><span class="meter"><i style="width:80%"></i></span>0.80</td></tr>
+        <tr><td><span class="code-ex">법 제25조의2</span> · <span class="code-ex">영 제13조</span></td><td>‘법’·‘영’으로 줄여 부름 (+담당 부서로 법령 추정)</td><td><span class="meter"><i style="width:78%"></i></span>0.78</td></tr>
+        <tr><td><span class="code-ex">은행법 2조 1항</span></td><td>‘제’를 빼고 쓴 표기</td><td><span class="meter"><i style="width:72%"></i></span>0.72</td></tr>
       </table></div>
     <div class="g2" style="margin-top:16px">
         <div class="card pc"><h4 style="margin-top:0">함정까지 규칙으로</h4><ul>
-          <li>HTML이 <span class="code-ex">제 2 조</span>처럼 쪼개져 들어옴 → 정규화 단계에서 붙임</li>
+          <li>원문이 <span class="code-ex">제 2 조</span>처럼 띄어져 들어옴 → 정리 단계에서 붙임</li>
           <li><span class="code-ex">5조 원</span>은 금액 → ‘제’도 법령명도 없으면 무시</li>
-          <li><span class="code-ex">제7-36조의2</span> 하이픈 번호는 감독규정 전용 → 법률로 잡히면 하위 규정으로 옮김</li>
+          <li><span class="code-ex">제7-36조의2</span> 같은 ‘숫자-숫자’ 번호는 감독규정·고시·세칙에만 있음 → 법률로 잡히면 하위 규정으로 옮김</li>
           <li>「은행법」에 따른 은행 → 조문 없는 법령명은 다음 조문에 영향 없음</li>
-          <li>목록에 없는 조문 번호는 버리지 않고 ‘미해결’로 기록</li></ul></div>
-        <div class="card pc"><h4 style="margin-top:0">실측과 개선 루프</h4>
-          <p>최근 실제 회신 10건에 적용 → 처음엔 미해결 13건(대부분 신용협동조합법·금융실명법 인용). 두 법령을 대상에 추가하자 <b>10건 중 9건 연결, 미해결 0건</b> (나머지 1건은 조문 인용이 없는 문서). 미해결 기록이 곧 ‘다음에 추가할 법령’ 목록이 됩니다. 테스트 20개로 회귀를 막습니다.</p></div>
+          <li>실제로 없는 조문 번호나 대상 밖 법령은 연결하지 않고 ‘미해결’로 따로 기록</li></ul></div>
+        <div class="card pc"><h4 style="margin-top:0">실제 결과 (회신 6,174건)</h4>
+          <p>대상 5개 법률을 언급한 회신 2,727건 중 <b>2,110건(77.4%)을 조문까지 연결</b>했습니다. 회신 전체로 보면 2,181건(35.3%)인데, 나머지 대부분이 대부업법(885회)·신용정보법(676회)처럼 아직 대상에 넣지 않은 법령을 인용하기 때문입니다. 이 ‘대상 밖 법령’ 기록이 곧 2단계 확대 순서의 근거가 됩니다. 규칙은 테스트 38개로 지킵니다.</p></div>
     </div>
   </section>
 
   <!-- ============================================================ 09 -->
   <section class="s" id="db">
     <div class="s-no">09 · 데이터베이스</div>
-    <h2>테이블 10개 + 집계 뷰 1개, 세 층으로 나눴습니다</h2>
+    <h2>표 10개와 집계 1개를 세 층으로 나눴습니다</h2>
     <p style="margin:-4px 0 16px"><a class="btn sm" href="docs/#db">DB 테이블 문서 전체 보기 (컬럼·PK·FK)</a></p>
-    <p class="intro">원본·운영 층은 배치만 보고, 정규화 층은 원천의 내용을 구조화하며, 파생 층은 서비스가 만든 연결과 변화입니다. 파생 층은 언제든 지우고 다시 만들 수 있습니다.</p>
+    <p class="intro">① 원문·운영 층은 수집 프로그램만 쓰는 보관함이고, ② 정리 층은 원천의 내용을 법령·조문·문서로 나눠 담은 것이며, ③ 연결·변화 층은 서비스가 계산해 만든 연결과 변화 기록입니다. ③은 언제든 지우고 ②에서 다시 계산할 수 있습니다.</p>
     <figure class="card figure" style="margin:0">
       <svg viewBox="0 0 1000 440" role="img" aria-label="데이터베이스 관계도">
-        <g font-size="11.5" font-weight="800" fill="var(--ink-3)"><text x="20" y="26">원본·운영</text><text x="250" y="26">정규화</text><text x="720" y="26">파생</text></g>
+        <g font-size="11.5" font-weight="800" fill="var(--ink-3)"><text x="20" y="26">① 원문·운영</text><text x="250" y="26">② 정리</text><text x="720" y="26">③ 연결·변화</text></g>
         <g font-size="12">
           <!-- raw -->
           <g transform="translate(20 40)"><rect width="190" height="88" rx="12" fill="var(--surface-2)" stroke="var(--line-2)"/><text x="12" y="22" font-weight="850" fill="var(--ink)" font-size="13">raw_payloads</text><text x="12" y="42" fill="var(--ink-2)">source · source_key · hash</text><text x="12" y="58" fill="var(--ink-2)">payload (원문 그대로)</text><text x="12" y="74" fill="var(--ink-3)">parsed_at</text></g>
@@ -403,13 +411,13 @@
           <path d="M450 192 C590 300 640 260 720 262"/>
         </g>
       </svg>
-      <figcaption>굵은 테두리 = 서비스의 중심(articles). 파생 층(옅은 남색)은 정규화 층에서 언제든 다시 계산할 수 있습니다.</figcaption>
+      <figcaption>굵은 테두리 = 서비스의 중심인 조문(articles). 옅은 남색(③ 연결·변화)은 ② 정리 층에서 언제든 다시 계산할 수 있습니다.</figcaption>
     </figure>
     <div class="g2" style="margin-top:16px">
       <div class="card pc"><h4 style="margin-top:0">데이터 규모 (1단계: 5개 법률 + 하위법령 21건)</h4><ul>
-        <li>조문 3,629개(실측) · 2단계 확대 시 약 5,000개</li><li>회신사례 약 12,100건 + 연 600~800건 증가 · 행정지도 수백 건</li>
-        <li>본문 텍스트 약 60~80MB + 인덱스 → Supabase 무료 한도(500MB) 안</li></ul></div>
-      <div class="card pc"><h4 style="margin-top:0">검색 인덱스</h4><p>한국어는 PostgreSQL 기본 전문검색이 형태소를 나누지 못해, <span class="code-ex">pg_trgm</span>(3글자 조각) GIN 인덱스로 부분일치·유사도 검색을 합니다. 규모가 커지면 Supabase가 지원하는 <span class="code-ex">PGroonga</span>로 바꿀 수 있습니다.</p></div>
+        <li>조문 3,629개 · 문서 6,341건(회신 6,174 + 행정지도 167) · 조문 연결 5,266개</li><li>회신은 해마다 수백 건씩 늘어남 · 2단계 확대 시 조문 약 5,000개</li>
+        <li>DB 전체 약 81MB(실측) → Supabase 무료 한도(500MB) 안</li></ul></div>
+      <div class="card pc"><h4 style="margin-top:0">검색 인덱스</h4><p>PostgreSQL 기본 검색은 한국어 단어를 잘게 나누지 못합니다. 그래서 <span class="code-ex">pg_trgm</span>(글자 세 개씩 묶어 찾는 색인)으로 단어 일부만 입력해도 찾게 했습니다. 규모가 커지면 Supabase가 지원하는 한국어 검색 확장(<span class="code-ex">PGroonga</span>)으로 바꿀 수 있습니다.</p></div>
     </div>
   </section>
 
@@ -417,29 +425,29 @@
   <section class="s" id="api">
     <div class="s-no">10 · API</div>
     <h2>조회 전용 GET 10개</h2>
-    <p class="intro">모든 응답은 JSON, 날짜는 ISO 8601, 오류는 <span class="code-ex">{"detail": …}</span> 형식입니다. 데이터가 하루 한 번 바뀌므로 <span class="code-ex">Cache-Control: max-age=300</span>을 붙입니다. 아래 예시는 실제 응답을 불러와 보여 줍니다(일부 생략). <span class="code-ex">/docs</span>에서 바로 시험할 수 있습니다.</p>
+    <p class="intro">모든 응답은 JSON이고, 날짜는 <span class="code-ex">2026-10-02</span> 형식, 오류는 <span class="code-ex">{"detail": …}</span> 형식입니다. 데이터가 자주 바뀌지 않아 브라우저가 5분간 응답을 재사용하게 했습니다. 아래 예시는 실제 응답의 일부입니다. <a href="https://finreg-api-nbco.onrender.com/docs" target="_blank" rel="noopener" style="color:var(--brand-2);font-weight:700">Swagger UI(/docs)</a>에서 바로 시험할 수 있습니다.</p>
     <p style="margin:-12px 0 18px"><a class="btn sm" href="docs/#api">API 설명 문서 전체 보기 (입력값·응답 형식·예시)</a></p>
     <details class="api" open><summary><span class="m">GET</span><code>/articles/{key}</code><span class="d">조문 카드: 현행·시행예정 본문, 위임, 연결 자료, 변화</span></summary><pre data-src="app/data/articles/efta__25%EC%9D%982.json" data-trim="article"></pre></details>
     <details class="api"><summary><span class="m">GET</span><code>/articles/{key}/graph?depth=2&amp;per_kind=3</code><span class="d">연결 지도: 위임 관계(위·아래 2단계) + 인용 문서를 점·선 목록으로</span></summary><pre data-src="app/data/graph/efta__25%EC%9D%982.json" data-trim="graph"></pre></details>
-    <details class="api"><summary><span class="m">GET</span><code>/search?q=&amp;kinds=&amp;orgs=&amp;laws=&amp;from=&amp;to=&amp;sort=</code><span class="d">통합검색 + 조문 바로가기 + 유형별 개수</span></summary><pre>{
+    <details class="api"><summary><span class="m">GET</span><code>/search?q=&amp;kinds=&amp;orgs=&amp;from=&amp;to=&amp;sort=</code><span class="d">조문 찾기 + 해석·의견 찾기 + 유형별 개수</span></summary><pre>{
   "query": "전금법 제25조의2",
   "jump": { "key": "efta:25의2", "label": "제25조의2", "title": "선불충전금의 보호", "law_name": "전자금융거래법" },
-  "total": 8, "facets": { "법령해석": 4, "비조치의견": 2, "행정지도": 1, "입법예고": 1 },
-  "articles": [],
-  "items": [ { "id": "demo:lawreq:101", "kind": "법령해석", "score": 3.0, "snippet": "…", "articles": [ … ] }, … ]
+  "total": 18, "facets": { "법령해석": 16, "비조치의견": 2 },
+  "articles": [], "articles_total": 0,
+  "items": [ { "id": "fsc.lawreq:4674", "kind": "법령해석", "score": 3.0, "snippet": "…", "articles": [ … ] }, … ]
 }</pre></details>
     <details class="api"><summary><span class="m">GET</span><code>/documents/{id}</code><span class="d">원문 + 인용 조문(근거 표현·방법·신뢰도) + 같은 조문을 다룬 자료</span></summary><pre id="docPre" data-trim="doc">불러오는 중…</pre></details>
     <details class="api"><summary><span class="m">GET</span><code>/feed?days=&amp;laws=&amp;articles=&amp;kinds=</code><span class="d">변화 피드 · 관심 조문 키를 보내면 그 조문 관련 변화만</span></summary><pre data-src="app/data/feed.json" data-trim="feed"></pre></details>
     <div class="tbl-wrap" style="margin-top:14px"><table class="t">
       <tr><th>요청</th><th>기능</th><th>쓰는 화면</th></tr>
       <tr><td><b>GET /health</b></td><td>DB 연결, 데이터 기준 시각, 단계별 마지막 실행 결과</td><td>상태 확인·푸터</td></tr>
-      <tr><td><b>GET /laws</b> · <b>/laws/{slug}/toc</b></td><td>법령 묶음(법률·시행령·감독규정), 장별 목차와 조문별 연결 건수</td><td>법령</td></tr>
+      <tr><td><b>GET /laws</b> · <b>/laws/{slug}/toc</b></td><td>법률과 하위법령 목록, 법령별 장·조 목차와 조문별 연결 건수</td><td>법령</td></tr>
       <tr><td><b>GET /articles/{key}</b></td><td>조문 카드</td><td>조문</td></tr>
       <tr><td><b>GET /analysis</b></td><td>수집 데이터 분석·정리 (출처별 수집 현황, 연도별·부서별 회신, 인용 상위 법령·조문, 연결 품질, 행정지도, 법령 구조)</td><td>데이터 분석</td></tr>
       <tr><td><b>GET /articles/{key}/graph</b></td><td>연결 지도용 점(조문·문서)·선(위임·인용) 목록. 입력: depth(1~2), per_kind(1~10)</td><td>조문 (연결 지도)</td></tr>
-      <tr><td><b>GET /search</b></td><td>통합검색</td><td>검색·홈</td></tr>
+      <tr><td><b>GET /search</b></td><td>조문(제목·본문)과 해석·의견을 함께 검색, 조문 표기 바로가기, 유형별 개수</td><td>해석·의견 찾기</td></tr>
       <tr><td><b>GET /documents/{id}</b></td><td>문서 상세</td><td>문서</td></tr>
-      <tr><td><b>GET /feed</b> · <b>/guidance</b></td><td>변화 피드, 행정지도 현황(시행 중·만료임박·예고)</td><td>홈·행정지도·관심 조문</td></tr>
+      <tr><td><b>GET /feed</b> · <b>/guidance</b></td><td>최근 변화 목록, 행정지도 현황(시행 중·만료 임박·예고)</td><td>홈·행정지도·관심 조문</td></tr>
       <tr><td colspan="3" class="faint">오류: 404 없는 조문·문서 · 422 허용하지 않는 값(예: sort=bad) · 503 DB 연결 실패</td></tr>
     </table></div>
   </section>
@@ -452,24 +460,24 @@
       <div class="tbl-wrap"><table class="t">
         <tr><th style="width:16%;min-width:58px">구성</th><th style="min-width:76px">서비스</th><th>무료 한도와 대응</th></tr>
         <tr><td><b>화면</b></td><td>Vercel</td><td>정적 파일만 → 한도 걱정 없음</td></tr>
-        <tr><td><b>API</b></td><td>Render (FastAPI)</td><td>15분 유휴 시 절전 → 화면이 스냅숏으로 자동 전환, 발표 전 /health로 깨움</td></tr>
-        <tr><td><b>DB</b></td><td>Supabase</td><td>500MB · 1주 미사용 시 일시정지 → 매일 배치가 쓰기로 깨워 둠</td></tr>
-        <tr><td><b>배치</b></td><td>GitHub Actions</td><td>Render 무료는 크론 미지원 → Actions 스케줄 + 수동 실행 버튼</td></tr>
+        <tr><td><b>API</b></td><td>Render (FastAPI)</td><td>15분간 요청이 없으면 잠듦 → 화면이 대표 데이터로 자동 전환, 발표 전 /health로 깨움</td></tr>
+        <tr><td><b>DB</b></td><td>Supabase</td><td>500MB(현재 약 81MB) · 1주 미사용 시 일시정지 → 수집을 정기 실행하면 자동 방지, 아니면 발표 전 대시보드에서 확인</td></tr>
+        <tr><td><b>수집</b></td><td>GitHub Actions</td><td>Render 무료는 예약 실행이 안 됨 → Actions에서 버튼으로 실행(매일 예약도 가능), 공개 저장소라 무료</td></tr>
       </table></div>
       <div style="display:grid;gap:12px;align-content:start">
-        <div class="card pc principles" style="display:grid;grid-template-columns:44px 1fr;gap:14px"><span class="pi"><svg class="i"><use href="#i-shield"/></svg></span><div><h4 style="margin:0 0 4px">계정 분리 + RLS</h4><p>배치는 <span class="code-ex">batch_writer</span>(쓰기), API는 <span class="code-ex">api_reader</span>(읽기, 5초 쿼리 제한). 모든 테이블에 RLS를 켜서 Supabase 공개 키로는 접근 불가. CORS는 Vercel 주소만 허용.</p></div></div>
-        <div class="card pc principles" style="display:grid;grid-template-columns:44px 1fr;gap:14px"><span class="pi"><svg class="i"><use href="#i-globe"/></svg></span><div><h4 style="margin:0 0 4px">원천 배려·출처</h4><p>호스트당 1.5초 간격, 새 글만, 연락처를 담은 User-Agent. 원문은 고치지 않고 저장·표시하며 모든 문서에 출처 링크. 포털 저작권정책의 링크 통지 의무는 정식 공개 전 이행.</p></div></div>
-        <div class="card pc principles" style="display:grid;grid-template-columns:44px 1fr;gap:14px"><span class="pi"><svg class="i"><use href="#i-user"/></svg></span><div><h4 style="margin:0 0 4px">개인정보를 받지 않는다</h4><p>로그인 없음. 관심 조문은 브라우저에만 저장하고, 서버에는 조문 키만 질의로 보냅니다.</p></div></div>
+        <div class="card pc principles" style="display:grid;grid-template-columns:44px 1fr;gap:14px"><span class="pi"><svg class="i"><use href="#i-shield"/></svg></span><div><h4 style="margin:0 0 4px">계정 분리 + 접근 제한</h4><p>수집 프로그램은 <span class="code-ex">batch_writer</span>(쓰기), API는 <span class="code-ex">api_reader</span>(읽기, 쿼리당 5초 제한)로 접속합니다. 모든 표에 행 수준 보안(RLS)을 켜고, API는 Vercel 화면 주소에서 온 요청만 받습니다(CORS).</p></div></div>
+        <div class="card pc principles" style="display:grid;grid-template-columns:44px 1fr;gap:14px"><span class="pi"><svg class="i"><use href="#i-globe"/></svg></span><div><h4 style="margin:0 0 4px">원천 사이트 배려·출처</h4><p>같은 사이트에는 1.5초 간격으로, 새 글만 요청하고, 요청에 우리 연락처를 밝힙니다. 사이트가 403·429로 거부하면 즉시 멈추고 기록합니다. 모든 문서에 원문 출처 링크를 답니다. 포털 저작권정책의 링크 통지는 정식 공개 전에 이행합니다.</p></div></div>
+        <div class="card pc principles" style="display:grid;grid-template-columns:44px 1fr;gap:14px"><span class="pi"><svg class="i"><use href="#i-user"/></svg></span><div><h4 style="margin:0 0 4px">개인정보를 모으지 않는다</h4><p>로그인이 없고, 관심 조문은 사용자 브라우저에만 저장합니다. 수집한 원문에 들어 있던 전화번호·담당 공무원 실명, 행정지도 등록자 이름은 저장하기 전에 가립니다.</p></div></div>
       </div>
     </div>
 
     <h3 class="sub"><svg class="i"><use href="#i-shield"/></svg>DB 접속 계정: 용도별 역할(role) 분리 — 최소 권한 원칙</h3>
-    <p class="intro" style="margin-bottom:14px">이 서비스는 DB를 쓰는 주체가 둘입니다. 인터넷에 공개된 <b>조회 API</b>는 읽기만, 매일 도는 <b>수집 배치</b>는 쓰기만 합니다. 그래서 같은 PostgreSQL 안에 역할을 셋으로 나누고, 각자 맡은 일에 필요한 권한만 주었습니다(Principle of Least Privilege).</p>
+    <p class="intro" style="margin-bottom:14px">이 서비스는 DB를 쓰는 프로그램이 둘입니다. 인터넷에 공개된 <b>조회 API</b>는 읽기만, <b>수집 프로그램</b>은 쓰기만 합니다. 그래서 같은 PostgreSQL 안에 접속 계정(역할)을 셋으로 나누고, 각자 맡은 일에 필요한 권한만 주었습니다(최소 권한 원칙).</p>
     <div class="tbl-wrap"><table class="t">
       <tr><th style="width:16%">역할(role)</th><th style="width:22%">누가 쓰나</th><th>권한(GRANT)과 제한</th><th style="width:20%">언제</th></tr>
       <tr><td><span class="code-ex">postgres</span></td><td>사람(관리자)</td><td>전부 — 테이블 생성·변경·삭제(DDL) 포함</td><td>처음 스키마 만들 때, 초기 데이터 적재 1회</td></tr>
-      <tr><td><span class="code-ex">batch_writer</span></td><td>수집 배치 (GitHub Actions)</td><td><span class="code-ex">SELECT·INSERT·UPDATE·DELETE</span>만. 테이블 구조는 못 바꿈. 집계 뷰 갱신은 소유자 권한 함수(<span class="code-ex">SECURITY DEFINER</span>)로만</td><td>매일 06:00 (KST)</td></tr>
-      <tr><td><span class="code-ex">api_reader</span></td><td>조회 API (FastAPI · Render)</td><td><span class="code-ex">SELECT</span>만. 원본 보관 테이블(<span class="code-ex">raw_payloads</span>)은 읽기도 불가. 쿼리당 5초 제한(<span class="code-ex">statement_timeout</span>)</td><td>사용자가 화면을 볼 때마다</td></tr>
+      <tr><td><span class="code-ex">batch_writer</span></td><td>수집 프로그램 (GitHub Actions)</td><td><span class="code-ex">SELECT·INSERT·UPDATE·DELETE</span>만. 표 구조는 못 바꿈. 집계 다시 계산은 미리 만들어 둔 함수(<span class="code-ex">SECURITY DEFINER</span>)로만</td><td>수집을 실행할 때</td></tr>
+      <tr><td><span class="code-ex">api_reader</span></td><td>조회 API (FastAPI · Render)</td><td><span class="code-ex">SELECT</span>만. 원문 보관 표(<span class="code-ex">raw_payloads</span>)는 읽기도 불가. 쿼리당 5초 제한(<span class="code-ex">statement_timeout</span>)</td><td>사용자가 화면을 볼 때마다</td></tr>
     </table></div>
     <div class="g3" style="margin-top:14px">
       <div class="card pc"><h4 style="margin-top:0">피해 범위를 줄인다</h4><p>공격받기 쉬운 곳은 인터넷에 열린 Render 서버입니다. 그 연결 정보가 새거나 코드에 허점이 있어도 <span class="code-ex">api_reader</span>로는 이미 공개된 데이터를 읽는 것밖에 못 합니다. 관리자 계정이었다면 테이블 삭제까지 가능합니다.</p></div>
@@ -481,20 +489,20 @@
     <p class="intro" style="margin-bottom:14px">개발 환경(FastAPI · Supabase PostgreSQL · Render · Vercel · GitHub)은 가이드 그대로입니다. 다만 수업의 가계부 API와 서비스 구조가 달라, 아래 네 가지는 다르게 설계했습니다. 모두 가이드가 정한 범위 안의 선택입니다.</p>
     <div class="tbl-wrap"><table class="t">
       <tr><th style="width:15%">항목</th><th style="width:27%">수업 실습 (가계부 API)</th><th style="width:27%">이 프로젝트</th><th>이유</th></tr>
-      <tr><td><b>DB를 쓰는 프로그램</b></td><td>FastAPI 앱 하나가 읽기·쓰기 모두 (POST로 저장, GET으로 조회)</td><td>조회 API는 읽기만, 쓰기는 수집 배치만</td><td>사용자는 조회만 하고, 데이터는 공공 원천에서 매일 자동으로 들어오는 서비스이기 때문</td></tr>
+      <tr><td><b>DB를 쓰는 프로그램</b></td><td>FastAPI 앱 하나가 읽기·쓰기 모두 (POST로 저장, GET으로 조회)</td><td>조회 API는 읽기만, 쓰기는 수집 프로그램만</td><td>사용자는 조회만 하고, 데이터는 공공 원천에서 매일 자동으로 들어오는 서비스이기 때문</td></tr>
       <tr><td><b>DB 접속 계정</b></td><td>관리자 <span class="code-ex">postgres</span> 하나를 모든 곳에</td><td>역할 셋으로 분리 (위 표)</td><td>최소 권한 원칙 — 공개 서버에는 읽기 권한만</td></tr>
-      <tr><td><b>테이블 생성</b></td><td>ORM(SQLAlchemy) 클래스 + 앱 시작 시 <span class="code-ex">create_all()</span></td><td>SQL 스크립트(<span class="code-ex">001_schema.sql</span>)를 SQL Editor에서 실행, DB 접근은 드라이버(<span class="code-ex">psycopg</span>)로 SQL 직접 실행</td><td>권한·RLS·구체화 뷰·부분 인덱스처럼 ORM 모델로 표현하기 어려운 DB 기능을 쓰고, 조회 API에는 테이블을 만들 권한 자체가 없기 때문</td></tr>
+      <tr><td><b>테이블 생성</b></td><td>ORM(SQLAlchemy) 클래스 + 앱 시작 시 <span class="code-ex">create_all()</span></td><td>SQL 스크립트(<span class="code-ex">001_schema.sql</span>)를 SQL Editor에서 실행, DB 접근은 드라이버(<span class="code-ex">psycopg</span>)로 SQL 직접 실행</td><td>계정 권한·행 수준 보안·집계 뷰처럼 ORM으로 표현하기 어려운 DB 기능을 쓰고, 조회 API에는 표를 만들 권한 자체가 없기 때문</td></tr>
       <tr><td><b>비밀값 관리</b></td><td>로컬 <span class="code-ex">.env</span> + Render 환경변수</td><td>Render 환경변수 + GitHub Actions Secrets (로컬 1회 작업은 화면에 안 보이는 입력)</td><td>원칙은 같음 — 연결 문자열은 코드·저장소에 두지 않는다</td></tr>
     </table></div>
     <div class="callout info"><svg class="i l" style="color:var(--brand-2)"><use href="#i-info"/></svg><div><b>연결 문자열 형식 주의</b>
-      <p>수업은 SQLAlchemy용으로 앞머리를 <span class="code-ex">postgresql+psycopg://</span>로 바꾸지만, 이 프로젝트는 드라이버를 직접 쓰므로 Supabase에서 복사한 <span class="code-ex">postgresql://</span> 그대로 씁니다(Session pooler, 포트 5432). 사용자 이름만 역할에 맞게 <span class="code-ex">batch_writer.&lt;프로젝트ref&gt;</span> · <span class="code-ex">api_reader.&lt;프로젝트ref&gt;</span>로 바꿉니다.</p></div></div>
+      <p>수업은 SQLAlchemy용으로 앞머리를 <span class="code-ex">postgresql+psycopg://</span>로 바꾸지만, 이 프로젝트는 드라이버를 직접 쓰므로 Supabase에서 복사한 <span class="code-ex">postgresql://</span> 그대로 씁니다(Session pooler, 포트 5432). 아이디 자리만 역할에 맞게 <span class="code-ex">batch_writer.[프로젝트ID]</span> · <span class="code-ex">api_reader.[프로젝트ID]</span>로 바꿉니다.</p></div></div>
   </section>
 
   <!-- ============================================================ 12 -->
   <section class="s" id="plan">
     <div class="s-no">12 · 일정·역할</div>
-    <h2>데이터부터 쌓고, 화면은 이미 붙어 있습니다</h2>
-    <p class="intro">초록 체크는 이번 기획 단계에서 이미 구현·검증한 항목입니다. 법제처 Open API 전환까지 끝났고, 남은 일은 배포(Supabase·Render·Vercel)와 연결 검수입니다.</p>
+    <h2>배포까지 끝났고, 이제 검수와 발표 준비입니다</h2>
+    <p class="intro">초록 체크는 구현·확인을 마친 항목입니다. 서비스는 Vercel·Render·Supabase에 배포되어 실제 데이터로 동작하고 있고, 남은 일은 연결 검수와 발표 준비입니다.</p>
     <div class="tl">
       <div class="card wk"><div class="w">5주차</div><h4>뼈대와 엔진</h4><ul>
         <li class="done"><svg class="i"><use href="#i-check"/></svg>스키마 10개 테이블·계정·RLS</li>
@@ -509,13 +517,13 @@
         <li><svg class="i"><use href="#i-clock"/></svg>무작위 100건 수동 검수 → 별칭·규칙 보강</li></ul>
         <div class="crit"><b>완료 기준</b> 검수 100건 기준 연결 정밀도 95%↑</div></div>
       <div class="card wk"><div class="w">7주차</div><h4>배포와 자동화</h4><ul>
-        <li class="done"><svg class="i"><use href="#i-check"/></svg>조회 API 10개 (로컬 검증)</li>
-        <li class="done"><svg class="i"><use href="#i-check"/></svg>화면 7개 + 스냅숏 폴백</li>
-        <li><svg class="i"><use href="#i-clock"/></svg>Supabase·Render 배포, Actions 매일 실행</li>
-        <li><svg class="i"><use href="#i-clock"/></svg>국회 입법예고 수집기</li></ul>
-        <div class="crit"><b>완료 기준</b> 배포 주소에서 실데이터로 화면 동작</div></div>
+        <li class="done"><svg class="i"><use href="#i-check"/></svg>Supabase·Render·Vercel 배포, 화면이 API로 실데이터 표시</li>
+        <li class="done"><svg class="i"><use href="#i-check"/></svg>조회 API 10개 · 화면 9개 · 서버가 잠들면 대표 데이터로 자동 전환</li>
+        <li class="done"><svg class="i"><use href="#i-check"/></svg>개인정보 가리기 · 403·429 수집 중단 장치</li>
+        <li><svg class="i"><use href="#i-clock"/></svg>GitHub Actions 정기 수집 여부 결정</li></ul>
+        <div class="crit"><b>완료 기준</b> 배포 주소에서 실데이터로 화면 동작 <span class="done-tag">달성</span></div></div>
       <div class="card wk"><div class="w">8주차</div><h4>다듬기·발표</h4><ul>
-        <li><svg class="i"><use href="#i-clock"/></svg>금감원 행정지도(가능 시)</li>
+        <li class="done"><svg class="i"><use href="#i-check"/></svg>화면 정리(메뉴 구분, 5개 법률 전환, 좁은 화면)</li>
         <li><svg class="i"><use href="#i-clock"/></svg>성능 점검·오류 처리</li>
         <li><svg class="i"><use href="#i-clock"/></svg>시연 시나리오 리허설</li></ul>
         <div class="crit"><b>완료 기준</b> 라이브 시연: 검색 → 조문 카드 → 해석 원문 → 관심 등록</div></div>
@@ -524,7 +532,7 @@
     <div class="tbl-wrap"><table class="t">
       <tr><th>영역</th><th>맡는 일</th><th>주 산출물</th></tr>
       <tr><td><b>법령 수집</b></td><td>법제처 Open API 운영, 시행예정 본 관리, 3단비교</td><td><span class="code-ex">batch/sources/lawgo.py</span></td></tr>
-      <tr><td><b>포털·행정지도 수집</b></td><td>회신·행정지도 수집, 분할 적재, 금감원 확장</td><td><span class="code-ex">batch/sources/fscportal.py</span></td></tr>
+      <tr><td><b>포털·행정지도 수집</b></td><td>회신·행정지도 수집, 개인정보 가리기, 수집 범위 확장</td><td><span class="code-ex">batch/sources/fscportal.py</span></td></tr>
       <tr><td><b>인용 연결·검수</b></td><td>별칭 사전, 100건 검수, 규칙·테스트 보강</td><td><span class="code-ex">batch/linker.py</span> · <span class="code-ex">tests/</span></td></tr>
       <tr><td><b>DB·API</b></td><td>Supabase 구성, Render 배포, 성능·오류</td><td><span class="code-ex">sql/</span> · <span class="code-ex">app/</span></td></tr>
       <tr><td><b>화면·발표</b></td><td>화면 다듬기, Vercel, 시연 흐름</td><td><span class="code-ex">service/app/</span> · 이 기획서</td></tr>
@@ -537,12 +545,13 @@
     <h2>잘못 연결하는 것보다, 연결하지 않는 편이 낫다</h2>
     <div class="tbl-wrap"><table class="t">
       <tr><th style="width:26%">위험</th><th style="width:24%">영향</th><th>대응</th></tr>
-      <tr><td><b>포털이 공식 API가 아님</b></td><td>화면 변경 시 수집 중단</td><td>기대 구조 검사(<span class="code-ex">html:질의요지</span>)로 즉시 감지·기록, 공공데이터포털의 금융위 게시글 정보(이용허락 제한 없음)로 대체 경로 확보</td></tr>
-      <tr><td><b>법제처 Open API 장애·키 문제</b></td><td>그날 법령 갱신 누락</td><td>받아 둔 조문은 그대로 유지(원본 보관), API가 전부 실패하면 같은 날 웹페이지 수집으로 자동 대체 · 실행 기록으로 확인</td></tr>
-      <tr><td><b>잘못된 조문 연결</b></td><td>엉뚱한 선례를 보여 줌</td><td>존재하지 않는 조문은 연결 안 함, 신뢰도·근거 표현을 화면에 표시, 검수 링크는 재처리에도 보존</td></tr>
+      <tr><td><b>포털이 공식 API가 아님</b></td><td>화면 변경 시 수집 중단</td><td>받은 화면에 꼭 있어야 할 항목(‘질의요지’ 등)이 없으면 즉시 실패로 기록, 사이트가 거부(403·429)하면 그 사이트 수집을 바로 멈춤. 이미 받은 데이터는 그대로 서비스</td></tr>
+      <tr><td><b>법제처 Open API 장애·키 문제</b></td><td>그날 법령 갱신 누락</td><td>받아 둔 조문은 그대로 유지, API가 전부 실패한 날만 웹페이지 수집으로 대체 · 실행 기록으로 확인</td></tr>
+      <tr><td><b>잘못된 조문 연결</b></td><td>엉뚱한 선례를 보여 줌</td><td>실제로 없는 조문은 연결 안 함, 연결 근거와 확실한 정도를 화면에 표시, 사람이 검수한 연결은 다시 계산해도 유지</td></tr>
       <tr><td><b>조문 번호 이동(개정)</b></td><td>옛 해석이 지금의 다른 조문에 붙음</td><td>문서 날짜 기준 버전 대조를 2단계 과제로, 그 전까지는 화면에 회신일을 항상 함께 표시</td></tr>
       <tr><td><b>법률 자문으로 오해</b></td><td>책임 문제</td><td>“조회 도구이며 법률 자문이 아님” 고정 안내, 원문 링크 필수, 요약·추천 표현 없음</td></tr>
-      <tr><td><b>무료 서버 절전</b></td><td>첫 화면 30~60초</td><td>스냅숏 자동 전환(구현됨), 발표 전 /health 호출</td></tr>
+      <tr><td><b>무료 서버 잠듦</b></td><td>첫 화면 30~60초</td><td>대표 데이터로 자동 전환(구현됨), 발표 전 /health 호출로 깨움</td></tr>
+      <tr><td><b>원문 속 개인정보</b></td><td>담당자 실명·연락처 노출</td><td>전화번호·이메일·담당 공무원 실명을 저장 전에 가림(구현됨), 이미 받은 데이터도 정리</td></tr>
     </table></div>
   </section>
 
@@ -571,13 +580,13 @@
         <li><b>2차</b>: 전담 법무 조직이 없는 핀테크 스타트업, 금융 전문 법무법인·컨설팅</li>
         <li><b>3차</b>: 금융규제를 공부하는 학생·연구자</li></ul></div>
       <div class="card pc"><span class="pi"><svg class="i"><use href="#i-spark"/></svg></span><h4>제공 가치</h4><ul>
-        <li><b>시간</b>: 5곳에 흩어진 규제 자료를 조문 하나에서 확인</li>
-        <li><b>누락 방지</b>: 법→시행령→감독규정 위임과 그 조문을 다룬 선례를 함께 제시</li>
+        <li><b>시간</b>: 여러 곳에 흩어진 규제 자료를 조문 하나에서 확인</li>
+        <li><b>누락 방지</b>: 법률 → 시행령 → 감독규정 위임 관계와 그 조문을 다룬 선례를 함께 제시</li>
         <li><b>변화 감지</b>: 시행 예정 조문, 행정지도 만료, 새 해석을 관심 조문 기준으로 모아 줌</li>
-        <li><b>신뢰</b>: 모든 연결에 근거 표현·신뢰도, 모든 문서에 원문 링크</li></ul></div>
+        <li><b>신뢰</b>: 모든 연결에 근거 표현과 확실한 정도, 모든 문서에 원문 링크</li></ul></div>
       <div class="card pc"><span class="pi"><svg class="i"><use href="#i-db"/></svg></span><h4>지속 가능한 운영 방안</h4><ul>
-        <li><b>운영비 0원 구조</b>: Vercel·Render·Supabase·GitHub 무료 한도 안 (데이터 약 100MB, 하루 1회 수집)</li>
-        <li><b>사람이 거의 필요 없는 운영</b>: 수집·가공·연결이 매일 자동, 실패는 실행 기록으로 확인</li>
+        <li><b>운영비 0원 구조</b>: Vercel·Render·Supabase·GitHub 무료 한도 안 (DB 약 81MB)</li>
+        <li><b>사람이 거의 필요 없는 운영</b>: 버튼 한 번(또는 정기 예약)으로 수집·정리·연결까지, 실패는 실행 기록으로 확인</li>
         <li><b>공공 데이터 협력</b>: 금융위 포털 데이터의 공식 API 제공을 요청해 크롤링 의존도를 낮춤</li>
         <li><b>오픈소스 공개</b>: 별칭 사전·인용 규칙을 실무자 기여로 함께 개선</li></ul></div>
     </div>
@@ -593,9 +602,10 @@
       <div class="card pc"><ul style="margin:0">
         <li><b>대상 법령 2단계 확대</b>: 1단계 5개 법률(자본시장·외환·은행·보험·전자금융) 다음으로 대부업법·신용정보법·여신전문금융업법 등 인용 빈도 상위부터 넣을 순서</li>
         <li><b>포털 이용 문의</b>: 정식 공개 전 금융위에 데이터 이용·링크 통지를 할지, 수업 시연 범위로 둘지</li>
-        <li><b>검수 기준</b>: 연결 정밀도 목표(95%)와 검수 표본 추출 방식</li></ul></div>
+        <li><b>검수 기준</b>: 연결 정밀도 목표(95%)와 검수 표본 추출 방식</li>
+        <li><b>정기 수집</b>: GitHub Actions로 매일 자동 수집할지, 필요할 때만 실행할지</li></ul></div>
       <div class="card pc"><ul style="margin:0">
-        <li><b>금감원 행정지도</b>: 8주차 안에 넣을지, 확장 과제로 둘지</li>
+        <li><b>크롤링 범위</b>: 포털 회신·행정지도 수집을 유지할지, 금감원 행정지도·입법예고까지 넓힐지</li>
         <li><b>관심 조문 알림</b>: 이메일 알림까지 갈지(로그인 필요), 브라우저 저장으로 충분한지</li>
         <li><b>역할과 담당자</b> 확정, 주간 회의 요일</li></ul></div>
     </div>
@@ -605,14 +615,14 @@
 
 <footer class="pfoot"><div class="wrap">
   <span>금융규제통합조회 · KAIST 디지털금융MBA 클라우드컴퓨팅실습 8조 (양정모 · 양지선 · 이수정 · 김한룡 · 최은정)</span>
-  <span>출처: 국가법령정보센터 · 금융규제·법령해석포털 · 국회사무처 — 법률 자문이 아닌 조회 도구입니다</span>
+  <span>출처: 국가법령정보센터(법제처 Open API) · 금융규제·법령해석포털 — 법률 자문이 아닌 조회 도구입니다</span>
 </div></footer>
 
-<script src="assets/icons.js?v=3"></script>
+<script src="assets/icons.js?v=4"></script>
 <script>
 (function () {
   // 그림 안의 문서 노드 (색 = 유형, 픽토그램 동반)
-  const docs = [["법령해석", "신탁·예치 병행 별도관리", 16], ["비조치의견", "관리기관 변경 중 비율 미달", 84], ["행정지도", "선불충전금 관리 점검 가이드", 152], ["입법예고", "전자금융거래법 개정안", 220], ["법령해석", "포인트 적립금 포함 여부", 288]];
+  const docs = [["법령해석", "신탁·예치 병행 별도관리", 16], ["비조치의견", "관리기관 변경 중 비율 미달", 84], ["행정지도", "선불충전금 관리 점검 가이드", 152], ["비조치의견", "선불충전금 운용 범위 확인", 220], ["법령해석", "포인트 적립금 포함 여부", 288]];
   const g = docs.map(([k, t, y]) => `<g transform="translate(745 ${y})" data-k="${k}"><rect width="215" height="52" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><rect x="10" y="10" width="32" height="32" rx="9" fill="color-mix(in srgb, var(--k) 16%, var(--surface))"/><svg x="17" y="17" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--k)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-${KIND_ICON[k]}"/></svg><text x="52" y="22" font-size="11" font-weight="800" fill="var(--ink-3)">${k}</text><text x="52" y="39" font-size="12.5" font-weight="700" fill="var(--ink)">${t}</text></g>`).join("");
   document.querySelectorAll("#idea svg").forEach((s) => { s.innerHTML = s.innerHTML.replace("${0}", "").replace("${1}", g); });
 
@@ -626,7 +636,7 @@
       <p>${body}</p>
       <div class="vrow"><span class="tag">현행 ${a.current.effective_from.replace(/-/g, ".")}~</span>${a.pending ? `<span class="tag pending" style="background:color-mix(in srgb,var(--t-notice) 12%,var(--surface))">시행예정 ${a.pending.effective_from.replace(/-/g, ".")}</span>` : ""}</div>`;
     const sats = [["법령해석", `법령해석 ${s.interp}건`, "이 조문을 인용", "10%", "6%"], ["비조치의견", `비조치의견 ${s.noaction}건`, "같은 조문의 선례", "62%", "4%"],
-      ["행정지도", `행정지도 ${s.guidance}건`, "존속기간 관리", "4%", "80%"], ["입법예고", `입법예고 ${s.notice}건`, "의원 발의 개정안", "62%", "80%"],
+      ["행정지도", `행정지도 ${s.guidance}건`, "존속기간 관리", "4%", "80%"], ["조문", a.pending ? `${a.pending.effective_from.slice(5).replace("-", ".")} 시행 예정` : "현행 본문", "바뀌는 부분 표시", "62%", "80%"],
       ["조문", `위임 ${a.delegates_to.length}개 조문`, "시행령 제13조의2 등", "72%", "44%"]];
     const st = document.getElementById("stage");
     st.insertAdjacentHTML("beforeend", sats.map(([k, b, sm, l, t]) => `<div class="sat" data-k="${k}" style="left:${l};top:${t}"><span class="kicon" data-k="${k}">${icon(k === "조문" ? "tree" : KIND_ICON[k])}</span><div><b>${b}</b><small>${sm}</small></div></div>`).join(""));
