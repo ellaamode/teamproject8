@@ -917,7 +917,7 @@
     ]
    },
    "response_example": {
-    "since": "2026-07-11",
+    "since": "2026-07-12",
     "summary": {
      "비조치_신규": 5,
      "해석_신규": 45,
@@ -1009,7 +1009,7 @@
     ]
    },
    "response_example": {
-    "today": "2026-10-09",
+    "today": "2026-10-10",
     "status": "active",
     "items": [
      {
@@ -1128,6 +1128,28 @@
      ],
      "unknown_laws": [
       "object"
+     ]
+    },
+    "evidence": {
+     "spread": {
+      "docs": "integer",
+      "avg_articles": "number",
+      "multi_article": "integer",
+      "law_and_sub": "integer",
+      "with_sub": "integer",
+      "title_no_article": "integer"
+     },
+     "pending": {
+      "articles": "integer",
+      "with_links": "integer",
+      "docs": "integer",
+      "top": [
+       "object"
+      ]
+     },
+     "replies_per_year": "integer",
+     "replies_per_year_span": [
+      "integer"
      ]
     },
     "guidance": {
@@ -1300,6 +1322,45 @@
        "n": 676
       },
       "…"
+     ]
+    },
+    "evidence": {
+     "spread": {
+      "docs": 2181,
+      "avg_articles": 2.0,
+      "multi_article": 1229,
+      "law_and_sub": 737,
+      "with_sub": 1325,
+      "title_no_article": 1951
+     },
+     "pending": {
+      "articles": 71,
+      "with_links": 36,
+      "docs": 358,
+      "top": [
+       {
+        "key": "efta:2",
+        "label": "제2조",
+        "title": "정의",
+        "law_name": "전자금융거래법",
+        "effective_from": "2026-12-17",
+        "docs": 151
+       },
+       {
+        "key": "efta:28",
+        "label": "제28조",
+        "title": "전자금융업의 허가와 등록",
+        "law_name": "전자금융거래법",
+        "effective_from": "2026-12-17",
+        "docs": 84
+       },
+       "…"
+      ]
+     },
+     "replies_per_year": 229,
+     "replies_per_year_span": [
+      2021,
+      2025
      ]
     },
     "guidance": {

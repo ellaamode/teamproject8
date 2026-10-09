@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23222c6b'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='17' font-weight='800' fill='white' font-family='sans-serif'%3E%C2%A7%3C/text%3E%3C/svg%3E">
 <script>try{var t=localStorage.getItem("finreg.theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="stylesheet" href="assets/base.css?v=4">
-<link rel="stylesheet" href="plan.css?v=6">
+<link rel="stylesheet" href="plan.css?v=7">
 </head>
 <body>
 <header class="ptop">
@@ -58,6 +58,26 @@
     <div class="card rb"><div class="v num">0<small>칸</small></div><div class="c">회신사례에 ‘관련 조문’ 항목이 없음</div><div class="s">조문 연결은 본문에서 직접 찾아야 함</div></div>
     <div class="card rb"><div class="v num">71<small>개</small></div><div class="c">지금 본문과 앞으로 바뀔 본문이 함께 있는 조문</div><div class="s">5개 법률·하위법령 기준 · 법제처 Open API</div></div>
     <div class="card rb"><div class="v num">58<small>건</small></div><div class="c">존속기간이 정해진 금융위 행정지도(시행)</div><div class="s">만료일이 지나면 효력이 끝남</div></div>
+  </div>
+  <div class="card talk" id="talk">
+    <div><h3>이 페이지로 발표합니다 · 과제 안내의 발표 필수 내용 순서</h3>
+      <ol>
+        <li><a href="#arch">서비스 아키텍처</a> <span>06 시스템 구조 · 07 수집 과정</span></li>
+        <li><a href="#data">사용 데이터 및 출처</a> <span>05 데이터 원천 (명칭·제공 기관·URL·크롤링 항목)</span></li>
+        <li><a href="#users">데이터 활용 기획 시나리오</a> <span>01 문제 · 02 사용자 · 04 사용 흐름</span></li>
+        <li><a href="#bm">비즈니스 모델</a> <span>15 대상 고객 · 제공 가치 · 수익 · 운영</span></li>
+        <li><a href="#screens">주요 페이지 및 기능</a> <span>04 메뉴 구성과 화면</span></li>
+        <li><a href="#insights">데이터 분석·정리 결과</a> <span>14 문제 검증 · 주요 발견</span></li>
+        <li><a href="#api">주소 3개 · 문서 2개</a> <span>맨 위 주소 줄 · 10 API · 09 DB · <a href="docs/">API·DB 문서</a></span></li>
+      </ol></div>
+    <div><h3>1분 데모 순서</h3>
+      <p class="faint">발표 5분 전에 <a href="https://finreg-api-nbco.onrender.com/health" target="_blank" rel="noopener">/health</a>를 한 번 열어 서버를 깨워 둡니다.</p>
+      <ol>
+        <li>서비스에서 ‘선불충전금’ 검색 → 조문과 해석·의견이 나뉘어 나옴 <span>10초</span></li>
+        <li>전자금융거래법 제25조의2 조문 카드 → 지금 본문과 12.17부터 바뀔 본문, 위임받은 시행령 5개, 인용한 법령해석 <span>20초</span></li>
+        <li>데이터 분석 → 문제 검증: 곧 바뀌는 조문 절반에 이미 해석이 걸려 있음 <span>15초</span></li>
+        <li>Swagger에서 <code>GET /collection</code> 실행 → 외부 원천(법제처 Open API·금융위 포털)에서 언제 몇 건 받아 왔는지 <span>15초</span></li>
+      </ol></div>
   </div>
 </div>
 
@@ -554,22 +574,29 @@
   <!-- ============================================================ 14 -->
   <section class="s" id="insights">
     <div class="s-no">14 · 데이터 분석 결과</div>
-    <h2>수집한 데이터가 말해 주는 것</h2>
+    <h2>우리가 말한 문제가 데이터에 실제로 있는가</h2>
     <p class="intro">서비스의 <a href="app/#/insights" style="color:var(--brand-2);font-weight:700">데이터 분석 페이지</a>와 같은 데이터(<span class="code-ex">GET /analysis</span>)입니다. 아래 수치는 페이지를 열 때 최신 분석 결과를 불러와 채웁니다.</p>
-    <div class="g4" id="insKpi"><div class="card rb"><div class="c">불러오는 중…</div></div></div>
+    <div class="card ins-head" id="insHead"><p>불러오는 중…</p></div>
+    <div class="g3" id="insEv"></div>
+    <div class="g4" id="insKpi" style="margin-top:16px"><div class="card rb"><div class="c">불러오는 중…</div></div></div>
     <div class="g2" style="margin-top:16px">
       <div class="card pc"><h4 style="margin-top:0">주요 발견</h4><ul id="insFind"><li>불러오는 중…</li></ul></div>
       <div class="card pc"><h4 style="margin-top:0">많이 인용된 법령 (회신 수)</h4><div id="insLaws" class="faint">불러오는 중…</div></div>
     </div>
     <div class="callout info"><svg class="i l" style="color:var(--brand-2)"><use href="#i-info"/></svg><div><b>분석 방법</b>
-      <p>회신 원문(질의요지·회답·이유)에서 인용 연결 엔진으로 조문을 찾아 집계했습니다. 하위법령(시행령·시행규칙·감독규정·고시·시행세칙) 인용은 모법으로 합산하고, 같은 회신이 한 법령을 여러 번 인용해도 1건으로 셉니다. 회신일은 포털 등록일 기준입니다.</p></div></div>
+      <p>회신 원문(질의요지·회답·이유)에서 인용 연결 엔진으로 조문을 찾아 집계했습니다. ‘문제 검증’의 비율은 조문이 1개 이상 연결된 회신을 분모로 합니다. 제목의 조문 번호는 ‘제○조’ 표기가 있는지로 판단했습니다. 하위법령(시행령·시행규칙·감독규정·고시·시행세칙) 인용은 모법으로 합산하고, 같은 회신이 한 법령을 여러 번 인용해도 1건으로 셉니다. 회신일은 포털 등록일 기준입니다.</p></div></div>
   </section>
 
   <!-- ============================================================ 15 -->
   <section class="s" id="bm">
     <div class="s-no">15 · 비즈니스 모델</div>
-    <h2>공공 데이터로 만드는, 운영비 0원의 규제 인프라</h2>
-    <p class="intro">기본은 누구나 무료로 쓰는 공공 서비스입니다. 운영비가 거의 들지 않는 구조로 지속 가능성을 확보하고, 수익화는 기업용 확장 기능에서 향후 검토합니다.</p>
+    <h2>조회는 무료, 변화 알림과 연동은 기업 구독</h2>
+    <p class="intro">법령·해석 원문은 누구나 무료로 봅니다. 돈은 우리가 만든 것 — 조문 단위 연결, 변화 알림, 사내 시스템 연동 — 에서 받습니다. 운영비가 거의 0원이라 작은 매출로도 유지됩니다.</p>
+    <div class="g3" style="margin-bottom:16px">
+      <div class="card rb"><div class="v num">연 229<small>건</small></div><div class="c">금융회사가 금융당국에 직접 보낸 법령해석·비조치의견 질의 (2021~2025 평균)</div><div class="s">해석이 필요해 시간을 들여 공식 질의까지 하는 수요가 매년 있음 · 우리 수집 데이터</div></div>
+      <div class="card rb"><div class="v num">207<small>개</small></div><div class="c">전자금융업 등록 회사 (2024년 말, 전년 188개)</div><div class="s">출처: 금융감독원 ‘2024년 전자금융업 영업실적’(2025.5) · 1차 시범 고객 업권</div></div>
+      <div class="card rb"><div class="v num">358<small>건</small></div><div class="c">곧 바뀌는 조문에 걸린 회신</div><div class="s">개정 때마다 다시 확인해야 하는 해석 = 변화 알림의 가치 · 14 데이터 분석</div></div>
+    </div>
     <div class="g3">
       <div class="card pc"><span class="pi"><svg class="i"><use href="#i-user"/></svg></span><h4>대상 고객</h4><ul>
         <li><b>1차</b>: 금융회사 준법감시·법무·상품기획·IT보안 실무자 (은행·카드·증권·보험·전자금융업자·핀테크)</li>
@@ -586,8 +613,19 @@
         <li><b>공공 데이터 협력</b>: 금융위 포털 데이터의 공식 API 제공을 요청해 크롤링 의존도를 낮춤</li>
         <li><b>오픈소스 공개</b>: 별칭 사전·인용 규칙을 실무자 기여로 함께 개선</li></ul></div>
     </div>
-    <div class="callout good"><svg class="i l" style="color:var(--t-interp)"><use href="#i-spark"/></svg><div><b>향후 수익 가능성 (검토 단계)</b>
-      <p>무료 조회는 그대로 두고, 기업이 필요로 하는 부가 기능(사내 시스템 연동용 API, 관심 조문 이메일 알림, 팀 단위 공유·검수 기록)을 기업 대상 유료 서비스로 제공하는 방안을 검토할 수 있습니다. 이 단계에서는 요금을 정하지 않았습니다.</p></div></div>
+    <h3 class="sub" style="margin-top:24px"><svg class="i"><use href="#i-spark"/></svg>수익 구조 — 누가, 무엇에, 어떤 단위로 돈을 내나</h3>
+    <div class="tbl-wrap"><table class="t">
+      <tr><th style="width:16%">상품</th><th style="width:22%">누가</th><th>무엇을 받나</th><th style="width:22%">과금 단위</th></tr>
+      <tr><td><b>무료 조회</b></td><td>누구나</td><td>조문·해석·행정지도 조회, 검색, 위임 관계, 연결 지도</td><td>무료 (공공 서비스로 유지)</td></tr>
+      <tr><td><b>팀 구독</b></td><td>준법감시·상품기획·IT보안 팀</td><td>관심 조문 변화 알림(개정 예정·새 해석·행정지도 만료, 이메일·메신저), 팀 공유와 검토 기록, 근거 표현 포함 내보내기</td><td>팀(5명) 단위 월 구독 · 가설: 법률 자문 1회보다 싼 금액, 시범 운영으로 확정</td></tr>
+      <tr><td><b>연동 API</b></td><td>사내 컴플라이언스 시스템을 둔 금융회사·법무법인</td><td>조문 ↔ 해석 연결, 위임 관계, 변화 기록을 사내 시스템에서 바로 받는 API</td><td>호출량 구간별 월 요금</td></tr>
+    </table></div>
+    <div class="g2" style="margin-top:16px">
+      <div class="callout good"><svg class="i l" style="color:var(--t-interp)"><use href="#i-check"/></svg><div><b>원문은 팔지 않습니다</b>
+        <p>법령·회신 원문은 계속 무료로 두고 출처 링크를 답니다. 유료는 우리가 만든 연결·알림·연동 기능에만 붙입니다. 금융위 포털 데이터는 상용화 전에 이용 협의와 공식 API 제공 요청을 먼저 합니다.</p></div></div>
+      <div class="callout info"><svg class="i l" style="color:var(--brand-2)"><use href="#i-clock"/></svg><div><b>단계</b>
+        <p><b>1단계(지금)</b> 무료 공개, 데이터와 연결 정확도 검증 → <b>2단계</b> 준법감시 실무 2~3팀에 관심 조문 알림 시범, 실제 확인 빈도와 지불 의향 측정 → <b>3단계</b> 팀 구독·연동 API, 대상 법령 확대</p></div></div>
+    </div>
   </section>
 
   <!-- ============================================================ 16 -->
@@ -664,6 +702,20 @@
         : kpi(lq.rate != null ? Math.round(lq.rate * 1000) / 10 : "-", "%", "조문에 연결된 회신 비율", `${n(lq.linked)} / ${n(lq.docs)}건`)) +
       kpi(n(t.articles), "개", `5개 법률과 하위법령 ${t.laws}건의 조문`, `위임 관계 ${n(t.delegations)}건`) +
       kpi(n(g.active), "건", "시행 중인 금융위 행정지도", `60일 내 만료 ${n(g.expiring_60)}건`);
+    // 문제 검증: 01에서 말한 세 가지 문제가 데이터에 실제로 있는지
+    const e = a.evidence;
+    if (e && e.spread && e.spread.docs) {
+      const sp = e.spread, pd = e.pending, pc = (x, y) => (y ? Math.round((x / y) * 100) : 0), pt = pd.top && pd.top[0];
+      document.getElementById("insHead").innerHTML = `<b>한 문장 결론</b><p>곧 바뀌는 조문 2개 중 1개(${pc(pd.with_links, pd.articles)}%)에는 이미 금융당국의 해석이 걸려 있습니다. 해석은 조문 여러 개에 흩어져 있고 제목만으로는 어느 조문인지 알 수 없어서, 조문 단위로 묶어 보지 않으면 놓칩니다.</p>`;
+      const ev = (v, h, p) => `<div class="card pc ev"><div class="v num">${v}</div><h4>${h}</h4><p>${p}</p></div>`;
+      document.getElementById("insEv").innerHTML =
+        ev(`${pc(sp.multi_article, sp.docs)}%`, "회신 하나가 조문 여러 개에 걸쳐 있다 (01의 STEP 1)",
+          `조문이 연결된 회신 ${n(sp.docs)}건 중 ${n(sp.multi_article)}건이 조문 2개 이상을 인용합니다(평균 ${sp.avg_articles}개). ${pc(sp.with_sub, sp.docs)}%는 시행령·감독규정 같은 하위법령까지 인용합니다.`) +
+        ev(`${pc(sp.title_no_article, sp.docs)}%`, "제목만으로는 어느 조문인지 모른다 (STEP 2)",
+          `회신 제목 ${n(sp.title_no_article)}건에 조문 번호가 없습니다. 포털의 제목·키워드 검색으로는 ‘이 조문을 다룬 해석’을 모을 수 없고, 본문을 읽어 연결해야 합니다.`) +
+        ev(`${pc(pd.with_links, pd.articles)}%`, "곧 바뀌는 조문에 해석이 걸려 있다 (STEP 3)",
+          `시행 예정 개정이 있는 ${n(pd.articles)}개 조문 중 ${n(pd.with_links)}개에 회신 ${n(pd.docs)}건이 걸려 있습니다.${pt ? ` 예: ${pt.law_name} ${pt.label}(${pt.title || ""})은 ${pt.effective_from.replaceAll("-", ".")} 개정되는데 회신 ${n(pt.docs)}건이 인용합니다.` : ""}`);
+    }
     const top = a.top_laws[0], topArt = a.top_articles[0], unk = lq.unknown_laws[0];
     const dept = a.replies_by_dept.find((d) => !d.dept.startsWith("("));
     const finds = [

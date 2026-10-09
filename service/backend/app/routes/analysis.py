@@ -4,11 +4,13 @@ GET /analysis 한 번으로 분석 페이지 전체를 그릴 수 있는 집계�
   1) 수집 현황   : 출처별 수집 건수, 수집 방식(API·크롤링), 마지막 수집 시각
   2) 회신사례    : 연도별·유형별 건수, 소관부서 상위
   3) 인용 분석   : 많이 인용된 법령·조문, 인용 연결률, 해석 방법별 분포, 미해결 사유, 대상 밖 법령(보강 후보)
+     문제 검증   : 회신이 여러 조문·단계에 걸친 비율, 제목에 조문 번호가 없는 비율, 시행 예정 조문에 걸린 회신 (evidence)
   4) 행정지도    : 시행 중·만료 임박·만료·예고, 평균 존속기간
   5) 법령 구조   : 법령별 법률·시행령·시행규칙·감독규정(고시)·시행세칙 조문 수, 위임 관계 수, 시행예정 조문 수
   6) 대상 범위   : 1단계 대상 법률과 2단계 확대 후보 (scope)
 """
 import re
+from datetime import date
 
 from fastapi import APIRouter
 
@@ -105,6 +107,36 @@ def analysis():
             unknown[name] = unknown.get(name, 0) + 1
     unknown_laws = sorted(({"name": k, "n": v} for k, v in unknown.items()), key=lambda x: -x["n"])[:12]
 
+    # 3-1) 문제 검증: 서비스가 풀려는 문제가 데이터에 실제로 있는가
+    #  - 한 회신이 여러 조문·여러 단계(법률·하위법령)에 걸쳐 있는가 → "자료가 흩어져 있다"
+    #  - 회신 제목에 조문 번호가 없는가 → "제목·키워드 검색으로는 조문별 해석을 찾을 수 없다"
+    #  - 곧 바뀌는 조문에 이미 해석이 걸려 있는가 → "변화는 소리 없이 온다"
+    spread = q("""WITH per AS (
+                    SELECT l.doc_id, count(DISTINCT l.article_key) AS arts,
+                           bool_or(w.kind = '법률') AS has_law, bool_or(w.kind <> '법률') AS has_sub
+                    FROM article_links l JOIN articles a ON a.key=l.article_key JOIN laws w ON w.slug=a.law_slug
+                    JOIN documents d ON d.id=l.doc_id WHERE d.kind IN ('법령해석','비조치의견') GROUP BY l.doc_id)
+                  SELECT count(*) AS docs, round(avg(arts), 1) AS avg_articles,
+                         count(*) FILTER (WHERE arts >= 2) AS multi_article,
+                         count(*) FILTER (WHERE has_law AND has_sub) AS law_and_sub,
+                         count(*) FILTER (WHERE has_sub) AS with_sub,
+                         count(*) FILTER (WHERE (SELECT title FROM documents WHERE id=per.doc_id) !~ '제\\s*[0-9]+\\s*조') AS title_no_article
+                  FROM per""")[0]
+    pending_links = q("""SELECT count(DISTINCT v.article_key) AS articles,
+                                count(DISTINCT v.article_key) FILTER (WHERE l.doc_id IS NOT NULL) AS with_links,
+                                count(DISTINCT l.doc_id) AS docs
+                         FROM article_versions v LEFT JOIN article_links l ON l.article_key=v.article_key
+                         WHERE v.effective_from > current_date""")[0]
+    pending_top = q("""SELECT a.key, a.label, a.title, w.name AS law_name, min(v.effective_from) AS effective_from,
+                              count(DISTINCT l.doc_id) AS docs
+                       FROM article_versions v JOIN articles a ON a.key=v.article_key JOIN laws w ON w.slug=a.law_slug
+                       JOIN article_links l ON l.article_key=a.key
+                       WHERE v.effective_from > current_date GROUP BY a.key, w.name ORDER BY docs DESC, a.key LIMIT 5""")
+    recent = [r for r in by_year if r["year"] and date.today().year - 5 <= r["year"] < date.today().year]
+    evidence = {"spread": spread, "pending": pending_links | {"top": pending_top},
+                "replies_per_year": round(sum(r["interp"] + r["noaction"] for r in recent) / len(recent)) if recent else None,
+                "replies_per_year_span": [recent[0]["year"], recent[-1]["year"]] if recent else None}
+
     # 4) 행정지도
     guidance = q("""SELECT count(*) FILTER (WHERE stage='시행' AND (valid_to IS NULL OR valid_to >= current_date)) AS active,
                            count(*) FILTER (WHERE stage='시행' AND valid_to BETWEEN current_date AND current_date + 60) AS expiring_60,
@@ -141,4 +173,4 @@ def analysis():
                              "in_scope": in_scope | {"rate": round(in_scope["linked"] / in_scope["docs"], 3)
                                                      if in_scope["docs"] else None},
                              "by_method": by_method, "unresolved": unresolved, "unknown_laws": unknown_laws},
-            "guidance": guidance | {"by_dept": guidance_dept}, "law_structure": structure}
+            "evidence": evidence, "guidance": guidance | {"by_dept": guidance_dept}, "law_structure": structure}

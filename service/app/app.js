@@ -631,6 +631,26 @@ const METHOD_KO = { explicit: "법령명 명시", abbr: "약칭", defined: "문�
   parent_ref: "모법·하위규정 지칭", title: "제목형 표기", inferred: "문맥 추정", manual: "수동 검수" };
 const REASON_KO = { unknown_law: "대상 밖 법령", unknown_article: "없는 조문 번호", article_not_loaded: "본문 미적재", ambiguous: "모호" };
 
+// 문제 검증: 서비스가 풀려는 세 가지 문제가 데이터에 실제로 있는지 (GET /analysis 의 evidence)
+function evidenceBlock(a) {
+  const e = a.evidence;
+  if (!e || !e.spread?.docs) return "";
+  const sp = e.spread, pd = e.pending, n = (x) => (x ?? 0).toLocaleString("ko-KR");
+  const pc = (x, y) => (y ? Math.round((x / y) * 100) : 0);
+  const top = pd.top?.[0];
+  const card = (v, h, p) => `<div class="ev"><div class="v num">${v}</div><b>${h}</b><p>${p}</p></div>`;
+  return `<section class="card sec" style="margin-bottom:22px"><div class="sec-h"><h2>${I("check")} 문제 검증 · 데이터가 보여 준 것</h2><span class="faint" style="font-size:12.5px">조문에 연결된 회신 ${n(sp.docs)}건 기준</span></div>
+    <p class="ev-head">곧 바뀌는 조문 2개 중 1개에는 이미 금융당국의 해석이 걸려 있습니다. 조문 단위로 묶어 보지 않으면 놓칩니다.</p>
+    <div class="ev-grid">
+      ${card(`${pc(sp.multi_article, sp.docs)}%`, "회신 하나가 조문 여러 개에 걸쳐 있다",
+        `회신의 ${pc(sp.multi_article, sp.docs)}%(${n(sp.multi_article)}건)가 조문 2개 이상을 인용합니다(평균 ${sp.avg_articles}개). ${pc(sp.with_sub, sp.docs)}%는 시행령·감독규정 같은 하위법령까지 인용합니다. 한 질문의 답을 찾으려면 여러 법령을 오가야 합니다.`)}
+      ${card(`${pc(sp.title_no_article, sp.docs)}%`, "제목만으로는 어느 조문인지 모른다",
+        `회신 제목의 ${pc(sp.title_no_article, sp.docs)}%(${n(sp.title_no_article)}건)에 조문 번호가 없습니다. 포털의 제목·키워드 검색으로는 ‘이 조문을 다룬 해석’을 모을 수 없고, 본문을 읽어 연결해야 합니다.`)}
+      ${card(`${pc(pd.with_links, pd.articles)}%`, "곧 바뀌는 조문에 해석이 걸려 있다",
+        `시행 예정 개정이 있는 ${n(pd.articles)}개 조문 중 ${n(pd.with_links)}개에 회신 ${n(pd.docs)}건이 걸려 있습니다.${top ? ` 예: ${esc(top.law_name)} ${esc(top.label)}(${esc(top.title || "")})은 ${fmt(top.effective_from)} 개정되는데 회신 ${n(top.docs)}건이 인용합니다.` : ""} 개정 뒤 다시 확인해야 할 해석입니다.`)}
+    </div></section>`;
+}
+
 async function viewInsights() {
   view.innerHTML = skeleton(4);
   const a = await api.analysis();
@@ -648,6 +668,7 @@ async function viewInsights() {
     ${lq.in_scope ? tile("비조치의견", "link", pct(lq.in_scope.rate), "", "대상 법령 언급 회신의 조문 연결률", `${lq.in_scope.linked.toLocaleString()} / ${lq.in_scope.docs.toLocaleString()}건 · 전체 회신 기준 ${pct(lq.rate)}`)
       : tile("비조치의견", "link", pct(lq.rate), "", "조문에 연결된 회신 비율", `${(lq.linked || 0).toLocaleString()} / ${(lq.docs || 0).toLocaleString()}건 · 링크 ${(t.links || 0).toLocaleString()}개`)}
   </section>
+  ${evidenceBlock(a)}
   ${a.scope ? `<section class="card sec scope" style="margin-bottom:22px"><div class="sec-h"><h2>${I("book")} 분석 범위 · ${a.scope.phase}단계</h2><span class="faint" style="font-size:12.5px">추후 확대 예정</span></div>
     <div class="chips" style="margin:0 0 10px">${a.law_structure.map((l) => `<a class="tag" href="#/laws/${l.slug}"><b>${esc(l.name)}</b></a>`).join("")}</div>
     <p class="muted" style="font-size:13.5px;margin:0 0 8px">${esc(a.scope.note)} 대상 법령을 언급하지 않은 회신 ${((lq.docs || 0) - (lq.in_scope?.docs || 0)).toLocaleString()}건(대부업·신용정보·여신 등)은 수집은 해 두었고, 조문 연결은 범위를 넓히면 다시 계산됩니다.</p>
