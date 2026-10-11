@@ -78,10 +78,11 @@ DEMO_SLUGS = ("efta", "efta-ed", "efta-reg")
 
 @dataclass
 class Settings:
-    database_url: str = field(default_factory=lambda: os.environ.get("DATABASE_URL", ""))
-    law_oc: str = field(default_factory=lambda: os.environ.get("LAW_GO_KR_OC", ""))
+    # 비밀값을 붙여 넣을 때 딸려 온 앞뒤 공백·줄바꿈은 지운다 (끝의 줄바꿈이 DB 이름에 붙어 접속 실패한 적 있음)
+    database_url: str = field(default_factory=lambda: os.environ.get("DATABASE_URL", "").strip())
+    law_oc: str = field(default_factory=lambda: os.environ.get("LAW_GO_KR_OC", "").strip())
     assembly_key: str = field(default_factory=lambda: os.environ.get("ASSEMBLY_API_KEY", ""))
-    contact: str = field(default_factory=lambda: os.environ.get("CRAWLER_CONTACT", "team8"))
+    contact: str = field(default_factory=lambda: os.environ.get("CRAWLER_CONTACT", "team8").strip())
     # 원천 서버 배려: 같은 호스트에 대한 최소 요청 간격(초)
     min_interval: float = float(os.environ.get("FETCH_MIN_INTERVAL", "1.5"))
     # 첫 적재(backfill) 때 포털 회신사례 최대 건수 (0 = 전체)
