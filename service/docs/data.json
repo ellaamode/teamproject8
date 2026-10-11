@@ -917,7 +917,7 @@
     ]
    },
    "response_example": {
-    "since": "2026-07-12",
+    "since": "2026-07-13",
     "summary": {
      "비조치_신규": 5,
      "해석_신규": 45,
@@ -1009,7 +1009,7 @@
     ]
    },
    "response_example": {
-    "today": "2026-10-10",
+    "today": "2026-10-11",
     "status": "active",
     "items": [
      {
@@ -1021,7 +1021,7 @@
       "valid_from": "2025-11-17",
       "valid_to": "2026-11-16",
       "source_url": "https://better.fsc.go.kr/fsc_new/status/adminMap/OpertnDetail.do?stNo=11&muNo=14…",
-      "days_left": 38
+      "days_left": 36
      },
      {
       "id": "fsc.guidance:5111",
@@ -1032,7 +1032,7 @@
       "valid_from": "2026-01-01",
       "valid_to": "2026-12-31",
       "source_url": "https://better.fsc.go.kr/fsc_new/status/adminMap/OpertnDetail.do?stNo=11&muNo=14…",
-      "days_left": 83
+      "days_left": 81
      },
      "…"
     ]
@@ -1469,7 +1469,7 @@
     "runner": {
      "tool": "GitHub Actions",
      "workflow": ".github/workflows/collect.yml",
-     "trigger": "수동 실행 (Run workflow 버튼)",
+     "trigger": "매일 06:00 KST 자동 실행 + 수동 실행 (Run workflow 버튼)",
      "url": "https://github.com/ellaamode/teamproject8/actions/workflows/collect.yml",
      "steps": [
       "수집 (외부 원천에서 받아 원문 보관)",

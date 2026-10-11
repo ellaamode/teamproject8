@@ -10,7 +10,7 @@ from .analysis import source_summary
 
 router = APIRouter(tags=["수집 현황"])
 
-RUNNER = {"tool": "GitHub Actions", "workflow": ".github/workflows/collect.yml", "trigger": "수동 실행 (Run workflow 버튼)",
+RUNNER = {"tool": "GitHub Actions", "workflow": ".github/workflows/collect.yml", "trigger": "매일 06:00 KST 자동 실행 + 수동 실행 (Run workflow 버튼)",
           "url": "https://github.com/ellaamode/teamproject8/actions/workflows/collect.yml",
           "steps": ["수집 (외부 원천에서 받아 원문 보관)", "정리 (조문·문서로 나눔)", "연결 (본문의 조문 인용 찾기)", "변화 기록"]}
 STAGE = {"fetch": "수집", "parse": "정리", "link": "연결", "derive": "변화 기록"}
