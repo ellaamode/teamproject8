@@ -8,7 +8,11 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23222c6b'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='17' font-weight='800' fill='white' font-family='sans-serif'%3E%C2%A7%3C/text%3E%3C/svg%3E">
 <script>try{var t=localStorage.getItem("finreg.theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="stylesheet" href="assets/base.css?v=4">
-<link rel="stylesheet" href="plan.css?v=7">
+<link rel="stylesheet" href="plan.css?v=8">
+<script>
+  // 움직임 줄이기를 켠 사용자나 스크립트가 꺼진 환경에서는 처음부터 전부 보인다
+  try { if (!matchMedia("(prefers-reduced-motion: reduce)").matches && !location.hash) document.documentElement.classList.add("intro"); } catch (e) {}
+</script>
 </head>
 <body>
 <header class="ptop">
@@ -25,24 +29,12 @@
 <div class="wrap">
   <!-- ============================================================ HERO -->
   <section class="hero">
-    <div>
-      <span class="eyebrow"><svg class="i s"><use href="#i-spark"/></svg>KAIST 디지털금융MBA · 클라우드컴퓨팅실습 8조</span>
-      <h1>흩어진 금융규제<br><em>하나로 모아서</em> 확인합니다</h1>
-      <p class="lead">금융 법령과 하위법령, 그리고 금융당국의 법령해석·비조치의견·행정지도를 <b>조문 단위로 연결</b>해,
+    <div class="hero-in">
+      <span class="eyebrow rv-intro"><svg class="i s"><use href="#i-spark"/></svg>KAIST 디지털금융MBA · 클라우드컴퓨팅실습 8조</span>
+      <h1>흩어진 금융규제를<br><em>모아서 한 번에</em> 확인합니다</h1>
+      <p class="lead rv-intro">금융 법령과 하위법령, 그리고 금융당국의 법령해석·비조치의견·행정지도를 <b>조문 단위로 연결</b>해,
         금융회사 실무자가 “이 조문을 두고 당국은 뭐라고 했고, 앞으로 무엇이 바뀌는지”를 한 화면에서 확인하게 합니다.</p>
-      <p style="font-size:13.5px;color:var(--ink-2);margin:10px 0 0"><b>1단계 대상</b> 자본시장법 · 외국환거래법 · 은행법 · 보험업법 · 전자금융거래법과 각 하위법령 전부(시행령·시행규칙·감독규정·고시·시행세칙) — 대상 법령은 추후 확대할 예정입니다.</p>
-      <div class="cta">
-        <a class="btn primary" href="app/">서비스 열어 보기 <svg class="i s"><use href="#i-arrow"/></svg></a>
-        <a class="btn" href="#arch"><svg class="i s"><use href="#i-server"/></svg>백엔드 설계 보기</a>
-      </div>
-      <p style="font-size:13.5px;color:var(--ink-2);margin:14px 0 0;display:flex;flex-wrap:wrap;gap:6px 14px"><b>주소</b>
-        <a href="https://teamproject8-service.vercel.app/app/" target="_blank" rel="noopener">서비스</a>
-        <a href="https://github.com/ellaamode/teamproject8" target="_blank" rel="noopener">GitHub 저장소</a>
-        <a href="https://finreg-api-nbco.onrender.com/docs" target="_blank" rel="noopener">Swagger UI</a>
-        <a href="https://teamproject8-service.vercel.app/docs/" target="_blank" rel="noopener">API·DB 문서</a></p>
-      <div class="members">팀원 <span class="m">양정모</span><span class="m">양지선</span><span class="m">이수정</span><span class="m">김한룡</span><span class="m">최은정</span></div>
-    </div>
-    <div class="stage" id="stage" aria-label="실제 데이터: 전자금융거래법 제25조의2에 연결된 자료">
+      <div class="stage rv-intro" id="stage" aria-label="실제 데이터: 자본시장법 제42조(금융투자업자의 업무위탁)에 연결된 자료">
       <svg class="wires" viewBox="0 0 560 470" preserveAspectRatio="none" aria-hidden="true">
         <g stroke="var(--line-2)" stroke-width="1.6" stroke-dasharray="4 6" fill="none">
           <path d="M280 235 C200 200 150 120 110 70"/><path d="M280 235 C360 190 420 120 470 78"/>
@@ -50,7 +42,19 @@
           <path d="M246 235 L470 235"/>
         </g>
       </svg>
-      <a class="card center" id="heroCard" href="app/#/a/efta%3A25%EC%9D%982"><div class="faint" style="font-size:12px">불러오는 중…</div></a>
+      <a class="card center" id="heroCard" href="app/#/a/fscma%3A42"><div class="faint" style="font-size:12px">불러오는 중…</div></a>
+    </div>
+      <p class="rv-intro" style="font-size:13.5px;color:var(--ink-2);margin:10px 0 0"><b>1단계 대상</b> 자본시장법 · 외국환거래법 · 은행법 · 보험업법 · 전자금융거래법과 각 하위법령 전부(시행령·시행규칙·감독규정·고시·시행세칙) — 대상 법령은 추후 확대할 예정입니다.</p>
+      <div class="cta rv-intro">
+        <a class="btn primary" href="app/">서비스 열어 보기 <svg class="i s"><use href="#i-arrow"/></svg></a>
+        <a class="btn" href="#arch"><svg class="i s"><use href="#i-server"/></svg>백엔드 설계 보기</a>
+      </div>
+      <p class="rv-intro" style="font-size:13.5px;color:var(--ink-2);margin:14px 0 0;display:flex;flex-wrap:wrap;gap:6px 14px"><b>주소</b>
+        <a href="https://teamproject8-service.vercel.app/app/" target="_blank" rel="noopener">서비스</a>
+        <a href="https://github.com/ellaamode/teamproject8" target="_blank" rel="noopener">GitHub 저장소</a>
+        <a href="https://finreg-api-nbco.onrender.com/docs" target="_blank" rel="noopener">Swagger UI</a>
+        <a href="https://teamproject8-service.vercel.app/docs/" target="_blank" rel="noopener">API·DB 문서</a></p>
+      <div class="members rv-intro">팀원 <span class="m">양정모</span><span class="m">양지선</span><span class="m">이수정</span><span class="m">김한룡</span><span class="m">최은정</span></div>
     </div>
   </section>
   <div class="ribbon" id="ribbon">
@@ -65,9 +69,9 @@
         <li><a href="#arch">서비스 아키텍처</a> <span>06 시스템 구조 · 07 수집 과정</span></li>
         <li><a href="#data">사용 데이터 및 출처</a> <span>05 데이터 원천 (명칭·제공 기관·URL·크롤링 항목)</span></li>
         <li><a href="#users">데이터 활용 기획 시나리오</a> <span>01 문제 · 02 사용자 · 04 사용 흐름</span></li>
-        <li><a href="#bm">비즈니스 모델</a> <span>15 대상 고객 · 제공 가치 · 수익 · 운영</span></li>
+        <li><a href="#bm">비즈니스 모델</a> <span>14 대상 고객 · 제공 가치 · 수익 · 운영</span></li>
         <li><a href="#screens">주요 페이지 및 기능</a> <span>04 메뉴 구성과 화면</span></li>
-        <li><a href="#insights">데이터 분석·정리 결과</a> <span>14 문제 검증 · 주요 발견</span></li>
+        <li><a href="#insights">데이터 분석·정리 결과</a> <span>13 문제 검증 · 주요 발견</span></li>
         <li><a href="#api">주소 3개 · 문서 2개</a> <span>맨 위 주소 줄 · 10 API · 09 DB · <a href="docs/">API·DB 문서</a></span></li>
       </ol></div>
     <div><h3>1분 데모 순서</h3>
@@ -97,12 +101,10 @@
     <a href="#api"><b>10</b>API</a>
     <a href="#ops"><b>11</b>운영·보안</a>
     <div class="grp">실행</div>
-    <a href="#plan"><b>12</b>일정·역할</a>
-    <a href="#risk"><b>13</b>위험과 대응</a>
+    <a href="#risk"><b>12</b>위험과 대응</a>
     <div class="grp">성과·사업</div>
-    <a href="#insights"><b>14</b>데이터 분석 결과</a>
-    <a href="#bm"><b>15</b>비즈니스 모델</a>
-    <a href="#discuss"><b>16</b>팀에서 정할 것</a>
+    <a href="#insights"><b>13</b>데이터 분석 결과</a>
+    <a href="#bm"><b>14</b>비즈니스 모델</a>
   </nav>
   <div>
 
@@ -110,17 +112,17 @@
   <section class="s" id="problem">
     <div class="s-no">01 · 문제</div>
     <h2>규제 정보는 업무와 가장 가깝지만, 가장 찾기 어렵습니다</h2>
-    <p class="intro">금융회사 실무에서 가장 큰 제약 중 하나는 규제입니다. 그런데 ‘이 업무를 해도 되나’에 답하려면 여러 사이트를 오가며, 서로 연결되지 않은 자료를 사람이 직접 이어 붙여야 합니다.</p>
+    <p class="intro">금융회사 실무에서 가장 큰 제약 중 하나는 규제입니다. 그런데 ‘이 업무를 해도 되나’에 답하려면 여러 사이트를 오가며 법령과 해석 자료를 하나씩 찾아, 어떤 해석이 어느 조문에 관한 것인지 직접 맞춰 봐야 합니다.</p>
     <div class="g3">
       <div class="card pc"><span class="kicon" data-k="입법예고"><svg class="i"><use href="#i-layers"/></svg></span>
         <div class="step-no" style="margin-top:14px">STEP 1</div><h4>자료가 여러 곳에 흩어져 있다</h4>
         <p>법령과 하위법령은 국가법령정보센터, 법령해석·비조치의견·행정지도는 금융규제·법령해석포털에 따로 있습니다. 둘 사이를 잇는 화면은 없습니다.</p></div>
       <div class="card pc"><span class="kicon" data-k="법령해석"><svg class="i"><use href="#i-interp"/></svg></span>
-        <div class="step-no" style="margin-top:14px">STEP 2</div><h4>해석은 조문과 이어져 있지 않다</h4>
+        <div class="step-no" style="margin-top:14px">STEP 2</div><h4>해석에 대상 조문이 연결되어 있지 않다</h4>
         <p>법령해석·비조치의견 회신 6,174건에는 ‘관련 조문’ 칸이 없습니다. 본문 속 인용도 <span class="code-ex">「자본시장과 금융투자업에 관한 법률」 제9조</span>, <span class="code-ex">자본시장법 제9조</span>, <span class="code-ex">같은 법 시행령 제7조</span>처럼 제각각입니다.</p></div>
       <div class="card pc"><span class="kicon" data-k="행정지도"><svg class="i"><use href="#i-hourglass"/></svg></span>
-        <div class="step-no" style="margin-top:14px">STEP 3</div><h4>변화는 소리 없이 온다</h4>
-        <p>한 조문에 지금 본문과 앞으로 바뀔 본문이 함께 있고(대상 법령 전체 71개 조문), 행정지도는 존속기간이 끝나면 효력을 잃습니다. 직접 찾아보기 전에는 알 수 없습니다.</p></div>
+        <div class="step-no" style="margin-top:14px">STEP 3</div><h4>바뀌는 내용을 미리 알기 어렵다</h4>
+        <p>개정된 조문은 시행일 전까지 지금 본문과 앞으로 바뀔 본문이 함께 있습니다(대상 법령 중 71개 조문). 행정지도도 존속기간이 끝나면 효력을 잃습니다. 이런 변화가 한곳에 모여 있지 않아, 직접 찾아보지 않으면 놓치기 쉽습니다.</p></div>
     </div>
   </section>
 
@@ -252,29 +254,28 @@
         <td>법률·시행령·시행규칙·감독규정·고시·시행세칙 조문(현행·시행예정), 시행일, 위임 관계(3단비교)</td>
         <td><b>구현·수집 완료 (Open API)</b>: 법제처 국가법령정보 공동활용 Open API(<span class="code-ex">lawSearch.do</span>·<span class="code-ex">lawService.do</span>, 인증키 OC). 1단계 5개 법률(자본시장법·외국환거래법·은행법·보험업법·전자금융거래법)과 하위법령 전부 21건, 조문 3,629개, 시행예정 본 7개, 3단비교 위임조문 908쌍 (추후 확대 예정)</td>
         <td>시행일을 지정하지 않으면 아직 시행 전인 개정 내용이 섞여 옴 → 시행일을 지정해서 받음. API가 막히면 그날만 웹페이지 수집으로 대체</td></tr>
-      <tr><td><b>금융규제·법령해석포털 회신사례</b><br>금융위원회·금융감독원<br><a class="faint" href="https://better.fsc.go.kr/fsc_new/replyCase/TotalReplyList.do" target="_blank" rel="noopener">better.fsc.go.kr/…/TotalReplyList.do</a></td>
+      <tr><td><b>금융규제·법령해석포털 회신사례</b><br>금융위원회·금융감독원<br><a class="faint" href="https://better.fsc.go.kr/fsc_new/replyCase/TotalReplyList.do?stNo=11&amp;muNo=117&amp;muGpNo=75" target="_blank" rel="noopener">better.fsc.go.kr/…/TotalReplyList.do</a></td>
         <td>구분(법령해석·비조치의견), 제목, 소관부서, 회신일, 질의요지, 회답, 이유, 첨부파일명</td>
         <td><b>구현·수집 완료 (크롤링)</b>: 목록 JSON(<span class="code-ex">selectReplyCaseTotalReplyList.do</span>) + 상세 HTML(<span class="code-ex">LawreqDetail.do</span> 등). 회신사례 12,088건 중 범위 안(법령해석·비조치의견) 6,174건 전부 수집, 요청 간격 1.5초. 현장건의 과제 5,914건은 범위 밖</td>
         <td>공식 API가 없음 → 원문 그대로 저장·출처 링크, 새 글만 받음. 본문의 전화번호·담당 공무원 실명은 가려서 저장, 사이트가 거부(403·429)하면 즉시 중단</td></tr>
-      <tr><td><b>금융위원회 행정지도</b><br>금융위원회<br><a class="faint" href="https://better.fsc.go.kr/fsc_new/status/adminMap/OpertnList.do" target="_blank" rel="noopener">better.fsc.go.kr/…/OpertnList.do</a></td>
+      <tr><td><b>금융위원회 행정지도</b><br>금융위원회<br><a class="faint" href="https://better.fsc.go.kr/fsc_new/status/adminMap/OpertnList.do?stNo=11&amp;muNo=145&amp;muGpNo=60" target="_blank" rel="noopener">better.fsc.go.kr/…/OpertnList.do</a></td>
         <td>관리번호, 제목, 소관부서, 존속기간(시작~종료), 단계(예고·시행)</td>
         <td><b>구현 (크롤링)</b>: 목록 JSON(<span class="code-ex">selectOpertnList.do</span> · <span class="code-ex">selectPrvntcList.do</span>)</td>
         <td>존속기간으로 시행 중·만료 임박 계산</td></tr>
-      <tr><td colspan="4" class="faint">확장 후보 (아직 수집하지 않음): 국회 입법예고(공공데이터포털 Open API), 금감원 행정지도, 대상 밖 법령(대부업법·신용정보법 등, 2단계)</td></tr>
+      <tr><td colspan="4" class="faint">확장 후보 (아직 수집하지 않음): 국회 입법예고(공공데이터포털 ‘국회사무처_진행중 입법예고’ Open API), 금감원 행정지도(금융감독원 홈페이지), 대상 밖 법령(대부업법·신용정보법 등, 2단계)</td></tr>
     </table></div>
-    <div class="g2" style="margin-top:16px">
-      <div class="callout info"><svg class="i l" style="color:var(--brand-2)"><use href="#i-info"/></svg><div><b>모두 실제로 수집한 데이터입니다</b>
-        <p>법령 조문은 국가법령정보센터의 실제 조문(저작권법 제7조상 보호받지 않는 저작물), 회신사례·행정지도는 금융규제·법령해석포털에서 수집한 원문입니다. 원문은 고치지 않고 저장하며 모든 문서에 출처 링크를 답니다. 수업 시연 목적이며, 정식 공개 전에는 포털 저작권정책에 따른 협의가 필요합니다.</p></div></div>
-      <div class="callout good"><svg class="i l" style="color:var(--t-interp)"><use href="#i-check"/></svg><div><b>세 데이터 모두 같은 순서로 처리</b>
-        <p>받은 원문을 <span class="code-ex">raw_payloads</span>에 그대로 보관한 뒤, 정리 → 조문 연결 → 변화 기록 순서로 가공합니다. 원문을 보관해 두므로 원천 사이트에 다시 요청하지 않고도 언제든 처음부터 다시 가공할 수 있습니다(실제로 Supabase에 이렇게 옮겨 담았습니다).</p></div></div>
-    </div>
+    <div class="callout good"><svg class="i l" style="color:var(--t-interp)"><use href="#i-check"/></svg><div><b>데이터별 처리 방법</b>
+      <p><b>법령</b>: 법제처 Open API에 시행일을 지정해 법령마다 지금 본문과 시행 예정 본문을 받습니다. 조문 단위로 나눠 시행일별로 저장하고, 법제처 3단비교 자료로 법률 → 시행령·시행규칙 위임 관계를 만듭니다. 감독규정·시행세칙은 본문의 ‘영 제○조’ 같은 표현으로 위임 관계를 찾습니다.</p>
+      <p><b>회신사례</b>: 포털 목록에서 새 글만 골라 상세 화면에서 질의요지·회답·이유를 받습니다. 전화번호·담당자 실명은 가려서 저장하고, 본문에서 인용한 조문을 찾아 연결합니다.</p>
+      <p><b>행정지도</b>: 예고·시행 목록에서 제목·소관부서·존속기간·단계를 받습니다. 목록에 본문이 없어 조문과는 연결하지 않고, 존속기간으로 시행 중·만료 임박을 계산합니다.</p>
+      <p><b>공통</b>: 받은 원문은 <span class="code-ex">raw_payloads</span>에 그대로 보관합니다. 연결 규칙을 고쳐도 원천 사이트에 다시 요청하지 않고, 보관한 원문으로 처음부터 다시 계산합니다.</p></div></div>
   </section>
 
   <!-- ============================================================ 06 -->
   <section class="s" id="arch">
     <div class="s-no">06 · 시스템 구조</div>
     <h2>모으는 일과 보여 주는 일을 나눴습니다</h2>
-    <p class="intro">데이터를 모아 정리하는 일은 수집 프로그램이 GitHub Actions에서 매일 06:00 자동으로 하고, 화면에 보여 주는 API(FastAPI)는 정리된 데이터를 읽기만 합니다. 사용자가 화면을 볼 때 원천 사이트에 요청이 가지 않으므로 무료 서버에서도 빠르고, 원천 사이트에 부담을 주지 않습니다. 외부 원천과의 연결 결과(원천별 수집 방식·건수·마지막 수집 시각·실행 기록)는 <span class="code-ex">GET /collection</span>으로 Swagger에서 바로 확인할 수 있습니다.</p>
+    <p class="intro">GitHub Actions의 수집 프로그램이 매일 아침(06:00 예약) 법제처 Open API와 금융위 포털에서 새 자료를 받아, 정리·조문 연결·변화 기록까지 계산한 뒤 결과를 Supabase(PostgreSQL 데이터베이스)에 저장합니다. 화면에 보여 주는 API(FastAPI)는 이렇게 저장된 데이터를 읽기만 합니다. 사용자가 화면을 볼 때 원천 사이트에 요청이 가지 않으므로 무료 서버에서도 빠르고, 원천 사이트에 부담을 주지 않습니다. 외부 원천과의 연결 결과(원천별 수집 방식·건수·마지막 수집 시각·실행 기록)는 <span class="code-ex">GET /collection</span>으로 Swagger에서 바로 확인할 수 있습니다.</p>
     <figure class="card figure" style="margin:0">
       <svg viewBox="0 0 1000 380" role="img" aria-label="원천 2곳 → GitHub Actions 수집 4단계 → Supabase 3층 저장 → FastAPI 읽기 전용 → Vercel 화면">
         <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--ink-3)" stroke-width="1.6"/></marker></defs>
@@ -331,20 +332,18 @@
     <div class="tbl-wrap"><table class="t">
       <tr><th style="width:22%">매일 수집에 필요한 것</th><th style="width:36%">Render 무료 서버(FastAPI)에서 하면</th><th>GitHub Actions에서 하면</th></tr>
       <tr><td><b>정해진 시간에 자동 실행</b></td><td>무료 요금제에는 예약 실행(Cron Job)이 없음</td><td>예약 실행 기본 제공 — 매일 06:00, 필요하면 버튼으로도 실행</td></tr>
-      <tr><td><b>오래 걸리는 작업</b></td><td>15분간 요청이 없으면 잠들고, 메모리 512MB를 조회와 나눠 씀</td><td>실행할 때마다 새 컴퓨터를 받아 한 번에 최대 6시간까지 실행</td></tr>
+      <tr><td><b>오래 걸리는 작업</b></td><td>15분간 요청이 없으면 잠들고, 메모리 512MB를 조회와 나눠 씀</td><td>실행할 때마다 GitHub이 빌려주는 임시 가상 컴퓨터에서 한 번에 최대 6시간까지 실행 (끝나면 그 컴퓨터는 사라짐)</td></tr>
       <tr><td><b>공개 서버에 쓰기 기능을 열지 않기</b></td><td>‘수집 시작’ API(POST)와 DB 쓰기 계정을 인터넷에 열린 서버에 둬야 함</td><td>공개 서버(Render)에는 조회(GET)와 읽기 계정만, 쓰기 계정은 Actions에만</td></tr>
       <tr><td><b>비용 0원</b></td><td>예약 실행을 쓰려면 유료</td><td>공개 저장소는 무료</td></tr>
     </table></div>
     <div class="g3" style="margin-top:14px">
       <div class="card pc"><h4 style="margin-top:0">조회가 느려지지 않는다</h4><p>수집과 조회가 서로 다른 컴퓨터에서 돌아서, 수집하는 동안에도 화면 응답 속도가 그대로입니다.</p></div>
-      <div class="card pc"><h4 style="margin-top:0">공개 서버가 뚫려도 데이터는 안전</h4><p>인터넷에 열린 Render에는 읽기 계정만 있어서, 연결 정보가 새도 데이터를 바꾸거나 지울 수 없습니다(11 운영·보안).</p></div>
+      <div class="card pc"><h4 style="margin-top:0">공개 서버가 뚫려도 데이터는 안전</h4><p>인터넷에 열린 Render에는 읽기 계정만 있어서, 연결 정보가 새도 데이터를 바꾸거나 지울 수 없습니다. 계정 구성은 <a href="#ops">11 운영·보안</a>에서 설명합니다.</p></div>
       <div class="card pc"><h4 style="margin-top:0">무료 DB가 잠들지 않는다</h4><p>Supabase 무료 프로젝트는 일주일간 사용이 없으면 일시정지됩니다. 매일 수집이 DB에 실행 기록을 쓰므로 방문자가 없는 주에도 멈추지 않습니다.</p></div>
       <div class="card pc"><h4 style="margin-top:0">실패해도 서비스는 계속</h4><p>원천 사이트가 막히거나 수집이 실패해도 화면은 마지막으로 모은 데이터를 계속 보여 줍니다. 실패는 실행 기록과 GitHub 알림 메일로 바로 알 수 있습니다.</p></div>
       <div class="card pc"><h4 style="margin-top:0">외부 연동을 Swagger로 확인</h4><p>원천별 수집 방식·건수·마지막 수집 시각·최근 실행 결과를 <span class="code-ex">GET /collection</span>이 돌려줍니다. 수집이 화면 밖에서 돌아도 API로 바로 확인할 수 있습니다.</p></div>
       <div class="card pc"><h4 style="margin-top:0">원천 사이트에 하루 한 번만</h4><p>사용자가 몇 명이든 법제처·금융위 포털에는 하루 한 번, 새로 생긴 것만 요청합니다. 사용자 수가 늘어도 원천 사이트 부담은 늘지 않습니다.</p></div>
     </div>
-    <div class="callout info"><svg class="i l" style="color:var(--brand-2)"><use href="#i-info"/></svg><div><b>운영할 때 알아 둘 점</b>
-      <p>처음 대량 적재(회신 6,174건)는 같은 수집 프로그램을 팀원 PC에서 한 번 실행해 넣었고, 이후 매일 갱신을 Actions가 맡습니다. 비밀값 3개(쓰기 계정 주소·법제처 인증키·연락처)는 GitHub Secrets에만 둡니다. 공개 저장소에서 60일 동안 커밋 같은 활동이 없으면 GitHub이 예약 실행을 자동으로 끄므로, 그때는 Actions 탭에서 ‘Enable workflow’를 누릅니다.</p></div></div>
   </section>
 
   <!-- ============================================================ 07 -->
@@ -418,7 +417,7 @@
   <!-- ============================================================ 09 -->
   <section class="s" id="db">
     <div class="s-no">09 · 데이터베이스</div>
-    <h2>표 10개와 집계 1개를 세 층으로 나눴습니다</h2>
+    <h2>테이블 10개와 집계 뷰 1개를 세 층으로 나눴습니다</h2>
     <p style="margin:-4px 0 16px"><a class="btn sm" href="docs/#db">DB 테이블 문서 전체 보기 (컬럼·PK·FK)</a></p>
     <p class="intro">① 원문·운영 층은 수집 프로그램만 쓰는 보관함이고, ② 정리 층은 원천의 내용을 법령·조문·문서로 나눠 담은 것이며, ③ 연결·변화 층은 서비스가 계산해 만든 연결과 변화 기록입니다. ③은 언제든 지우고 ②에서 다시 계산할 수 있습니다.</p>
     <figure class="card figure" style="margin:0">
@@ -530,54 +529,11 @@
       <tr><td><b>테이블 생성</b></td><td>ORM(SQLAlchemy) 클래스 + 앱 시작 시 <span class="code-ex">create_all()</span></td><td>SQL 스크립트(<span class="code-ex">001_schema.sql</span>)를 SQL Editor에서 실행, DB 접근은 드라이버(<span class="code-ex">psycopg</span>)로 SQL 직접 실행</td><td>계정 권한·행 수준 보안·집계 뷰처럼 ORM으로 표현하기 어려운 DB 기능을 쓰고, 조회 API에는 표를 만들 권한 자체가 없기 때문</td></tr>
       <tr><td><b>비밀값 관리</b></td><td>로컬 <span class="code-ex">.env</span> + Render 환경변수</td><td>Render 환경변수 + GitHub Actions Secrets (로컬 1회 작업은 화면에 안 보이는 입력)</td><td>원칙은 같음 — 연결 문자열은 코드·저장소에 두지 않는다</td></tr>
     </table></div>
-    <div class="callout info"><svg class="i l" style="color:var(--brand-2)"><use href="#i-info"/></svg><div><b>연결 문자열 형식 주의</b>
-      <p>수업은 SQLAlchemy용으로 앞머리를 <span class="code-ex">postgresql+psycopg://</span>로 바꾸지만, 이 프로젝트는 드라이버를 직접 쓰므로 Supabase에서 복사한 <span class="code-ex">postgresql://</span> 그대로 씁니다(Session pooler, 포트 5432). 아이디 자리만 역할에 맞게 <span class="code-ex">batch_writer.[프로젝트ID]</span> · <span class="code-ex">api_reader.[프로젝트ID]</span>로 바꿉니다.</p></div></div>
   </section>
 
   <!-- ============================================================ 12 -->
-  <section class="s" id="plan">
-    <div class="s-no">12 · 일정·역할</div>
-    <h2>배포까지 끝났고, 이제 검수와 발표 준비입니다</h2>
-    <p class="intro">초록 체크는 구현·확인을 마친 항목입니다. 서비스는 Vercel·Render·Supabase에 배포되어 실제 데이터로 동작하고 있고, 남은 일은 연결 검수와 발표 준비입니다.</p>
-    <div class="tl">
-      <div class="card wk"><div class="w">5주차</div><h4>뼈대와 엔진</h4><ul>
-        <li class="done"><svg class="i"><use href="#i-check"/></svg>스키마 10개 테이블·계정·RLS</li>
-        <li class="done"><svg class="i"><use href="#i-check"/></svg>인용 연결 엔진 + 테스트 20개</li>
-        <li class="done"><svg class="i"><use href="#i-check"/></svg>조문 분리 파서(부칙·시행예정 처리)</li>
-        <li class="done"><svg class="i"><use href="#i-check"/></svg>법제처 Open API 인증키(OC) 발급</li></ul>
-        <div class="crit"><b>완료 기준</b> 데모 데이터가 4단계를 통과 <span class="done-tag">달성</span></div></div>
-      <div class="card wk"><div class="w">6주차</div><h4>실데이터 수집</h4><ul>
-        <li class="done"><svg class="i"><use href="#i-check"/></svg>1단계 5개 법률 + 하위법령 21건 적재 (법제처 Open API, 웹 수집본과 조문 3,579개 대조)</li>
-        <li class="done"><svg class="i"><use href="#i-check"/></svg>포털 회신 6,174건 전부 수집 (현장건의 제외)</li>
-        <li class="done"><svg class="i"><use href="#i-check"/></svg>3단비교(thdCmp)로 법→시행령·시행규칙 위임 관계 교체 (908쌍)</li>
-        <li><svg class="i"><use href="#i-clock"/></svg>무작위 100건 수동 검수 → 별칭·규칙 보강</li></ul>
-        <div class="crit"><b>완료 기준</b> 검수 100건 기준 연결 정밀도 95%↑</div></div>
-      <div class="card wk"><div class="w">7주차</div><h4>배포와 자동화</h4><ul>
-        <li class="done"><svg class="i"><use href="#i-check"/></svg>Supabase·Render·Vercel 배포, 화면이 API로 실데이터 표시</li>
-        <li class="done"><svg class="i"><use href="#i-check"/></svg>조회 API 11개 · 화면 9개 · 서버가 잠들면 대표 데이터로 자동 전환</li>
-        <li class="done"><svg class="i"><use href="#i-check"/></svg>개인정보 가리기 · 403·429 수집 중단 장치</li>
-        <li><svg class="i"><use href="#i-clock"/></svg>GitHub Secrets 등록 → 매일 자동 수집 시작 (Actions 실행 기록으로 확인)</li></ul>
-        <div class="crit"><b>완료 기준</b> 배포 주소에서 실데이터로 화면 동작 <span class="done-tag">달성</span></div></div>
-      <div class="card wk"><div class="w">8주차</div><h4>다듬기·발표</h4><ul>
-        <li class="done"><svg class="i"><use href="#i-check"/></svg>화면 정리(메뉴 구분, 5개 법률 전환, 좁은 화면)</li>
-        <li><svg class="i"><use href="#i-clock"/></svg>성능 점검·오류 처리</li>
-        <li><svg class="i"><use href="#i-clock"/></svg>시연 시나리오 리허설</li></ul>
-        <div class="crit"><b>완료 기준</b> 라이브 시연: 검색 → 조문 카드 → 해석 원문 → 관심 등록</div></div>
-    </div>
-    <h3 class="sub"><svg class="i"><use href="#i-user"/></svg>역할 (다섯 영역, 담당자는 팀 회의에서 확정)</h3>
-    <div class="tbl-wrap"><table class="t">
-      <tr><th>영역</th><th>맡는 일</th><th>주 산출물</th></tr>
-      <tr><td><b>법령 수집</b></td><td>법제처 Open API 운영, 시행예정 본 관리, 3단비교</td><td><span class="code-ex">batch/sources/lawgo.py</span></td></tr>
-      <tr><td><b>포털·행정지도 수집</b></td><td>회신·행정지도 수집, 개인정보 가리기, 수집 범위 확장</td><td><span class="code-ex">batch/sources/fscportal.py</span></td></tr>
-      <tr><td><b>인용 연결·검수</b></td><td>별칭 사전, 100건 검수, 규칙·테스트 보강</td><td><span class="code-ex">batch/linker.py</span> · <span class="code-ex">tests/</span></td></tr>
-      <tr><td><b>DB·API</b></td><td>Supabase 구성, Render 배포, 성능·오류</td><td><span class="code-ex">sql/</span> · <span class="code-ex">app/</span></td></tr>
-      <tr><td><b>화면·발표</b></td><td>화면 다듬기, Vercel, 시연 흐름</td><td><span class="code-ex">service/app/</span> · 이 기획서</td></tr>
-    </table></div>
-  </section>
-
-  <!-- ============================================================ 13 -->
   <section class="s" id="risk">
-    <div class="s-no">13 · 위험과 대응</div>
+    <div class="s-no">12 · 위험과 대응</div>
     <h2>잘못 연결하는 것보다, 연결하지 않는 편이 낫다</h2>
     <div class="tbl-wrap"><table class="t">
       <tr><th style="width:26%">위험</th><th style="width:24%">영향</th><th>대응</th></tr>
@@ -592,9 +548,9 @@
     </table></div>
   </section>
 
-  <!-- ============================================================ 14 -->
+  <!-- ============================================================ 13 -->
   <section class="s" id="insights">
-    <div class="s-no">14 · 데이터 분석 결과</div>
+    <div class="s-no">13 · 데이터 분석 결과</div>
     <h2>우리가 말한 문제가 데이터에 실제로 있는가</h2>
     <p class="intro">서비스의 <a href="app/#/insights" style="color:var(--brand-2);font-weight:700">데이터 분석 페이지</a>와 같은 데이터(<span class="code-ex">GET /analysis</span>)입니다. 아래 수치는 페이지를 열 때 최신 분석 결과를 불러와 채웁니다.</p>
     <div class="card ins-head" id="insHead"><p>불러오는 중…</p></div>
@@ -608,15 +564,15 @@
       <p>회신 원문(질의요지·회답·이유)에서 인용 연결 엔진으로 조문을 찾아 집계했습니다. ‘문제 검증’의 비율은 조문이 1개 이상 연결된 회신을 분모로 합니다. 제목의 조문 번호는 ‘제○조’ 표기가 있는지로 판단했습니다. 하위법령(시행령·시행규칙·감독규정·고시·시행세칙) 인용은 모법으로 합산하고, 같은 회신이 한 법령을 여러 번 인용해도 1건으로 셉니다. 회신일은 포털 등록일 기준입니다.</p></div></div>
   </section>
 
-  <!-- ============================================================ 15 -->
+  <!-- ============================================================ 14 -->
   <section class="s" id="bm">
-    <div class="s-no">15 · 비즈니스 모델</div>
+    <div class="s-no">14 · 비즈니스 모델</div>
     <h2>조회는 무료, 변화 알림과 연동은 기업 구독</h2>
     <p class="intro">법령·해석 원문은 누구나 무료로 봅니다. 돈은 우리가 만든 것 — 조문 단위 연결, 변화 알림, 사내 시스템 연동 — 에서 받습니다. 운영비가 거의 0원이라 작은 매출로도 유지됩니다.</p>
     <div class="g3" style="margin-bottom:16px">
       <div class="card rb"><div class="v num">연 229<small>건</small></div><div class="c">금융회사가 금융당국에 직접 보낸 법령해석·비조치의견 질의 (2021~2025 평균)</div><div class="s">해석이 필요해 시간을 들여 공식 질의까지 하는 수요가 매년 있음 · 우리 수집 데이터</div></div>
       <div class="card rb"><div class="v num">44<small>%</small></div><div class="c">전체 회신 6,174건 중 대상 5개 법률을 다룬 회신 (2,727건)</div><div class="s">1단계 범위만으로 공식 질의의 절반 가까이를 다룸 · 우리 수집 데이터</div></div>
-      <div class="card rb"><div class="v num">358<small>건</small></div><div class="c">곧 바뀌는 조문에 걸린 회신</div><div class="s">개정 때마다 다시 확인해야 하는 해석 = 변화 알림의 가치 · 14 데이터 분석</div></div>
+      <div class="card rb"><div class="v num">358<small>건</small></div><div class="c">곧 바뀌는 조문에 걸린 회신</div><div class="s">개정 때마다 다시 확인해야 하는 해석 = 변화 알림의 가치 · 13 데이터 분석</div></div>
     </div>
     <div class="g3">
       <div class="card pc"><span class="pi"><svg class="i"><use href="#i-user"/></svg></span><h4>대상 고객</h4><ul>
@@ -648,22 +604,6 @@
         <p><b>1단계(지금)</b> 무료 공개, 데이터와 연결 정확도 검증 → <b>2단계</b> 준법감시 실무 2~3팀에 관심 조문 알림 시범, 실제 확인 빈도와 지불 의향 측정 → <b>3단계</b> 팀 구독·연동 API, 대상 법령 확대</p></div></div>
     </div>
   </section>
-
-  <!-- ============================================================ 16 -->
-  <section class="s" id="discuss">
-    <div class="s-no">16 · 팀에서 정할 것</div>
-    <h2>다음 회의 안건</h2>
-    <div class="g2">
-      <div class="card pc"><ul style="margin:0">
-        <li><b>대상 법령 2단계 확대</b>: 1단계 5개 법률(자본시장·외환·은행·보험·전자금융) 다음으로 대부업법·신용정보법·여신전문금융업법 등 인용 빈도 상위부터 넣을 순서</li>
-        <li><b>포털 이용 문의</b>: 정식 공개 전 금융위에 데이터 이용·링크 통지를 할지, 수업 시연 범위로 둘지</li>
-        <li><b>검수 기준</b>: 연결 정밀도 목표(95%)와 검수 표본 추출 방식</li></ul></div>
-      <div class="card pc"><ul style="margin:0">
-        <li><b>크롤링 범위</b>: 포털 회신·행정지도 수집을 유지할지, 금감원 행정지도·입법예고까지 넓힐지</li>
-        <li><b>관심 조문 알림</b>: 이메일 알림까지 갈지(로그인 필요), 브라우저 저장으로 충분한지</li>
-        <li><b>역할과 담당자</b> 확정, 주간 회의 요일</li></ul></div>
-    </div>
-  </section>
   </div>
 </div>
 
@@ -681,7 +621,7 @@
   document.querySelectorAll("#idea svg").forEach((s) => { s.innerHTML = s.innerHTML.replace("${0}", "").replace("${1}", g); });
 
   // 히어로: 실제 데이터 파일에서 조문 카드
-  fetch("app/data/articles/efta__25%EC%9D%982.json").then((r) => r.json()).then((a) => {
+  fetch("app/data/articles/fscma__42.json").then((r) => r.json()).then((a) => {
     const s = a.stats;
     const body = (a.current?.body || "").replace(/^제\S+\([^)]*\)\s*/, "");
     document.getElementById("heroCard").innerHTML = `
@@ -689,9 +629,14 @@
       <div class="lb" style="margin-top:10px"><span>${a.label}</span>${a.title}</div>
       <p>${body}</p>
       <div class="vrow"><span class="tag">현행 ${a.current.effective_from.replace(/-/g, ".")}~</span>${a.pending ? `<span class="tag pending" style="background:color-mix(in srgb,var(--t-notice) 12%,var(--surface))">시행예정 ${a.pending.effective_from.replace(/-/g, ".")}</span>` : ""}</div>`;
-    const sats = [["법령해석", `법령해석 ${s.interp}건`, "이 조문을 인용", "10%", "6%"], ["비조치의견", `비조치의견 ${s.noaction}건`, "같은 조문의 선례", "62%", "4%"],
-      ["행정지도", `행정지도 ${s.guidance}건`, "존속기간 관리", "4%", "80%"], ["조문", a.pending ? `${a.pending.effective_from.slice(5).replace("-", ".")} 시행 예정` : "현행 본문", "바뀌는 부분 표시", "62%", "80%"],
-      ["조문", `위임 ${a.delegates_to.length}개 조문`, "시행령 제13조의2 등", "72%", "44%"]];
+    // 위임받은 조문을 법령 단계별로 세고, 가장 최근 해석을 하나 보여 줌
+    const ed = a.delegates_to.filter((d) => d.law_kind === "시행령"), reg = a.delegates_to.filter((d) => d.law_kind !== "시행령");
+    const latest = (a.documents || []).find((d) => d.kind === "법령해석");
+    const short = (t, n) => (t.length > n ? t.slice(0, n) + "…" : t);
+    const sats = [["법령해석", `법령해석 ${s.interp}건`, "이 조문을 인용", "6%", "6%"], ["비조치의견", `비조치의견 ${s.noaction}건`, "같은 조문의 선례", "62%", "4%"],
+      ["조문", `시행령 ${ed.length}개 조문`, `${ed.map((d) => d.label.replace("제", "").replace("조", "")).join("·")}조 (공식 위임)`, "2%", "80%"],
+      ["조문", `감독규정 ${reg.length}개 조문`, reg[0] ? `${reg[0].law_name} ${reg[0].label} 등` : "", "56%", "82%"],
+      ["법령해석", latest ? `최근 해석 ${latest.published_on.replace(/-/g, ".")}` : "최근 해석", latest ? short(latest.title, 16) : "", "70%", "44%"]];
     const st = document.getElementById("stage");
     st.insertAdjacentHTML("beforeend", sats.map(([k, b, sm, l, t]) => `<div class="sat" data-k="${k}" style="left:${l};top:${t}"><span class="kicon" data-k="${k}">${icon(k === "조문" ? "tree" : KIND_ICON[k])}</span><div><b>${b}</b><small>${sm}</small></div></div>`).join(""));
   }).catch(() => {});
@@ -711,7 +656,7 @@
       .catch(() => { pre.textContent = "(예시를 불러오지 못했습니다)"; });
   });
 
-  // 14 · 데이터 분석 결과: 분석 API 스냅숏에서 수치를 채움
+  // 13 · 데이터 분석 결과: 분석 API 스냅숏에서 수치를 채움
   fetch("app/data/analysis.json").then((r) => r.json()).then((a) => {
     const t = a.totals, lq = a.link_quality, g = a.guidance, n = (x) => (x ?? 0).toLocaleString("ko-KR");
     const reply = a.sources.find((s) => s.key === "fsc.reply") || {};
@@ -788,6 +733,24 @@
     const nx = cur === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = nx;
     try { localStorage.setItem("finreg.theme", nx); } catch (e) {}
   };
+})();
+</script>
+<script>
+(function () {
+  const root = document.documentElement;
+  // 제목 아래 영역과 각 섹션의 블록에 나타나기 효과를 붙인다
+  const blocks = [...document.querySelectorAll(".ribbon > *, #talk, .doc .s > *")];
+  blocks.forEach((el) => el.classList.add("rv"));
+  if (!root.classList.contains("intro")) { blocks.forEach((el) => el.classList.add("in")); return; }
+  const show = (el) => el.classList.add("in");
+  let io = null;
+  if ("IntersectionObserver" in window) {
+    io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
+  }
+  setTimeout(() => {
+    root.classList.add("intro-done");                     // 히어로의 나머지가 순서대로 나타남
+    setTimeout(() => blocks.forEach((el) => (io ? io.observe(el) : show(el))), 900);
+  }, 2000);
 })();
 </script>
 </body>

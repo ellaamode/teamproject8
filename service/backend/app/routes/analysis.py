@@ -27,10 +27,10 @@ SOURCES = [
      "items": "법률·시행령·시행규칙·감독규정·고시·시행세칙 조문(현행·시행예정), 시행일, 3단비교(위임조문)",
      "raw": ("lawgo.law", "lawgo.admrul")},
     {"key": "fsc.reply", "name": "금융규제·법령해석포털 회신사례", "provider": "금융위원회·금융감독원",
-     "url": "https://better.fsc.go.kr/fsc_new/replyCase/TotalReplyList.do", "method": "크롤링 (목록 JSON + 상세 HTML)",
+     "url": "https://better.fsc.go.kr/fsc_new/replyCase/TotalReplyList.do?stNo=11&muNo=117&muGpNo=75", "method": "크롤링 (목록 JSON + 상세 HTML)",
      "items": "구분, 제목, 소관부서, 회신일, 질의요지, 회답, 이유", "raw": ("fsc.lawreq", "fsc.opinion", "fsc.pastreq")},
     {"key": "fsc.guidance", "name": "금융위원회 행정지도 (예고·시행)", "provider": "금융위원회",
-     "url": "https://better.fsc.go.kr/fsc_new/status/adminMap/OpertnList.do", "method": "크롤링 (목록 JSON)",
+     "url": "https://better.fsc.go.kr/fsc_new/status/adminMap/OpertnList.do?stNo=11&muNo=145&muGpNo=60", "method": "크롤링 (목록 JSON)",
      "items": "관리번호, 제목, 소관부서, 존속기간(시작~종료), 단계", "raw": ("fsc.guidance",)},
 ]
 
