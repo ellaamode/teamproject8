@@ -88,7 +88,7 @@ def analysis():
     quality = q("""SELECT count(*) AS docs,
                           count(*) FILTER (WHERE EXISTS (SELECT 1 FROM article_links l WHERE l.doc_id=d.id)) AS linked
                    FROM documents d WHERE kind IN ('법령해석','비조치의견')""")[0]
-    # 대상 법령(1단계)을 본문에서 언급한 회신 중 조문까지 연결된 비율 — 대상 밖 회신을 빼고 본 엔진 성능
+    # 대상 법령(1단계)을 본문에서 언급한 회신 중 조문까지 연결된 비율 — 대상 밖 회신을 빼고 본 자동 연결 성능
     names = [n for r in q("SELECT name, aliases FROM laws") for n in [r["name"], *(r["aliases"] or [])]]
     scope_re = "(" + "|".join(re.escape(n) for n in sorted(set(names), key=len, reverse=True)) + ")"
     in_scope = q("""SELECT count(*) AS docs,
@@ -108,7 +108,7 @@ def analysis():
     unknown_laws = sorted(({"name": k, "n": v} for k, v in unknown.items()), key=lambda x: -x["n"])[:12]
 
     # 3-1) 문제 검증: 서비스가 풀려는 문제가 데이터에 실제로 있는가
-    #  - 한 회신이 여러 조문·여러 단계(법률·하위법령)에 걸쳐 있는가 → "자료가 흩어져 있다"
+    #  - 한 회신이 여러 조문·여러 단계(법률·시행령·행정규칙)에 걸쳐 있는가 → "자료가 흩어져 있다"
     #  - 회신 제목에 조문 번호가 없는가 → "제목·키워드 검색으로는 조문별 해석을 찾을 수 없다"
     #  - 곧 바뀌는 조문에 이미 해석이 걸려 있는가 → "변화는 소리 없이 온다"
     spread = q("""WITH per AS (
@@ -164,7 +164,7 @@ def analysis():
                      WHERE r.parent_slug IS NULL GROUP BY r.slug, r.name
                      HAVING count(a.key) > 0 ORDER BY count(a.key) DESC""")
     scope = {"phase": 1, "laws": [r["name"] for r in structure],
-             "note": "1단계는 5개 법률과 그 하위법령 전부(시행령·시행규칙·감독규정·고시·시행세칙)입니다. 추후 확대할 예정입니다.",
+             "note": "1단계는 5개 법률과 그 시행령·시행규칙·행정규칙(감독규정·고시·시행세칙) 전부입니다. 추후 확대할 예정입니다.",
              "next": [s.aliases[0] if s.aliases else s.name for s in PHASE2_LAWS if s.kind == "법률"]}
     return {"scope": scope, "sources": sources, "totals": totals, "replies_by_year": by_year, "replies_by_dept": by_dept,
             "top_laws": top_laws, "top_articles": top_articles,

@@ -127,7 +127,7 @@ async function viewHome() {
     <div>
       <span class="eyebrow">${I("spark", "s")} ${fmt(t)} 기준 · 데이터 ${fmt(health.data_as_of) || "-"} 갱신</span>
       <h1>조문 하나로,<br>규제의 변화를 따라갑니다</h1>
-      <p class="lead">금융법률과 하위법령(시행령·시행규칙·감독규정·고시·시행세칙)을 법령해석·비조치의견·행정지도와 조문 단위로 연결했습니다.</p>
+      <p class="lead">금융 법률과 시행령·시행규칙, 행정규칙(감독규정·고시·시행세칙)을 법령해석·비조치의견·행정지도와 조문 단위로 연결했습니다.</p>
       <p class="scope-line">${I("book", "s")} 1단계 대상 · 자본시장법 · 외국환거래법 · 은행법 · 보험업법 · 전자금융거래법 <span class="faint">— 추후 확대 예정</span></p>
       <form class="bigq" id="bigq" role="search">
         ${I("search")}
@@ -145,7 +145,7 @@ async function viewHome() {
     ${kpi("법령해석", "interp", nNew, "건", "최근 90일 새 해석·비조치의견", "조문에 자동 연결됨", "#/search?kinds=법령해석&kinds=비조치의견&sort=date")}
     ${kpi("조문", "pending", nPending, "개", "시행을 앞둔 조문", nextPending ? `가장 가까운 시행 ${fmt(nextPending)}` : "예정 없음", "#/laws")}
     ${kpi("행정지도", "guide", guidanceSoon.items.length, "건", "60일 안에 만료되는 행정지도", "존속기간 기준", "#/guidance?tab=expiring")}
-    ${kpi("조문", "link", (health.counts?.links || 0).toLocaleString(), "건", "조문에 연결된 해석·의견", "인용 연결 엔진이 자동 연결", "#/insights")}
+    ${kpi("조문", "link", (health.counts?.links || 0).toLocaleString(), "건", "조문에 연결된 해석·의견", "본문의 인용을 자동으로 연결", "#/insights")}
   </section>
   <div class="grid-2">
     <section class="card sec">
@@ -264,7 +264,7 @@ async function viewSearch(params) {
     <section>
       ${p.q ? `
       <div class="res-h"><h2>${I("book", "s")} 조문 <span class="n">${artTotal.toLocaleString()}개</span></h2>
-        <span class="faint">법령·하위법령 본문에서 찾은 조문${artTotal > r.articles.length ? ` · 상위 ${r.articles.length}개 표시` : ""}</span></div>
+        <span class="faint">법령·행정규칙 본문에서 찾은 조문${artTotal > r.articles.length ? ` · 상위 ${r.articles.length}개 표시` : ""}</span></div>
       ${r.jump ? `<a class="card jump" href="${aLink(r.jump.key)}"><span class="ic">${I("article", "l")}</span>
         <div><small>입력하신 조문으로 바로 가기</small><b>${esc(r.jump.law_name)} ${esc(r.jump.label)} ${esc(r.jump.title)}</b></div>${I("arrow")}</a>` : ""}
       ${r.articles.length ? `<div class="art-list">${r.articles.map((a) => `
@@ -313,7 +313,7 @@ function viewLawIndex(laws) {
   const roots = rootsOf(laws);
   view.innerHTML = `
   <div class="page-h"><div><h1>법령</h1>
-    <div class="sub">1단계 대상 ${roots.length}개 법률과 하위법령 ${laws.length - roots.length}건 · 추후 확대 예정</div></div></div>
+    <div class="sub">1단계 대상 ${roots.length}개 법률과 시행령·행정규칙 ${laws.length - roots.length}건 · 추후 확대 예정</div></div></div>
   ${roots.map((r) => {
     const fam = laws.filter((l) => l.slug === r.slug || l.parent === r.slug);
     const arts = fam.reduce((s, f) => s + (f.articles || 0), 0), links = fam.reduce((s, f) => s + (f.linked_docs || 0), 0);
@@ -643,7 +643,7 @@ function evidenceBlock(a) {
     <p class="ev-head">곧 바뀌는 조문 2개 중 1개에는 이미 금융당국의 해석이 걸려 있습니다. 조문 단위로 묶어 보지 않으면 놓칩니다.</p>
     <div class="ev-grid">
       ${card(`${pc(sp.multi_article, sp.docs)}%`, "회신 하나가 조문 여러 개에 걸쳐 있다",
-        `회신의 ${pc(sp.multi_article, sp.docs)}%(${n(sp.multi_article)}건)가 조문 2개 이상을 인용합니다(평균 ${sp.avg_articles}개). ${pc(sp.with_sub, sp.docs)}%는 시행령·감독규정 같은 하위법령까지 인용합니다. 한 질문의 답을 찾으려면 여러 법령을 오가야 합니다.`)}
+        `회신의 ${pc(sp.multi_article, sp.docs)}%(${n(sp.multi_article)}건)가 조문 2개 이상을 인용합니다(평균 ${sp.avg_articles}개). ${pc(sp.with_sub, sp.docs)}%는 시행령이나 감독규정까지 인용합니다. 한 질문의 답을 찾으려면 여러 법령을 오가야 합니다.`)}
       ${card(`${pc(sp.title_no_article, sp.docs)}%`, "제목만으로는 어느 조문인지 모른다",
         `회신 제목의 ${pc(sp.title_no_article, sp.docs)}%(${n(sp.title_no_article)}건)에 조문 번호가 없습니다. 포털의 제목·키워드 검색으로는 ‘이 조문을 다룬 해석’을 모을 수 없고, 본문을 읽어 연결해야 합니다.`)}
       ${card(`${pc(pd.with_links, pd.articles)}%`, "곧 바뀌는 조문에 해석이 걸려 있다",
@@ -697,7 +697,7 @@ async function viewInsights() {
       ${hbars(a.replies_by_dept.map((d) => ({ label: d.dept, value: d.n })))}</section>
   </div>
   <div class="grid-2 ins">
-    <section class="card sec"><div class="sec-h"><h2>${I("book")} 많이 인용된 법령</h2><span class="faint" style="font-size:12.5px">하위법령 인용은 모법으로 합산</span></div>
+    <section class="card sec"><div class="sec-h"><h2>${I("book")} 많이 인용된 법령</h2><span class="faint" style="font-size:12.5px">시행령·행정규칙 인용은 모법으로 합산</span></div>
       ${hbars(a.top_laws.map((l) => ({ label: l.name, value: l.docs, href: `#/laws/${l.slug}` })), { empty: "인용 연결이 아직 없습니다" })}</section>
     <section class="card sec"><div class="sec-h"><h2>${I("article")} 많이 인용된 조문</h2></div>
       ${hbars(a.top_articles.map((x) => ({ label: `${x.label} ${x.title || ""}`, sub: x.law_name, value: x.docs, href: aLink(x.key) })), { empty: "인용 연결이 아직 없습니다" })}</section>
@@ -720,7 +720,7 @@ async function viewInsights() {
       ${hbars((g.by_dept || []).map((d) => ({ label: d.dept, value: d.n })))}
     </section>
   </div>
-  <section class="card sec" style="margin-top:22px"><div class="sec-h"><h2>${I("tree")} 법령 구조 (법률과 하위법령)</h2><span class="faint" style="font-size:12.5px">조문 수 · 위임 관계 · 시행 예정</span></div>
+  <section class="card sec" style="margin-top:22px"><div class="sec-h"><h2>${I("tree")} 법령 구조 (법률·시행령·행정규칙)</h2><span class="faint" style="font-size:12.5px">조문 수 · 위임 관계 · 시행 예정</span></div>
     <div class="tbl-x"><table class="tbl">
       <tr><th>법령</th><th class="num">법률</th><th class="num">시행령</th><th class="num">시행규칙</th><th class="num">감독규정·고시</th><th class="num">시행세칙</th><th class="num">위임 관계</th><th class="num">시행 예정 조문</th></tr>
       ${a.law_structure.map((l) => `<tr><td><a href="#/laws/${l.slug}"><b>${esc(l.name)}</b></a></td><td class="num">${l.law_articles}</td>

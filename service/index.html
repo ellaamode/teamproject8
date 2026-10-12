@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>금융규제통합조회 · 서비스 기획서 (8조)</title>
-<meta name="description" content="흩어진 금융규제를 조문 하나로 잇는 서비스 — 금융 법령·하위법령과 법령해석·비조치의견·행정지도를 조문 단위로 연결. KAIST 디지털금융MBA 클라우드컴퓨팅실습 8조">
+<meta name="description" content="흩어진 금융규제를 모아서 한 번에 확인하는 서비스 — 금융 법령·행정규칙과 법령해석·비조치의견·행정지도를 조문 단위로 연결. KAIST 디지털금융MBA 클라우드컴퓨팅실습 8조">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23222c6b'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='17' font-weight='800' fill='white' font-family='sans-serif'%3E%C2%A7%3C/text%3E%3C/svg%3E">
 <script>try{var t=localStorage.getItem("finreg.theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="stylesheet" href="assets/base.css?v=4">
@@ -32,7 +32,7 @@
     <div class="hero-in">
       <span class="eyebrow rv-intro"><svg class="i s"><use href="#i-spark"/></svg>KAIST 디지털금융MBA · 클라우드컴퓨팅실습 8조</span>
       <h1>흩어진 금융규제를<br><em>모아서 한 번에</em> 확인합니다</h1>
-      <p class="lead rv-intro">금융 법령과 하위법령, 그리고 금융당국의 법령해석·비조치의견·행정지도를 <b>조문 단위로 연결</b>해,
+      <p class="lead rv-intro">금융 법령과 행정규칙, 그리고 금융당국의 법령해석·비조치의견·행정지도를 <b>조문 단위로 연결</b>해,
         금융회사 실무자가 “이 조문을 두고 당국은 뭐라고 했고, 앞으로 무엇이 바뀌는지”를 한 화면에서 확인하게 합니다.</p>
       <div class="stage rv-intro" id="stage" aria-label="실제 데이터: 자본시장법 제42조(금융투자업자의 업무위탁)에 연결된 자료">
       <svg class="wires" viewBox="0 0 560 470" preserveAspectRatio="none" aria-hidden="true">
@@ -44,7 +44,7 @@
       </svg>
       <a class="card center" id="heroCard" href="app/#/a/fscma%3A42"><div class="faint" style="font-size:12px">불러오는 중…</div></a>
     </div>
-      <p class="rv-intro" style="font-size:13.5px;color:var(--ink-2);margin:10px 0 0"><b>1단계 대상</b> 자본시장법 · 외국환거래법 · 은행법 · 보험업법 · 전자금융거래법과 각 하위법령 전부(시행령·시행규칙·감독규정·고시·시행세칙) — 대상 법령은 추후 확대할 예정입니다.</p>
+      <p class="rv-intro" style="font-size:13.5px;color:var(--ink-2);margin:10px 0 0"><b>1단계 대상</b> 자본시장법 · 외국환거래법 · 은행법 · 보험업법 · 전자금융거래법과 그 아래 시행령·시행규칙·행정규칙(감독규정·고시·시행세칙) 전부 — 대상 법령은 추후 확대할 예정입니다.</p>
       <div class="cta rv-intro">
         <a class="btn primary" href="app/">서비스 열어 보기 <svg class="i s"><use href="#i-arrow"/></svg></a>
         <a class="btn" href="#arch"><svg class="i s"><use href="#i-server"/></svg>백엔드 설계 보기</a>
@@ -60,7 +60,7 @@
   <div class="ribbon" id="ribbon">
     <div class="card rb"><div class="v num">6,174<small>건</small></div><div class="c">금융위 포털의 법령해석·비조치의견 회신 (전부 수집)</div><div class="s">포털 회신사례 12,088건 중 현장건의 5,914건 제외</div></div>
     <div class="card rb"><div class="v num">0<small>칸</small></div><div class="c">회신사례에 ‘관련 조문’ 항목이 없음</div><div class="s">조문 연결은 본문에서 직접 찾아야 함</div></div>
-    <div class="card rb"><div class="v num">71<small>개</small></div><div class="c">지금 본문과 앞으로 바뀔 본문이 함께 있는 조문</div><div class="s">5개 법률·하위법령 기준 · 법제처 Open API</div></div>
+    <div class="card rb"><div class="v num">71<small>개</small></div><div class="c">지금 본문과 앞으로 바뀔 본문이 함께 있는 조문</div><div class="s">5개 법률과 시행령·행정규칙 기준 · 법제처 Open API</div></div>
     <div class="card rb"><div class="v num">58<small>건</small></div><div class="c">존속기간이 정해진 금융위 행정지도(시행)</div><div class="s">만료일이 지나면 효력이 끝남</div></div>
   </div>
   <div class="card talk" id="talk">
@@ -96,7 +96,7 @@
     <a href="#data"><b>05</b>데이터 원천</a>
     <a href="#arch"><b>06</b>시스템 구조</a>
     <a href="#pipeline"><b>07</b>수집 파이프라인</a>
-    <a href="#linker"><b>08</b>인용 연결 엔진</a>
+    <a href="#linker"><b>08</b>인용 조문 자동 연결</a>
     <a href="#db"><b>09</b>데이터베이스</a>
     <a href="#api"><b>10</b>API</a>
     <a href="#ops"><b>11</b>운영·보안</a>
@@ -116,7 +116,7 @@
     <div class="g3">
       <div class="card pc"><span class="kicon" data-k="입법예고"><svg class="i"><use href="#i-layers"/></svg></span>
         <div class="step-no" style="margin-top:14px">STEP 1</div><h4>자료가 여러 곳에 흩어져 있다</h4>
-        <p>법령과 하위법령은 국가법령정보센터, 법령해석·비조치의견·행정지도는 금융규제·법령해석포털에 따로 있습니다. 둘 사이를 잇는 화면은 없습니다.</p></div>
+        <p>법령과 행정규칙은 국가법령정보센터, 법령해석·비조치의견·행정지도는 금융규제·법령해석포털에 따로 있습니다. 둘 사이를 잇는 화면은 없습니다.</p></div>
       <div class="card pc"><span class="kicon" data-k="법령해석"><svg class="i"><use href="#i-interp"/></svg></span>
         <div class="step-no" style="margin-top:14px">STEP 2</div><h4>해석에 대상 조문이 연결되어 있지 않다</h4>
         <p>법령해석·비조치의견 회신 6,174건에는 ‘관련 조문’ 칸이 없습니다. 본문 속 인용도 <span class="code-ex">「자본시장과 금융투자업에 관한 법률」 제9조</span>, <span class="code-ex">자본시장법 제9조</span>, <span class="code-ex">같은 법 시행령 제7조</span>처럼 제각각입니다.</p></div>
@@ -227,7 +227,7 @@
     <div class="tbl-wrap"><table class="t">
       <tr><th style="width:20%">메뉴</th><th>하는 일</th></tr>
       <tr><td><b>홈</b></td><td>최근 변화(새 해석·비조치의견, 행정지도), 다가오는 일정(시행 예정 조문, 행정지도 만료), 5개 법률 바로가기</td></tr>
-      <tr><td><b>법령</b></td><td>5개 법률과 하위법령 21건 목록 → 법령별 장·조 목차. 조문 옆에 연결된 자료 수 표시, 화면 위에서 5개 법률 사이를 바로 전환</td></tr>
+      <tr><td><b>법령</b></td><td>5개 법률과 시행령·행정규칙 21건 목록 → 법령별 장·조 목차. 조문 옆에 연결된 자료 수 표시, 화면 위에서 5개 법률 사이를 바로 전환</td></tr>
       <tr><td><b>해석·의견 찾기</b></td><td>검색어로 조문과 해석·의견을 함께 찾음. 유형(법령해석·비조치의견·행정지도)·기관·기간 필터, 관련도순·최신순</td></tr>
       <tr><td><b>행정지도</b></td><td>시행 중 · 60일 안에 만료 · 예고 · 만료된 행정지도를 존속기간 기준으로</td></tr>
       <tr><td><b>데이터 분석</b></td><td>수집한 데이터의 출처·건수, 연도별·부서별 회신, 많이 인용된 법령·조문, 연결 품질, 법령 구조 (과제 필수 페이지)</td></tr>
@@ -252,7 +252,7 @@
       <tr><th style="width:22%">데이터 · 제공 기관 · 출처 URL</th><th style="width:22%">수집 항목</th><th>수집 방식과 현황</th><th style="width:22%">제약 → 대응</th></tr>
       <tr><td><b>국가법령정보 (법령·행정규칙)</b><br>법제처<br><a class="faint" href="https://www.law.go.kr" target="_blank" rel="noopener">law.go.kr</a> · <a class="faint" href="https://open.law.go.kr" target="_blank" rel="noopener">open.law.go.kr</a></td>
         <td>법률·시행령·시행규칙·감독규정·고시·시행세칙 조문(현행·시행예정), 시행일, 위임 관계(3단비교)</td>
-        <td><b>구현·수집 완료 (Open API)</b>: 법제처 국가법령정보 공동활용 Open API(<span class="code-ex">lawSearch.do</span>·<span class="code-ex">lawService.do</span>, 인증키 OC). 1단계 5개 법률(자본시장법·외국환거래법·은행법·보험업법·전자금융거래법)과 하위법령 전부 21건, 조문 3,629개, 시행예정 본 7개, 3단비교 위임조문 908쌍 (추후 확대 예정)</td>
+        <td><b>구현·수집 완료 (Open API)</b>: 법제처 국가법령정보 공동활용 Open API(<span class="code-ex">lawSearch.do</span>·<span class="code-ex">lawService.do</span>, 인증키 OC). 1단계 5개 법률(자본시장법·외국환거래법·은행법·보험업법·전자금융거래법)과 시행령·행정규칙 전부 21건, 조문 3,629개, 시행예정 본 7개, 3단비교 위임조문 908쌍 (추후 확대 예정)</td>
         <td>시행일을 지정하지 않으면 아직 시행 전인 개정 내용이 섞여 옴 → 시행일을 지정해서 받음. API가 막히면 그날만 웹페이지 수집으로 대체</td></tr>
       <tr><td><b>금융규제·법령해석포털 회신사례</b><br>금융위원회·금융감독원<br><a class="faint" href="https://better.fsc.go.kr/fsc_new/replyCase/TotalReplyList.do?stNo=11&amp;muNo=117&amp;muGpNo=75" target="_blank" rel="noopener">better.fsc.go.kr/…/TotalReplyList.do</a></td>
         <td>구분(법령해석·비조치의견), 제목, 소관부서, 회신일, 질의요지, 회답, 이유, 첨부파일명</td>
@@ -281,7 +281,7 @@
         <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--ink-3)" stroke-width="1.6"/></marker></defs>
         <text x="20" y="28" font-size="12" font-weight="800" fill="var(--ink-3)">원천</text>
         <g font-size="12.5">
-          <g transform="translate(20 96)"><rect width="168" height="52" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="14" y="22" font-weight="800" fill="var(--ink)">법제처 Open API</text><text x="14" y="40" fill="var(--ink-3)" font-size="11.5">법령·하위법령·위임</text></g>
+          <g transform="translate(20 96)"><rect width="168" height="52" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="14" y="22" font-weight="800" fill="var(--ink)">법제처 Open API</text><text x="14" y="40" fill="var(--ink-3)" font-size="11.5">법령·행정규칙·위임</text></g>
           <g transform="translate(20 170)"><rect width="168" height="52" rx="12" fill="var(--surface)" stroke="var(--line-2)"/><text x="14" y="22" font-weight="800" fill="var(--ink)">금융위 포털 (크롤링)</text><text x="14" y="40" fill="var(--ink-3)" font-size="11.5">해석·비조치·행정지도</text></g>
         </g>
         <g stroke="var(--ink-3)" stroke-width="1.4" fill="none" marker-end="url(#ar2)"><path d="M188 122 L236 154"/><path d="M188 196 L236 168"/></g>
@@ -359,7 +359,7 @@
         <dt>입력</dt><dd>아직 정리하지 않은 원문</dd><dt>처리</dt><dd>조문 단위로 자르기(부칙 제외), 시행일별 본문 나누기, 서식·공백 정리. 위임 관계: 법률→시행령·시행규칙은 3단비교 공식 자료, 그 아래(감독규정·고시·세칙)는 본문의 ‘법 제N조’·‘영 제N조’ 인용으로 판단</dd>
         <dt>출력</dt><dd><span class="code-ex">articles · article_versions · delegations · documents</span></dd></dl></div>
       <div class="stg"><div class="tagline">3단계</div><h4>연결 (link)</h4><dl>
-        <dt>입력</dt><dd>새로 들어오거나 바뀐 문서</dd><dt>처리</dt><dd>인용 연결 엔진(08)으로 본문의 ‘어느 법 몇 조’를 찾음 → 실제로 있는 조문인지 확인 → 그 문서의 연결을 새로 저장(사람이 검수한 연결은 유지)</dd>
+        <dt>입력</dt><dd>새로 들어오거나 바뀐 문서</dd><dt>처리</dt><dd>인용 조문 자동 연결(08)로 본문의 ‘어느 법 몇 조’를 찾음 → 실제로 있는 조문인지 확인 → 그 문서의 연결을 새로 저장(사람이 검수한 연결은 유지)</dd>
         <dt>출력</dt><dd><span class="code-ex">article_links · unresolved_mentions</span></dd></dl></div>
       <div class="stg"><div class="tagline">4단계</div><h4>변화 기록 (derive)</h4><dl>
         <dt>입력</dt><dd>문서·조문·연결</dd><dt>처리</dt><dd>새 해석·비조치의견, 조문 개정·시행 예정, 행정지도 시행·만료 임박·만료를 기록(같은 일은 한 번만), 조문별 자료 수 다시 계산</dd>
@@ -377,11 +377,11 @@
 
   <!-- ============================================================ 08 -->
   <section class="s" id="linker">
-    <div class="s-no">08 · 인용 연결 엔진</div>
+    <div class="s-no">08 · 인용 조문 자동 연결</div>
     <h2>서비스의 핵심 기술: 본문에서 ‘어느 법 몇 조’를 찾는다</h2>
     <p class="intro">회신사례에는 관련 조문 칸이 없어, 본문에 적힌 표기를 읽어 조문 고유 번호로 바꿔야 합니다. 실제 회신에서 관찰한 표기 방식을 규칙으로 만들고, 연결마다 어떤 방식으로 찾았는지와 확실한 정도를 붙입니다.</p>
     <div class="card anno">
-      <div class="faint" style="font-size:12.5px;margin-bottom:14px">예시 문장 (실제 회신에서 관찰한 표기를 모은 설명용 문장) → 엔진이 찾은 인용</div>
+      <div class="faint" style="font-size:12.5px;margin-bottom:14px">예시 문장 (실제 회신에서 관찰한 표기를 모은 설명용 문장) → 자동으로 찾은 인용</div>
       <p class="sent">□ <span class="hl m1"><i>법령명 명시</i>전자금융거래법(이하 '전금법') 제25조의2제1항</span>은 별도관리 방법으로 신탁, 예치, 지급보증보험을 열거하고 있을 뿐…
         ㅇ <span class="hl m2"><i>같은 법</i>같은 법 시행령 제13조의2</span> 및 <span class="hl m2"><i>앞 인용 이어받음</i>제13조의6</span>에서 정하는 기준을 합산하여 충족한다면…
         ㅇ 다만 <span class="hl m3"><i>문서 안 약칭</i>전금법 제25조의3</span>에 따라 보호조치 내용을 고지할 때에는…</p>
@@ -448,7 +448,7 @@
       <figcaption>굵은 테두리 = 서비스의 중심인 조문(articles). 옅은 남색(③ 연결·변화)은 ② 정리 층에서 언제든 다시 계산할 수 있습니다.</figcaption>
     </figure>
     <div class="g2" style="margin-top:16px">
-      <div class="card pc"><h4 style="margin-top:0">데이터 규모 (1단계: 5개 법률 + 하위법령 21건)</h4><ul>
+      <div class="card pc"><h4 style="margin-top:0">데이터 규모 (1단계: 5개 법률과 시행령·행정규칙 21건)</h4><ul>
         <li>조문 3,629개 · 문서 6,341건(회신 6,174 + 행정지도 167) · 조문 연결 5,266개</li><li>회신은 해마다 수백 건씩 늘어남 · 2단계 확대 시 조문 약 5,000개</li>
         <li>DB 전체 약 81MB(실측) → Supabase 무료 한도(500MB) 안</li></ul></div>
       <div class="card pc"><h4 style="margin-top:0">검색 인덱스</h4><p>PostgreSQL 기본 검색은 한국어 단어를 잘게 나누지 못합니다. 그래서 <span class="code-ex">pg_trgm</span>(글자 세 개씩 묶어 찾는 색인)으로 단어 일부만 입력해도 찾게 했습니다. 규모가 커지면 Supabase가 지원하는 한국어 검색 확장(<span class="code-ex">PGroonga</span>)으로 바꿀 수 있습니다.</p></div>
@@ -475,7 +475,7 @@
     <div class="tbl-wrap" style="margin-top:14px"><table class="t">
       <tr><th>요청</th><th>기능</th><th>쓰는 화면</th></tr>
       <tr><td><b>GET /health</b></td><td>DB 연결, 데이터 기준 시각, 단계별 마지막 실행 결과</td><td>상태 확인·푸터</td></tr>
-      <tr><td><b>GET /laws</b> · <b>/laws/{slug}/toc</b></td><td>법률과 하위법령 목록, 법령별 장·조 목차와 조문별 연결 건수</td><td>법령</td></tr>
+      <tr><td><b>GET /laws</b> · <b>/laws/{slug}/toc</b></td><td>법률과 시행령·행정규칙 목록, 법령별 장·조 목차와 조문별 연결 건수</td><td>법령</td></tr>
       <tr><td><b>GET /articles/{key}</b></td><td>조문 카드</td><td>조문</td></tr>
       <tr><td><b>GET /collection</b></td><td>외부 원천별 수집 현황: 법제처 Open API·금융위 포털 크롤링 각각의 수집 방식, 건수, 마지막 수집 시각, 최근 실행 기록(단계·성공 여부·처리 건수). 입력: limit(1~100)</td><td>Swagger (외부 연동 확인)</td></tr>
       <tr><td><b>GET /analysis</b></td><td>수집 데이터 분석·정리 (출처별 수집 현황, 연도별·부서별 회신, 인용 상위 법령·조문, 연결 품질, 행정지도, 법령 구조)</td><td>데이터 분석</td></tr>
@@ -561,7 +561,7 @@
       <div class="card pc"><h4 style="margin-top:0">많이 인용된 법령 (회신 수)</h4><div id="insLaws" class="faint">불러오는 중…</div></div>
     </div>
     <div class="callout info"><svg class="i l" style="color:var(--brand-2)"><use href="#i-info"/></svg><div><b>분석 방법</b>
-      <p>회신 원문(질의요지·회답·이유)에서 인용 연결 엔진으로 조문을 찾아 집계했습니다. ‘문제 검증’의 비율은 조문이 1개 이상 연결된 회신을 분모로 합니다. 제목의 조문 번호는 ‘제○조’ 표기가 있는지로 판단했습니다. 하위법령(시행령·시행규칙·감독규정·고시·시행세칙) 인용은 모법으로 합산하고, 같은 회신이 한 법령을 여러 번 인용해도 1건으로 셉니다. 회신일은 포털 등록일 기준입니다.</p></div></div>
+      <p>회신 원문(질의요지·회답·이유)에서 인용 조문 자동 연결로 조문을 찾아 집계했습니다. ‘문제 검증’의 비율은 조문이 1개 이상 연결된 회신을 분모로 합니다. 제목의 조문 번호는 ‘제○조’ 표기가 있는지로 판단했습니다. 시행령·시행규칙·행정규칙(감독규정·고시·시행세칙) 인용은 모법으로 합산하고, 같은 회신이 한 법령을 여러 번 인용해도 1건으로 셉니다. 회신일은 포털 등록일 기준입니다.</p></div></div>
   </section>
 
   <!-- ============================================================ 14 -->
@@ -599,7 +599,7 @@
     </table></div>
     <div class="g2" style="margin-top:16px">
       <div class="callout good"><svg class="i l" style="color:var(--t-interp)"><use href="#i-check"/></svg><div><b>원문은 팔지 않습니다</b>
-        <p>법령·회신 원문은 계속 무료로 두고 출처 링크를 답니다. 유료는 우리가 만든 연결·알림·연동 기능에만 붙입니다. 금융위 포털 데이터는 상용화 전에 이용 협의와 공식 API 제공 요청을 먼저 합니다.</p></div></div>
+        <p>법령·회신 원문은 계속 무료로 두고 출처 링크를 답니다. 유료는 우리가 만든 연결·알림·연동 기능에만 붙입니다.</p></div></div>
       <div class="callout info"><svg class="i l" style="color:var(--brand-2)"><use href="#i-clock"/></svg><div><b>단계</b>
         <p><b>1단계(지금)</b> 무료 공개, 데이터와 연결 정확도 검증 → <b>2단계</b> 준법감시 실무 2~3팀에 관심 조문 알림 시범, 실제 확인 빈도와 지불 의향 측정 → <b>3단계</b> 팀 구독·연동 API, 대상 법령 확대</p></div></div>
     </div>
@@ -665,7 +665,7 @@
       kpi(n(reply.collected), "건", "수집한 법령해석·비조치의견 회신", "범위 안 전부 · 현장건의 과제 제외") +
       (lq.in_scope ? kpi(Math.round(lq.in_scope.rate * 1000) / 10, "%", "대상 법령 언급 회신의 조문 연결률", `${n(lq.in_scope.linked)} / ${n(lq.in_scope.docs)}건 · 전체 회신 기준 ${Math.round(lq.rate * 1000) / 10}%`)
         : kpi(lq.rate != null ? Math.round(lq.rate * 1000) / 10 : "-", "%", "조문에 연결된 회신 비율", `${n(lq.linked)} / ${n(lq.docs)}건`)) +
-      kpi(n(t.articles), "개", `5개 법률과 하위법령 ${t.laws}건의 조문`, `위임 관계 ${n(t.delegations)}건`) +
+      kpi(n(t.articles), "개", `5개 법률과 시행령·행정규칙 ${t.laws}건의 조문`, `위임 관계 ${n(t.delegations)}건`) +
       kpi(n(g.active), "건", "시행 중인 금융위 행정지도", `60일 내 만료 ${n(g.expiring_60)}건`);
     // 문제 검증: 01에서 말한 세 가지 문제가 데이터에 실제로 있는지
     const e = a.evidence;
@@ -675,7 +675,7 @@
       const ev = (v, h, p) => `<div class="card pc ev"><div class="v num">${v}</div><h4>${h}</h4><p>${p}</p></div>`;
       document.getElementById("insEv").innerHTML =
         ev(`${pc(sp.multi_article, sp.docs)}%`, "회신 하나가 조문 여러 개에 걸쳐 있다 (01의 STEP 1)",
-          `조문이 연결된 회신 ${n(sp.docs)}건 중 ${n(sp.multi_article)}건이 조문 2개 이상을 인용합니다(평균 ${sp.avg_articles}개). ${pc(sp.with_sub, sp.docs)}%는 시행령·감독규정 같은 하위법령까지 인용합니다.`) +
+          `조문이 연결된 회신 ${n(sp.docs)}건 중 ${n(sp.multi_article)}건이 조문 2개 이상을 인용합니다(평균 ${sp.avg_articles}개). ${pc(sp.with_sub, sp.docs)}%는 시행령이나 감독규정까지 인용합니다.`) +
         ev(`${pc(sp.title_no_article, sp.docs)}%`, "제목만으로는 어느 조문인지 모른다 (STEP 2)",
           `회신 제목 ${n(sp.title_no_article)}건에 조문 번호가 없습니다. 포털의 제목·키워드 검색으로는 ‘이 조문을 다룬 해석’을 모을 수 없고, 본문을 읽어 연결해야 합니다.`) +
         ev(`${pc(pd.with_links, pd.articles)}%`, "곧 바뀌는 조문에 해석이 걸려 있다 (STEP 3)",
@@ -688,7 +688,7 @@
       topArt && `가장 많이 인용된 조문은 <b>${topArt.law_name} ${topArt.label} ${topArt.title || ""}</b>(${n(topArt.docs)}건)입니다.`,
       dept && `회신이 가장 많은 소관부서는 <b>${dept.dept}</b>(${n(dept.n)}건)입니다.`,
       `연결 방법 중 법령명을 명시한 인용(「…」)이 가장 많고, 문맥으로 추정한 연결은 ${n((lq.by_method.find((m) => m.method === "inferred") || {}).n)}건입니다.`,
-      a.scope && `분석 범위는 <b>${a.scope.phase}단계 5개 법률과 하위법령 전부</b>입니다. 대상 법령을 언급하지 않은 회신은 수집만 하고 조문 연결은 2단계에서 합니다(추후 확대 예정).`,
+      a.scope && `분석 범위는 <b>${a.scope.phase}단계 5개 법률과 그 시행령·행정규칙 전부</b>입니다. 대상 법령을 언급하지 않은 회신은 수집만 하고 조문 연결은 2단계에서 합니다(추후 확대 예정).`,
       unk && `대상 법령 밖에서 가장 많이 인용된 법령은 <b>${unk.name}</b>(${n(unk.n)}회)입니다. 이 목록이 2단계 확대 순서의 근거입니다(폐지된 옛 법령인지도 함께 확인).`,
       t.pending_versions && `대상 법령 중 <b>${n(t.pending_versions)}개 조문</b>은 아직 시행 전인 개정 본문이 있습니다.`,
     ].filter(Boolean);
