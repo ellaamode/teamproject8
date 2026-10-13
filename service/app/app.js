@@ -1,4 +1,4 @@
-import { api } from "./api.js";
+import { api } from "./api.js?v=13";
 import { renderGraph } from "./graph.js";
 import { bindTips, hbars, ratioBar, stackedCols } from "./charts.js";
 
@@ -775,8 +775,9 @@ $("#theme").onclick = () => {
 };
 document.addEventListener("api:fallback", () => {
   $("#modeBanner").hidden = false;
-  $("#modeBanner").querySelector("span").textContent = "실시간 서버에 연결하지 못해, 저장된 데이터로 보여드리고 있습니다.";
+  $("#modeBanner").querySelector("span").textContent = "서버가 깨어나는 중이라, 저장된 데이터로 먼저 보여드리고 있습니다.";
 });
+document.addEventListener("api:live", () => { $("#modeBanner").hidden = true; });   // 서버가 깨어나면 안내를 닫음
 if (api.mode === "static") $("#modeBanner").hidden = false;
 window.addEventListener("hashchange", route);
 updateBadge();

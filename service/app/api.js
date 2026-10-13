@@ -1,7 +1,8 @@
 /* 데이터 계층. 화면은 이 객체만 부른다.
  *  live  : config.js 의 FINREG_API 가 있으면 FastAPI 호출
  *  static: 없으면 data/*.json (= 실제 API 응답을 떠 둔 스냅숏). 검색·피드 필터만 브라우저에서 계산
- * live 호출이 실패하면(무료 서버 절전 등) 자동으로 static 으로 넘어가 화면이 멈추지 않는다.
+ * live 호출이 7초 안에 오지 않거나 실패하면(무료 서버 절전 등) 이번 화면은 static 으로 먼저 보여 주고,
+ * 서버가 깨어나면(느렸던 요청이 결국 오면) 다음 화면부터 다시 live 로 돌아간다.
  */
 const BASE = (window.FINREG_API || "").replace(/\/$/, "");
 const cache = new Map();
@@ -34,15 +35,34 @@ async function getJSON(url, timeoutMs) {
   return p;
 }
 
+const FIRST_WAIT = 7000;            // 이보다 오래 걸리면 이번 화면은 저장된 데이터로 먼저 보여 준다
+const FALLBACK = Symbol("fallback");
+let waking = null;
+
+// 서버가 깨어나면(느렸던 요청이 결국 성공하면) 다음 화면부터 다시 실시간 데이터
+function goStatic(pending) {
+  if (!fellBack) { fellBack = true; document.dispatchEvent(new CustomEvent("api:fallback")); }
+  if (!waking) {
+    waking = (pending || getJSON(BASE + "/health", 70000))
+      .then(() => { fellBack = false; document.dispatchEvent(new CustomEvent("api:live")); })
+      .catch(() => {})
+      .finally(() => { waking = null; });
+  }
+}
+
+async function tryLive(url) {
+  const p = getJSON(url, 70000);       // 무료 서버 첫 요청은 30~60초 걸릴 수 있어 끝까지 기다리되
+  const r = await Promise.race([p.then((v) => ({ v }), (e) => ({ e })),
+    new Promise((res) => setTimeout(() => res(null), FIRST_WAIT))]);   // 화면은 7초까지만 기다린다
+  if (r && "v" in r) return r.v;
+  if (r && r.e && r.e.status === 404) throw r.e;
+  goStatic(r && r.e ? null : p);
+  throw FALLBACK;
+}
+
 async function call(livePath, staticKey, ...args) {
   if (BASE && !fellBack) {
-    try {
-      return await getJSON(BASE + livePath, 45000);   // 무료 서버 첫 요청은 30~60초 걸릴 수 있음
-    } catch (e) {
-      if (e.status === 404) throw e;
-      fellBack = true;
-      document.dispatchEvent(new CustomEvent("api:fallback"));
-    }
+    try { return await tryLive(BASE + livePath); } catch (e) { if (e !== FALLBACK) throw e; }
   }
   return getJSON(STATIC[staticKey](...args));
 }
@@ -128,19 +148,19 @@ export const api = {
   document: (id) => call(`/documents/${encodeURIComponent(id)}`, "document", id),
   async search(p) {
     if (BASE && !fellBack) {
-      try { return await getJSON(`${BASE}/search?${qs(p)}`, 45000); } catch { fellBack = true; }
+      try { return await tryLive(`${BASE}/search?${qs(p)}`); } catch (e) { if (e !== FALLBACK) throw e; }
     }
     return staticSearch(await getJSON(STATIC.index()), p);
   },
   async feed(p = {}) {
     if (BASE && !fellBack) {
-      try { return await getJSON(`${BASE}/feed?${qs(p)}`, 45000); } catch { fellBack = true; }
+      try { return await tryLive(`${BASE}/feed?${qs(p)}`); } catch (e) { if (e !== FALLBACK) throw e; }
     }
     return staticFeed(await getJSON(STATIC.feed()), p);
   },
   async guidance(status = "active") {
     if (BASE && !fellBack) {
-      try { return await getJSON(`${BASE}/guidance?status=${status}&within=60`, 45000); } catch { fellBack = true; }
+      try { return await tryLive(`${BASE}/guidance?status=${status}&within=60`); } catch (e) { if (e !== FALLBACK) throw e; }
     }
     return (await getJSON(STATIC.guidance()))[status];
   },
