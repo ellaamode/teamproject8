@@ -217,10 +217,13 @@ def build_resolver(conn) -> Resolver:
     laws = {r["slug"]: {"name": r["name"], "kind": r["kind"], "parent": r["parent_slug"], "aliases": r["aliases"]}
             for r in conn.execute("SELECT slug, name, kind, parent_slug, aliases FROM laws").fetchall()}
     arts: dict[str, set] = {}
-    for r in conn.execute("SELECT law_slug, no FROM articles").fetchall():
+    titles: dict[str, str] = {}
+    for r in conn.execute("SELECT law_slug, no, title FROM articles").fetchall():
         arts.setdefault(r["law_slug"], set()).add(r["no"])
+        if r["title"]:
+            titles[f"{r['law_slug']}:{r['no']}"] = r["title"]    # 원문 괄호 제목과 한 번 더 대조
     # 본문을 아직 못 받은 법령은 검증하지 않는다(조문 목록이 비어 있으면 모두 '없음'이 되므로)
-    return Resolver(laws, {k: v for k, v in arts.items() if v})
+    return Resolver(laws, {k: v for k, v in arts.items() if v}, titles)
 
 
 def link(conn, relink_all: bool = False):

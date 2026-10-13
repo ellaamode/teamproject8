@@ -29,11 +29,11 @@
    },
    "response_example": {
     "status": "ok",
-    "data_as_of": "2026-10-07T15:04:53.125049+00:00",
+    "data_as_of": "2026-10-13T14:21:21.608886+00:00",
     "counts": {
      "documents": 6341,
      "articles": 3629,
-     "links": 5266,
+     "links": 5028,
      "laws": 21
     },
     "runs": [
@@ -41,7 +41,7 @@
       "stage": "derive",
       "source": "events",
       "status": "ok",
-      "finished_at": "2026-10-07T15:04:53.125049+00:00",
+      "finished_at": "2026-10-13T14:21:21.608886+00:00",
       "stats": {
        "errors": 0,
        "sources": {
@@ -88,13 +88,13 @@
       "stage": "link",
       "source": "documents",
       "status": "ok",
-      "finished_at": "2026-10-07T15:04:50.938769+00:00",
+      "finished_at": "2026-10-13T14:21:18.719842+00:00",
       "stats": {
-       "docs": 25,
-       "links": 32,
+       "docs": 6341,
+       "links": 5028,
        "errors": 0,
-       "unresolved": 17,
-       "no_citation": 14
+       "unresolved": 8628,
+       "no_citation": 4192
       }
      },
      "…"
@@ -134,7 +134,7 @@
      ],
      "effective_on": "2026-07-01",
      "articles": 96,
-     "linked_docs": 218
+     "linked_docs": 191
     },
     {
      "slug": "bank-ed",
@@ -146,7 +146,7 @@
      ],
      "effective_on": "2026-07-01",
      "articles": 73,
-     "linked_docs": 83
+     "linked_docs": 78
     },
     "…"
    ]
@@ -243,9 +243,9 @@
         "label": "제2조",
         "title": "정의",
         "is_deleted": false,
-        "total": 151,
-        "interp": 108,
-        "noaction": 43,
+        "total": 149,
+        "interp": 105,
+        "noaction": 44,
         "guidance": 0,
         "notice": 0,
         "pending": true
@@ -262,8 +262,8 @@
         "label": "제5조",
         "title": "전자문서의 사용",
         "is_deleted": false,
-        "total": 1,
-        "interp": 1,
+        "total": 0,
+        "interp": 0,
         "noaction": 0,
         "guidance": 0,
         "notice": 0,
@@ -917,7 +917,7 @@
     ]
    },
    "response_example": {
-    "since": "2026-07-13",
+    "since": "2026-07-15",
     "summary": {
      "비조치_신규": 5,
      "해석_신규": 45,
@@ -1009,7 +1009,7 @@
     ]
    },
    "response_example": {
-    "today": "2026-10-11",
+    "today": "2026-10-13",
     "status": "active",
     "items": [
      {
@@ -1021,7 +1021,7 @@
       "valid_from": "2025-11-17",
       "valid_to": "2026-11-16",
       "source_url": "https://better.fsc.go.kr/fsc_new/status/adminMap/OpertnDetail.do?stNo=11&muNo=14…",
-      "days_left": 36
+      "days_left": 34
      },
      {
       "id": "fsc.guidance:5111",
@@ -1032,7 +1032,7 @@
       "valid_from": "2026-01-01",
       "valid_to": "2026-12-31",
       "source_url": "https://better.fsc.go.kr/fsc_new/status/adminMap/OpertnDetail.do?stNo=11&muNo=14…",
-      "days_left": 81
+      "days_left": 79
      },
      "…"
     ]
@@ -1207,7 +1207,7 @@
       "key": "fsc.reply",
       "name": "금융규제·법령해석포털 회신사례",
       "provider": "금융위원회·금융감독원",
-      "url": "https://better.fsc.go.kr/fsc_new/replyCase/TotalReplyList.do?stNo=11&muNo=117&muGpNo=75",
+      "url": "https://better.fsc.go.kr/fsc_new/replyCase/TotalReplyList.do?stNo=11&muNo=117&mu…",
       "method": "크롤링 (목록 JSON + 상세 HTML)",
       "items": "구분, 제목, 소관부서, 회신일, 질의요지, 회답, 이유",
       "collected": 6174,
@@ -1221,7 +1221,7 @@
      "pending_versions": 71,
      "delegations": 2293,
      "documents": 6341,
-     "links": 5266,
+     "links": 5028,
      "first_reply": "2014-03-10",
      "last_reply": "2026-09-30",
      "portal_listed_total": null
@@ -1254,12 +1254,12 @@
      {
       "slug": "fscma",
       "name": "자본시장과 금융투자업에 관한 법률",
-      "docs": 1072
+      "docs": 1057
      },
      {
       "slug": "efta",
       "name": "전자금융거래법",
-      "docs": 482
+      "docs": 479
      },
      "…"
     ],
@@ -1270,7 +1270,7 @@
       "title": "정의",
       "law_name": "전자금융거래법",
       "law_kind": "법률",
-      "docs": 151
+      "docs": 149
      },
      {
       "key": "fscma:6",
@@ -1278,18 +1278,18 @@
       "title": "금융투자업",
       "law_name": "자본시장과 금융투자업에 관한 법률",
       "law_kind": "법률",
-      "docs": 86
+      "docs": 83
      },
      "…"
     ],
     "link_quality": {
      "docs": 6174,
-     "linked": 2181,
-     "rate": 0.353,
+     "linked": 2149,
+     "rate": 0.348,
      "in_scope": {
       "docs": 2727,
-      "linked": 2110,
-      "rate": 0.774
+      "linked": 2109,
+      "rate": 0.773
      },
      "by_method": [
       {
@@ -1298,45 +1298,46 @@
       },
       {
        "method": "abbr",
-       "n": 843
+       "n": 836
       },
       "…"
      ],
      "unresolved": [
       {
        "reason": "unknown_law",
-       "n": 7549
+       "n": 7899
       },
       {
        "reason": "unknown_article",
-       "n": 501
-      }
+       "n": 419
+      },
+      "…"
      ],
      "unknown_laws": [
       {
-       "name": "대부업법",
-       "n": 885
+       "name": "여신전문금융업법",
+       "n": 664
       },
       {
-       "name": "신용정보법",
-       "n": 676
+       "name": "대부업법",
+       "n": 553
       },
       "…"
      ]
     },
     "evidence": {
      "spread": {
-      "docs": 2181,
+      "docs": 2149,
       "avg_articles": 2.0,
-      "multi_article": 1229,
-      "law_and_sub": 737,
-      "with_sub": 1325,
-      "title_no_article": 1951
+      "multi_article": 1166,
+      "law_and_sub": 707,
+      "with_sub": 1297,
+      "title_no_article": 1931
      },
      "pending": {
       "articles": 71,
       "with_links": 36,
-      "docs": 358,
+      "docs": 356,
       "top": [
        {
         "key": "efta:2",
@@ -1344,7 +1345,7 @@
         "title": "정의",
         "law_name": "전자금융거래법",
         "effective_from": "2026-12-17",
-        "docs": 151
+        "docs": 149
        },
        {
         "key": "efta:28",
@@ -1352,7 +1353,7 @@
         "title": "전자금융업의 허가와 등록",
         "law_name": "전자금융거래법",
         "effective_from": "2026-12-17",
-        "docs": 84
+        "docs": 82
        },
        "…"
       ]
@@ -1494,7 +1495,7 @@
       "key": "fsc.reply",
       "name": "금융규제·법령해석포털 회신사례",
       "provider": "금융위원회·금융감독원",
-      "url": "https://better.fsc.go.kr/fsc_new/replyCase/TotalReplyList.do?stNo=11&muNo=117&muGpNo=75",
+      "url": "https://better.fsc.go.kr/fsc_new/replyCase/TotalReplyList.do?stNo=11&muNo=117&mu…",
       "method": "크롤링 (목록 JSON + 상세 HTML)",
       "items": "구분, 제목, 소관부서, 회신일, 질의요지, 회답, 이유",
       "collected": 6174,
@@ -1508,8 +1509,8 @@
       "stage": "변화 기록",
       "source": "events",
       "status": "ok",
-      "started_at": "2026-10-07T15:04:50.940563+00:00",
-      "finished_at": "2026-10-07T15:04:53.125049+00:00",
+      "started_at": "2026-10-13T14:21:19.866927+00:00",
+      "finished_at": "2026-10-13T14:21:21.608886+00:00",
       "stats": {
        "errors": 0,
        "events_new": 0
@@ -1520,14 +1521,14 @@
       "stage": "연결",
       "source": "documents",
       "status": "ok",
-      "started_at": "2026-10-07T15:04:50.759901+00:00",
-      "finished_at": "2026-10-07T15:04:50.938769+00:00",
+      "started_at": "2026-10-13T14:21:03.802046+00:00",
+      "finished_at": "2026-10-13T14:21:18.719842+00:00",
       "stats": {
-       "docs": 25,
-       "links": 32,
+       "docs": 6341,
+       "links": 5028,
        "errors": 0,
-       "unresolved": 17,
-       "no_citation": 14
+       "unresolved": 8628,
+       "no_citation": 4192
       },
       "error": null
      },
@@ -1609,7 +1610,7 @@
   {
    "name": "pipeline_runs",
    "description": "배치 단계별 실행 기록 (/health 의 데이터 기준 시각)",
-   "rows": 15,
+   "rows": 18,
    "primary_key": [
     "id"
    ],
@@ -2167,7 +2168,7 @@
   {
    "name": "article_links",
    "description": "문서 ↔ 조문 인용 연결 (근거 표현·방법·신뢰도)",
-   "rows": 5266,
+   "rows": 5028,
    "primary_key": [
     "doc_id",
     "article_key",
@@ -2248,7 +2249,7 @@
   {
    "name": "unresolved_mentions",
    "description": "연결하지 못한 인용 (대상 밖 법령 등) — 별칭 사전·대상 법령 보강용",
-   "rows": 8050,
+   "rows": 8625,
    "primary_key": [
     "doc_id",
     "raw_text"
@@ -2373,7 +2374,7 @@
   {
    "name": "article_stats",
    "description": "조문별 연결 문서 수 집계 (구체화 뷰)",
-   "rows": 911,
+   "rows": 863,
    "primary_key": [],
    "columns": [],
    "references": []
