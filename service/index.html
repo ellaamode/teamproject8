@@ -13,6 +13,7 @@
   // 움직임 줄이기를 켠 사용자나 스크립트가 꺼진 환경에서는 처음부터 전부 보인다
   try { if (!matchMedia("(prefers-reduced-motion: reduce)").matches && !location.hash) document.documentElement.classList.add("intro"); } catch (e) {}
 </script>
+<script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 </head>
 <body>
 <header class="ptop">
@@ -275,7 +276,7 @@
   <section class="s" id="arch">
     <div class="s-no">06 · 시스템 구조</div>
     <h2>모으는 일과 보여 주는 일을 나눴습니다</h2>
-    <p class="intro">GitHub Actions의 수집 프로그램이 매일 아침(06:00 예약) 법제처 Open API와 금융위 포털에서 새 자료를 받아, 정리·조문 연결·변화 기록까지 계산한 뒤 결과를 Supabase(PostgreSQL 데이터베이스)에 저장합니다. 화면에 보여 주는 API(FastAPI)는 이렇게 저장된 데이터를 읽기만 합니다. 사용자가 화면을 볼 때 원천 사이트에 요청이 가지 않으므로 무료 서버에서도 빠르고, 원천 사이트에 부담을 주지 않습니다. 외부 원천과의 연결 결과(원천별 수집 방식·건수·마지막 수집 시각·실행 기록)는 <span class="code-ex">GET /collection</span>으로 Swagger에서 바로 확인할 수 있습니다.</p>
+    <p class="intro">GitHub Actions의 수집 프로그램이 매일 아침(06:00 예약) 법제처 Open API와 금융위 포털에서 새 자료를 받아, 정리·조문 연결·변화 기록까지 계산한 뒤 결과를 Supabase(PostgreSQL 데이터베이스)에 저장합니다. ��면에 보여 주는 API(FastAPI)는 이렇게 저장된 데이터를 읽기만 합니다. 사용자가 화면을 볼 때 원천 사이트에 요청이 가지 않으므로 무료 서버에서도 빠르��, 원천 사이트에 부담을 주지 않습니다. 외부 원천과의 연결 결과(원천별 수집 방식·건수·마지막 수집 시각·실행 기록)는 <span class="code-ex">GET /collection</span>으로 Swagger에서 바로 확인할 수 있습니다.</p>
     <figure class="card figure" style="margin:0">
       <svg viewBox="0 0 1000 380" role="img" aria-label="원천 2곳 → GitHub Actions 수집 4단계 → Supabase 3층 저장 → FastAPI 읽기 전용 → Vercel 화면">
         <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="var(--ink-3)" stroke-width="1.6"/></marker></defs>
@@ -540,7 +541,7 @@
     <h2>잘못 연결하는 것보다, 연결하지 않는 편이 낫다</h2>
     <div class="tbl-wrap"><table class="t">
       <tr><th style="width:26%">위험</th><th style="width:24%">영향</th><th>대응</th></tr>
-      <tr><td><b>포털이 공식 API가 아님</b></td><td>화면 변경 시 수집 중단</td><td>받은 화면에 꼭 있어야 할 항목(‘질의요지’ 등)이 없으면 즉시 실패로 기록, 사이트가 거부(403·429)하면 그 사이트 수집을 바로 멈춤. 이미 받은 데이터는 그대로 서비스</td></tr>
+      <tr><td><b>포털이 공식 API가 아님</b></td><td>화면 변경 시 수집 중단</td><td>받은 화면에 꼭 있어야 할 항목(‘질의요지’ 등)이 없으면 즉시 실패로 기록, 사이트가 거부(403·429)���면 그 사이트 수집을 바로 멈춤. 이미 받은 데이터는 그대로 서비스</td></tr>
       <tr><td><b>법제처 Open API 장애·키 문제</b></td><td>그날 법령 갱신 누락</td><td>받아 둔 조문은 그대로 유지, API가 전부 실패한 날만 웹페이지 수집으로 대체 · 실행 기록으로 확인</td></tr>
       <tr><td><b>잘못된 조문 연결</b></td><td>엉뚱한 선례를 보여 줌</td><td>애매하면 연결하지 않고 보류, 원문 제목과 한 번 더 대조, 연결 근거와 확실한 정도를 화면에 표시 · 무작위 100개 정확도 측정(87% → 96%)과 틀린 사례 자동 테스트</td></tr>
       <tr><td><b>조문 번호 이동(개정)</b></td><td>옛 해석이 지금의 다른 조문에 붙음</td><td>문서 날짜 기준 버전 대조를 2단계 과제로, 그 전까지는 화면에 회신일을 항상 함께 표시</td></tr>
@@ -670,7 +671,7 @@
         : kpi(lq.rate != null ? Math.round(lq.rate * 1000) / 10 : "-", "%", "조문에 연결된 회신 비율", `${n(lq.linked)} / ${n(lq.docs)}건`)) +
       kpi(n(t.articles), "개", `5개 법률과 시행령·행정규칙 ${t.laws}건의 조문`, `위임 관계 ${n(t.delegations)}건`) +
       kpi(n(g.active), "건", "시행 중인 금융위 행정지도", `60일 내 만료 ${n(g.expiring_60)}건`);
-    // 문제 검증: 01에서 말한 세 가지 문제가 데이터에 실제로 있는지
+    // 문제 검증: 01에서 말한 세 가지 문제가 데이터�� 실제로 있는지
     const e = a.evidence;
     if (e && e.spread && e.spread.docs) {
       const sp = e.spread, pd = e.pending, pc = (x, y) => (y ? Math.round((x / y) * 100) : 0), pt = pd.top && pd.top[0];
