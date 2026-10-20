@@ -201,3 +201,6 @@ details.api pre { margin: 0; padding: 16px 18px; border-top: 1px solid var(--lin
   .hero .stage .center { position: static; transform: none; width: auto; }
   .hero .stage .sat { position: static; animation: none; }
 }
+
+/* 13 끝 · 정리 숫자 */
+.wrap-kpi { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 12px; }
