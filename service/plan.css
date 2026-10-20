@@ -184,16 +184,32 @@ details.api pre { margin: 0; padding: 16px 18px; border-top: 1px solid var(--lin
 /* 히어로: 한 줄로 쌓고, 제목 다음 문장 바로 아래에 그림 */
 .hero { grid-template-columns: minmax(0, 1fr); gap: 0; }
 .hero .stage { max-width: 760px; margin: 26px 0 8px; }
-/* 나타나기 효과: 제목만 먼저, 2초 뒤 히어로 나머지가 차례로, 그 아래는 스크롤하면 */
+/* 표지: 처음에는 제목 묶음만 화면 가득, 클릭하면 제자리로 줄어들고 페이지 전체가 나타남 */
+.hero-title { width: fit-content; max-width: 100%; transform-origin: 50% 50%; }
+.cover-go { display: none; }
+.intro:not(.cover-off) { overflow: hidden; }
+.intro:not(.intro-done) .wrap, .intro:not(.intro-done) .ptop { pointer-events: none; }
+.intro .ptop { transition: opacity .6s ease .5s; }
+.intro:not(.intro-done) .ptop { opacity: 0; }
+.intro .hero-title { transition: opacity .6s ease; }
+.intro:not(.cover-ready) .hero-title { opacity: 0; }
+.intro.intro-done .hero-title { transition: transform .9s cubic-bezier(.2, .7, .2, 1); }
+.intro.cover-ready:not(.intro-done) .cover-go {
+  display: inline-flex; align-items: center; gap: 8px; position: fixed; z-index: 30; left: 50%; bottom: 32px; transform: translateX(-50%);
+  border: 0; background: none; color: var(--ink-3); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+  animation: cover-hint 2.4s ease-in-out infinite;
+}
+.cover-go .i { transform: rotate(90deg); }
+@keyframes cover-hint { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+.intro:not(.intro-done) body { cursor: pointer; }
+/* 나머지 히어로는 제목이 자리 잡는 동안 차례로, 그 아래는 스크롤하면 */
 .intro .rv-intro { opacity: 0; transform: translateY(14px); }
 .intro.intro-done .rv-intro { opacity: 1; transform: none; transition: opacity .8s ease, transform .8s ease; }
-.intro.intro-done .eyebrow.rv-intro { transition-delay: 0s; }
-.intro.intro-done .lead.rv-intro { transition-delay: .1s; }
-.intro.intro-done .stage.rv-intro { transition-delay: .35s; }
-.intro.intro-done .hero-in > p.rv-intro:not(.lead), .intro.intro-done .cta.rv-intro, .intro.intro-done .members.rv-intro { transition-delay: .6s; }
+.intro.intro-done .stage.rv-intro { transition-delay: .5s; }
+.intro.intro-done .hero-in > p.rv-intro, .intro.intro-done .cta.rv-intro, .intro.intro-done .members.rv-intro { transition-delay: .75s; }
 .intro .rv { opacity: 0; transform: translateY(18px); }
 .intro .rv.in { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s ease; }
-@media print { .intro .rv, .intro .rv-intro { opacity: 1 !important; transform: none !important; } }
+@media print { .intro .rv, .intro .rv-intro, .intro .ptop, .intro .hero-title { opacity: 1 !important; transform: none !important; } .cover-go { display: none !important; } }
 @media (max-width: 720px) {
   /* 좁은 화면: 그림을 세로 목록으로 */
   .hero .stage { display: flex; flex-direction: column; gap: 10px; height: auto; }

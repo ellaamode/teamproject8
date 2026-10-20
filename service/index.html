@@ -8,13 +8,14 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23222c6b'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-size='17' font-weight='800' fill='white' font-family='sans-serif'%3E%C2%A7%3C/text%3E%3C/svg%3E">
 <script>try{var t=localStorage.getItem("finreg.theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="stylesheet" href="assets/base.css?v=4">
-<link rel="stylesheet" href="plan.css?v=9">
+<link rel="stylesheet" href="plan.css?v=10">
 <script>
   // 움직임 줄이기를 켠 사용자나 스크립트가 꺼진 환경에서는 처음부터 전부 보인다
   try { if (!matchMedia("(prefers-reduced-motion: reduce)").matches && !location.hash) document.documentElement.classList.add("intro"); } catch (e) {}
 </script>
 </head>
 <body>
+<button class="cover-go" id="coverGo" type="button">클릭하면 시작합니다 <svg class="i s"><use href="#i-arrow"/></svg></button>
 <header class="ptop">
   <div class="ptop-in">
     <a class="logo" href="#"><span class="logo-mark"><svg viewBox="0 0 24 24"><use href="#i-logo"/></svg></span>금융규제통합조회</a>
@@ -30,10 +31,12 @@
   <!-- ============================================================ HERO -->
   <section class="hero">
     <div class="hero-in">
-      <span class="eyebrow rv-intro"><svg class="i s"><use href="#i-spark"/></svg>KAIST 디지털금융MBA · 클라우드컴퓨팅실습 8조</span>
+      <div class="hero-title" id="heroTitle">
+      <span class="eyebrow"><svg class="i s"><use href="#i-spark"/></svg>KAIST 디지털금융MBA · 클라우드컴퓨팅실습 8조</span>
       <h1>흩어진 금융규제를<br><em>모아서 한 번에</em> 확인합니다</h1>
-      <p class="lead rv-intro">금융 법령과 행정규칙, 그리고 금융당국의 법령해석·비조치의견·행정지도를 <b>조문 단위로 연결</b>해,
+      <p class="lead">금융 법령과 행정규칙, 그리고 금융당국의 법령해석·비조치의견·행정지도를 <b>조문 단위로 연결</b>해,
         금융회사 실무자가 “이 조문을 두고 당국은 뭐라고 했고, 앞으로 무엇이 바뀌는지”를 한 화면에서 확인하게 합니다.</p>
+      </div>
       <div class="stage rv-intro" id="stage" aria-label="실제 데이터: 자본시장법 제42조(금융투자업자의 업무위탁)에 연결된 자료">
       <svg class="wires" viewBox="0 0 560 470" preserveAspectRatio="none" aria-hidden="true">
         <g stroke="var(--line-2)" stroke-width="1.6" stroke-dasharray="4 6" fill="none">
@@ -737,10 +740,35 @@
   if ("IntersectionObserver" in window) {
     io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
   }
-  setTimeout(() => {
-    root.classList.add("intro-done");                     // 히어로의 나머지가 순서대로 나타남
-    setTimeout(() => blocks.forEach((el) => (io ? io.observe(el) : show(el))), 900);
-  }, 2000);
+
+  // 표지: 제목 묶음을 원래 자리에서 화면 가운데로 옮겨 크게 보여 준다 (발표 시작 화면)
+  const title = document.getElementById("heroTitle");
+  try { history.scrollRestoration = "manual"; } catch (e) {}
+  window.scrollTo(0, 0);
+  const fit = () => {
+    if (root.classList.contains("intro-done")) return;
+    title.style.transform = "none";
+    const r = title.getBoundingClientRect(), vw = innerWidth, vh = innerHeight;
+    const k = Math.min((vw * 0.84) / r.width, (vh * 0.6) / r.height, 2.4);
+    const dx = vw / 2 - (r.left + r.width / 2), dy = vh * 0.47 - (r.top + r.height / 2);
+    title.style.transform = `translate(${dx}px, ${dy}px) scale(${k})`;
+    root.classList.add("cover-ready");
+  };
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(fit, fit);
+  addEventListener("resize", fit);
+
+  // 시작: 제목이 제자리로 줄어들고, 나머지가 차례로 나타난다
+  const start = (e) => {
+    if (root.classList.contains("intro-done")) return;
+    if (e && e.cancelable) e.preventDefault();
+    root.classList.add("intro-done");
+    title.style.transform = "";
+    setTimeout(() => root.classList.add("cover-off"), 900);  // 줄어드는 동안은 스크롤을 막아 둔다
+    setTimeout(() => blocks.forEach((el) => (io ? io.observe(el) : show(el))), 700);
+  };
+  document.addEventListener("click", (e) => { if (!root.classList.contains("intro-done")) { e.stopPropagation(); start(e); } }, true);
+  document.addEventListener("keydown", (e) => { if (["Enter", " ", "ArrowRight", "ArrowDown", "PageDown"].includes(e.key)) start(e); });
+  addEventListener("wheel", (e) => { if (e.deltaY > 0) start(); }, { passive: true });
 })();
 </script>
 </body>
