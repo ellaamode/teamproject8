@@ -220,3 +220,8 @@ details.api pre { margin: 0; padding: 16px 18px; border-top: 1px solid var(--lin
 
 /* 13 끝 · 정리 숫자 */
 .wrap-kpi { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 12px; }
+
+/* 제목 옆 기획서 QR: 제목 두 줄과 같은 높이 (표지에서도 제목과 함께 커짐), 좁은 화면에서는 숨김 */
+.hero h1.h1-qr { display: flex; align-items: center; gap: .5em; }
+.hero-qr { height: 2.32em; width: 2.32em; flex: none; border-radius: .12em; }
+@media (max-width: 720px) { .hero-qr { display: none; } }
