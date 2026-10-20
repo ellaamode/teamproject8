@@ -10,8 +10,8 @@
 <link rel="stylesheet" href="assets/base.css?v=4">
 <link rel="stylesheet" href="plan.css?v=10">
 <script>
-  // 움직임 줄이기를 켠 사용자나 스크립트가 꺼진 환경에서는 처음부터 전부 보인다
-  try { if (!matchMedia("(prefers-reduced-motion: reduce)").matches && !location.hash) document.documentElement.classList.add("intro"); } catch (e) {}
+  // 표지로 시작 (주소에 #이 붙어 특정 섹션으로 바로 갈 때와 스크립트가 꺼진 환경은 제외). 움직임 줄이기를 켜면 애니메이션 없이 바로 바뀐다
+  try { if (!location.hash) document.documentElement.classList.add("intro"); } catch (e) {}
 </script>
 </head>
 <body>
